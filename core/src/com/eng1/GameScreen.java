@@ -1,6 +1,7 @@
 package com.eng1;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -8,67 +9,54 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.eng1.Objects.*;
 
 public class GameScreen implements Screen {
 
     final PiazzaPanic game;
 
-    Texture wallTextureHorizontal, wallTextureVertical, counterTexture;
+//    Texture wallTextureHorizontal, wallTextureVertical, counterTexture, chef1Texture, chef2Texture, chef3Texture;
     OrthographicCamera camera;
-    Rectangle wallTop, wallLeft, wallBottom, wallRight, counter1, counter2, serverCounter, burgerStation, saladStation, recipeStation, chef1, chef2, chef3;
+    Rectangle serverCounter, burgerStation, saladStation, recipeStation;
+    Array<Counter> counters;
+    Chef[] chefs;
     Array<Rectangle> customers;
     int width, height;
 
-    public GameScreen(PiazzaPanic game, int width, int height) {
+    private boolean tabPressed;
+    int width, height, chefSelector;
+
+    public GameScreen(PiazzaPanic game, int width, int height, boolean extraChef) {
         this.game = game;
         this.width = width;
         this.height = height;
+        this.tabPressed = false;
+        this.chefSelector = 0;
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
 
-        this.wallTop = new Rectangle();
-        this.wallTop.x = 0;
-        this.wallTop.y = height - 40;
+        this.counters = new Array<>();
 
-        this.wallTop.width = width / 5f * 4f;
-        this.wallTop.height = 40;
+        this.counters.add(new Counter(0f, height - 40f, (int) (width / 5f * 4f), 40, this.game.stage)); // Top
+        this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 40, this.game.stage));   // Bottom
+        this.counters.add(new Counter(0f, 0f, 40, height, this.game.stage));    // Left
+        this.counters.add(new Counter((width / 5f * 4f), 0f, 40, height, this.game.stage));    // Right
+        this.counters.add(new Counter(width / 5f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.game.stage));  // Counter 1
+        this.counters.add(new Counter(width / 5f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.game.stage)); // Counter 2
 
-        this.wallBottom = new Rectangle();
-        this.wallBottom.x = 0;
-        this.wallBottom.y = 0;
+        this.chefs = new Chef[2];
+        if (extraChef) this.chefs = new Chef[3];
 
-        this.wallBottom.width = width / 5f * 4f;
-        this.wallBottom.height = 40;
+        this.chefs[0] = new Chef(60, 60, this.game.stage, 1);
+        this.chefs[1] = new Chef(60, 100, this.game.stage, 2);
+        if (extraChef) this.chefs[2] = new Chef(60, 140, this.game.stage, 3);
 
-        this.wallLeft = new Rectangle();
-        this.wallLeft.x = 0;
-        this.wallLeft.y = 40;
+//        this.chef1Texture = new Texture(Gdx.files.internal("chef1.png"));
+//        this.chef2Texture = new Texture(Gdx.files.internal("chef2.png"));
+//        this.chef3Texture = new Texture(Gdx.files.internal("chef3.png"));
 
-        this.wallLeft.width = 40;
-        this.wallLeft.height = height - (2 * 40);
-
-        this.wallRight = new Rectangle();
-        this.wallRight.x = width / 5f * 4f - 40;
-        this.wallRight.y = 40;
-
-        this.wallRight.width = 40;
-        this.wallRight.height = height - (2 * 40);
-
-        this.counter1 = new Rectangle();
-        this.counter1.x = width / 5f;
-        this.counter1.y = height / 3f - 40;
-
-        this.counter1.width = width / 5f * 2f;
-        this.counter1.height = 80;
-
-        this.counter2 = new Rectangle();
-        this.counter2.x = width / 5f;
-        this.counter2.y = height / 3f * 2f - 40;
-
-        this.counter2.width = width / 5f * 2f;
-        this.counter2.height = 80;
-
-        Pixmap pixmapHorizontal = new Pixmap(width / 5 * 4, 40, Pixmap.Format.RGBA8888);
+        /*Pixmap pixmapHorizontal = new Pixmap(width / 5 * 4, 40, Pixmap.Format.RGBA8888);
         pixmapHorizontal.setColor(new Color(0, 0, 1, 1));
         pixmapHorizontal.fillRectangle(0, 0, width / 5 * 4, 40);
         this.wallTextureHorizontal = new Texture(pixmapHorizontal);
@@ -90,9 +78,10 @@ public class GameScreen implements Screen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24;
         BitmapFont font = generator.generateFont(parameter); // font size 12 pixels
-        generator.dispose();
+        generator.dispose();*/
 
         Gdx.input.setInputProcessor(this.game.stage);
+
         /*Skin skin = new Skin();
 
         Window.WindowStyle windowStyle = new Window.WindowStyle();
@@ -151,19 +140,104 @@ public class GameScreen implements Screen {
         this.camera.update();
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
-        this.game.batch.draw(this.wallTextureHorizontal, this.wallTop.x, this.wallTop.y);
-        this.game.batch.draw(this.wallTextureHorizontal, this.wallBottom.x, this.wallBottom.y);
-        this.game.batch.draw(this.wallTextureVertical, this.wallLeft.x, this.wallLeft.y);
-        this.game.batch.draw(this.wallTextureVertical, this.wallRight.x, this.wallRight.y);
-        this.game.batch.draw(this.counterTexture, this.counter1.x, this.counter1.y);
-        this.game.batch.draw(this.counterTexture, this.counter2.x, this.counter2.y);
+//        this.game.batch.draw(this.wallTextureHorizontal, this.wallTop.x, this.wallTop.y);
+//        this.game.batch.draw(this.wallTextureHorizontal, this.wallBottom.x, this.wallBottom.y);
+//        this.game.batch.draw(this.wallTextureVertical, this.wallLeft.x, this.wallLeft.y);
+//        this.game.batch.draw(this.wallTextureVertical, this.wallRight.x, this.wallRight.y);
+//        this.game.batch.draw(this.counterTexture, this.counter1.x, this.counter1.y);
+//        this.game.batch.draw(this.counterTexture, this.counter2.x, this.counter2.y);
+//        this.game.batch.draw(this.chef1Texture, this.chef1.x, this.chef1.y);
+//        this.game.batch.draw(this.chef2Texture, this.chef2.x, this.chef2.y);
+//        if (chefs == 3)
+//            this.game.batch.draw(this.chef3Texture, this.chef3.x, this.chef3.y);
 //        Gdx.gl.glClearColor(1, 0, 0, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.game.stage.act();
         this.game.stage.draw();
-//        game.batch.draw(screenViewport, 100, 100);
         this.game.batch.end();
+
+        try {
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                float oldY = this.chefs[this.chefSelector].getY();
+                this.chefs[this.chefSelector].setY(this.chefs[this.chefSelector].getY() + 200 * Gdx.graphics.getDeltaTime());
+                checkCollision(this.chefs[this.chefSelector].getX(), oldY);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                float oldY = this.chefs[this.chefSelector].getY();
+                this.chefs[this.chefSelector].setY(this.chefs[this.chefSelector].getY() - 200 * Gdx.graphics.getDeltaTime());
+                checkCollision(this.chefs[this.chefSelector].getX(), oldY);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                float oldX = this.chefs[this.chefSelector].getX();
+                this.chefs[this.chefSelector].setX(this.chefs[this.chefSelector].getX() + 200 * Gdx.graphics.getDeltaTime());
+                checkCollision(oldX, this.chefs[this.chefSelector].getY());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                float oldX = this.chefs[this.chefSelector].getX();
+                this.chefs[this.chefSelector].setX(this.chefs[this.chefSelector].getX() - 200 * Gdx.graphics.getDeltaTime());
+                checkCollision(oldX, this.chefs[this.chefSelector].getY());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.TAB) && !Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
+                if (!this.tabPressed)
+                    switch (this.chefs.length) {
+                        case 2 -> {
+                            this.chefSelector++;
+                            if (this.chefSelector == 2) this.chefSelector = 0;
+                        }
+                        case 3 -> {
+                            this.chefSelector++;
+                            if (this.chefSelector == 3) this.chefSelector = 0;
+                        }
+                    }
+                tabPressed = true;
+            } else
+                tabPressed = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkCollision(float oldX, float oldY) {
+        for (Counter counter : this.counters)
+            if (counter.getBounds().overlaps(this.chefs[this.chefSelector].getBounds())) {
+                this.chefs[this.chefSelector].setX(oldX);
+                this.chefs[this.chefSelector].setY(oldY);
+            }
+        switch (this.chefSelector) {
+            case 0 -> {
+                if (this.chefs.length == 3)
+                    if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[2].getBounds())) {
+                        this.chefs[this.chefSelector].setX(oldX);
+                        this.chefs[this.chefSelector].setY(oldY);
+                    }
+                if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[1].getBounds())) {
+                    this.chefs[this.chefSelector].setX(oldX);
+                    this.chefs[this.chefSelector].setY(oldY);
+                }
+            }
+            case 1 -> {
+                if (this.chefs.length == 3)
+                    if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[2].getBounds())) {
+                        this.chefs[this.chefSelector].setX(oldX);
+                        this.chefs[this.chefSelector].setY(oldY);
+                    }
+                if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[0].getBounds())) {
+                    this.chefs[this.chefSelector].setX(oldX);
+                    this.chefs[this.chefSelector].setY(oldY);
+                }
+            }
+            case 2 -> {
+                if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[0].getBounds())) {
+                    this.chefs[this.chefSelector].setX(oldX);
+                    this.chefs[this.chefSelector].setY(oldY);
+                }
+                if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[1].getBounds())) {
+                    this.chefs[this.chefSelector].setX(oldX);
+                    this.chefs[this.chefSelector].setY(oldY);
+                }
+            }
+        }
     }
 
     @Override
@@ -180,6 +254,7 @@ public class GameScreen implements Screen {
     public void resume() {
 
     }
+
     @Override
     public void show() {
 

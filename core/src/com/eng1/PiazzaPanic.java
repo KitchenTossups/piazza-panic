@@ -7,21 +7,23 @@ import com.badlogic.gdx.scenes.scene2d.*;
 public class PiazzaPanic extends Game {
 
 	private final int width, height;
+	private final boolean extraChef;
 
 	SpriteBatch batch;
 	BitmapFont font;
 	Stage stage;
 
-	public PiazzaPanic(int width, int height) {
+	public PiazzaPanic(int width, int height, boolean extraChef) {
 		this.width = width;
 		this.height = height;
+		this.extraChef = extraChef;
 	}
 
 	public void create() {
 		this.batch = new SpriteBatch();
 		this.font = new BitmapFont();
 		this.stage = new Stage();
-		setScreen(new MainMenuScreen(this, this.width, this.height));
+		setScreen(new MainMenuScreen(this, this.width, this.height, this.extraChef));
 	}
 
 	public void render () {
