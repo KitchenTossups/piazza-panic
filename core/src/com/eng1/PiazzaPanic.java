@@ -1,31 +1,39 @@
 package com.eng1;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.utils.*;
 
-public class PiazzaPanic extends ApplicationAdapter {
+public class PiazzaPanic extends Game {
+
+	private final int width, height;
+
 	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	BitmapFont font;
+	Stage stage;
+
+	public PiazzaPanic(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
-	@Override
+	public void create() {
+		this.batch = new SpriteBatch();
+		this.font = new BitmapFont();
+		this.stage = new Stage();
+		setScreen(new MainMenuScreen(this, this.width, this.height));
+	}
+
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		this.batch.dispose();
+		this.font.dispose();
+		this.stage.dispose();
 	}
 }
