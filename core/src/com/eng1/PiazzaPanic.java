@@ -1,10 +1,8 @@
 package com.eng1;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.utils.*;
 
 public class PiazzaPanic extends Game {
 
