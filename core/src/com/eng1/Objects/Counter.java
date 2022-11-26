@@ -13,7 +13,7 @@ public class Counter extends BaseActor {
     public Counter(float x, float y, int width, int height, Stage s) {
         super(x, y, s);
 
-        bounds = new Rectangle(x, y, width, height);
+        this.bounds = new Rectangle(x, y, width, height);
 
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(new Color(0, 0, 1, 1));
@@ -23,7 +23,7 @@ public class Counter extends BaseActor {
     }
 
     public Rectangle getBounds() {
-        bounds.set(getX(), getY(), getWidth(), getHeight());
-        return bounds;
+        this.bounds.set(getX(), getY(), getWidth(), getHeight());
+        return this.bounds;
     }
 }

@@ -10,13 +10,13 @@ public class Chef extends BaseActor {
     public Chef(float x, float y, Stage s, int chefNumber) {
         super(x, y, s);
 
-        bounds = new Rectangle(x, y, 32, 32);
+        this.bounds = new Rectangle(x, y, 32, 32);
 
         loadTexture("chef" + chefNumber + ".png");
     }
 
     public Rectangle getBounds() {
-        bounds.set(getX(), getY(), getWidth(), getHeight());
-        return bounds;
+        this.bounds.set(getX(), getY(), getWidth(), getHeight());
+        return this.bounds;
     }
 }

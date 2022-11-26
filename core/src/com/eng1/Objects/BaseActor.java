@@ -121,9 +121,8 @@ public class BaseActor extends Actor {
      * @param fileNames     array of names of files containing animation images
      * @param frameDuration how long each frame should be displayed
      * @param loop          should the animation loop
-     * @return animation created (useful for storing multiple animations)
      */
-    public Animation<TextureRegion> loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop) {
+    public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop) {
         Array<TextureRegion> textureArray = new Array<>();
 
         for (String fileName : fileNames) {
@@ -142,7 +141,6 @@ public class BaseActor extends Actor {
         if (animation == null)
             setAnimation(anim);
 
-        return anim;
     }
 
 //    /**
@@ -186,15 +184,14 @@ public class BaseActor extends Actor {
      * Convenience method for creating a 1-frame animation from a single texture.
      *
      * @param fileName names of image file
-     * @return animation created (useful for storing multiple animations)
      */
-    public Animation<TextureRegion> loadTexture(String fileName) {
+    public void loadTexture(String fileName) {
         String[] fileNames = new String[1];
         fileNames[0] = fileName;
-        return loadAnimationFromFiles(fileNames, 1, true);
+        loadAnimationFromFiles(fileNames, 1, true);
     }
 
-    public Animation<TextureRegion> setTexture(Texture texture) {
+    public void setTexture(Texture texture) {
         Array<TextureRegion> textureArray = new Array<>();
         texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         textureArray.add(new TextureRegion(texture));
@@ -205,8 +202,6 @@ public class BaseActor extends Actor {
 
         if (animation == null)
             setAnimation(anim);
-
-        return anim;
     }
 
 //    /**
