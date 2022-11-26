@@ -1,11 +1,7 @@
 package com.eng1;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-//import com.badlogic.gdx.graphics.g2d.*;
-//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -14,6 +10,8 @@ import com.eng1.Objects.*;
 public class GameScreen implements Screen {
 
     final PiazzaPanic game;
+
+    final Mode mode;
 
 //    Texture wallTextureHorizontal, wallTextureVertical, counterTexture, chef1Texture, chef2Texture, chef3Texture;
     OrthographicCamera camera;
@@ -25,10 +23,11 @@ public class GameScreen implements Screen {
     private boolean tabPressed;
     int width, height, chefSelector;
 
-    public GameScreen(PiazzaPanic game, int width, int height, boolean extraChef) {
+    public GameScreen(PiazzaPanic game, int width, int height, Mode mode) {
         this.game = game;
         this.width = width;
         this.height = height;
+        this.mode = mode;
         this.tabPressed = false;
         this.chefSelector = 0;
 
@@ -45,11 +44,11 @@ public class GameScreen implements Screen {
         this.counters.add(new Counter(width / 5f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.game.stage)); // Counter 2
 
         this.chefs = new Chef[2];
-        if (extraChef) this.chefs = new Chef[3];
+        if (mode == Mode.ASSESSMENT_2) this.chefs = new Chef[3];
 
         this.chefs[0] = new Chef(60, 60, this.game.stage, 1);
         this.chefs[1] = new Chef(60, 100, this.game.stage, 2);
-        if (extraChef) this.chefs[2] = new Chef(60, 140, this.game.stage, 3);
+        if (mode == Mode.ASSESSMENT_2) this.chefs[2] = new Chef(60, 140, this.game.stage, 3);
 
 //        this.chef1Texture = new Texture(Gdx.files.internal("chef1.png"));
 //        this.chef2Texture = new Texture(Gdx.files.internal("chef2.png"));
@@ -179,12 +178,12 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.TAB) && !Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
                 if (!this.tabPressed)
-                    switch (this.chefs.length) {
-                        case 2 -> {
+                    switch (mode) {
+                        case ASSESSMENT_1 -> {
                             this.chefSelector++;
                             if (this.chefSelector == 2) this.chefSelector = 0;
                         }
-                        case 3 -> {
+                        case ASSESSMENT_2 -> {
                             this.chefSelector++;
                             if (this.chefSelector == 3) this.chefSelector = 0;
                         }
@@ -205,7 +204,7 @@ public class GameScreen implements Screen {
             }
         switch (this.chefSelector) {
             case 0 -> {
-                if (this.chefs.length == 3)
+                if (this.mode == Mode.ASSESSMENT_2)
                     if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[2].getBounds())) {
                         this.chefs[this.chefSelector].setX(oldX);
                         this.chefs[this.chefSelector].setY(oldY);
@@ -216,7 +215,7 @@ public class GameScreen implements Screen {
                 }
             }
             case 1 -> {
-                if (this.chefs.length == 3)
+                if (this.mode == Mode.ASSESSMENT_2)
                     if (this.chefs[this.chefSelector].getBounds().overlaps(this.chefs[2].getBounds())) {
                         this.chefs[this.chefSelector].setX(oldX);
                         this.chefs[this.chefSelector].setY(oldY);

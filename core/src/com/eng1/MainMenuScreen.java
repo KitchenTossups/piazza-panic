@@ -6,19 +6,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.eng1.Objects.Mode;
 
 public class MainMenuScreen implements Screen {
 
     final PiazzaPanic game;
     int width, height;
-    boolean extraChef;
+    Mode mode;
     OrthographicCamera camera;
 
-    public MainMenuScreen(PiazzaPanic game, int width, int height, boolean extraChef) {
+    public MainMenuScreen(PiazzaPanic game, int width, int height, Mode mode) {
         this.game = game;
         this.width = width;
         this.height = height;
-        this.extraChef = extraChef;
+        this.mode = mode;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
@@ -43,7 +44,7 @@ public class MainMenuScreen implements Screen {
         this.game.batch.end();
 
         if (Gdx.input.isTouched()) {
-            this.game.setScreen(new GameScreen(this.game, this.width, this.height, this.extraChef));
+            this.game.setScreen(new GameScreen(this.game, this.width, this.height, this.mode));
             dispose();
         }
     }
