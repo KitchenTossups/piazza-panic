@@ -15,7 +15,7 @@ public class GameScreen implements Screen {
 
 //    Texture wallTextureHorizontal, wallTextureVertical, counterTexture, chef1Texture, chef2Texture, chef3Texture;
     OrthographicCamera camera;
-    Rectangle serverCounter, burgerStation, saladStation, recipeStation;
+    Array<Station> stations; // servingCounter, burgerStation, saladStation, recipeStation;
     Array<Counter> counters;
     Chef[] chefs;
     Array<Rectangle> customers;
@@ -33,6 +33,10 @@ public class GameScreen implements Screen {
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
+
+        this.stations = new Array<>();
+
+        this.stations.add(new Station(200f, 200f, 20, 20, 40, this.game.stage));
 
         this.counters = new Array<>();
 
@@ -191,6 +195,9 @@ public class GameScreen implements Screen {
                 tabPressed = true;
             } else
                 tabPressed = false;
+            if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+                stationProximity();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,6 +242,13 @@ public class GameScreen implements Screen {
                     this.chefs[this.chefSelector].setY(oldY);
                 }
             }
+        }
+    }
+
+    private void stationProximity() {
+        for (Station station : this.stations) {
+            if (station.getLoci().overlaps(this.chefs[this.chefSelector].getBounds()))
+                System.out.println("Station");
         }
     }
 
