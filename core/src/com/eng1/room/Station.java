@@ -1,4 +1,4 @@
-package com.eng1.Objects;
+package com.eng1.room;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
