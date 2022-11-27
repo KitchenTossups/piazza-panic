@@ -1,38 +1,29 @@
 package com.eng1.room;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.eng1.StationType;
+import com.eng1.base.BaseActor;
 
 public class Station extends BaseActor {
 
-    private final Rectangle bounds;
+    private final StationType stationType;
 
-    private final float distance;
+    public Station(float x, float y, int width, int height, float loci, Stage s, StationType stationType) {
+        super(x, y, s, loci);
 
-    public Station(float x, float y, int width, int height, float distance, Stage s) {
-        super(x, y, s);
+        switch (stationType) {
+            case BIN -> this.loadTexture("grey.png", width, height);
+            case SERVING -> this.loadTexture("green.png", width, height);
+            case FOOD_CHEST -> this.loadTexture("yellow.png", width, height);
+            case CHOPPING -> this.loadTexture("blue.png", width, height);
+            case COUNTER -> this.loadTexture("purple.png", width, height);
+            case PREP -> this.loadTexture("red.png", width, height);
+        }
 
-        this.bounds = new Rectangle(x, y, width, height);
-
-        this.distance = distance;
-
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0, 1, 0, 1));
-        pixmap.fillRectangle(0, 0, width, height);
-        setTexture(new Texture(pixmap));
-        pixmap.dispose();
+        this.stationType = stationType;
     }
 
-    public Rectangle getBounds() {
-        this.bounds.set(getX(), getY(), getWidth(), getHeight());
-        return this.bounds;
-    }
-
-    public Rectangle getLoci() {
-        this.bounds.set(getX() - this.distance, getY() - this.distance, getWidth() + (2 * this.distance), getHeight() + (2 * this.distance));
-        return this.bounds;
+    public StationType getStationType() {
+        return this.stationType;
     }
 }
