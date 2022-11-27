@@ -1,4 +1,4 @@
-package com.eng1.Objects;
+package com.eng1;
 
 public enum Mode {
     ASSESSMENT_1,
