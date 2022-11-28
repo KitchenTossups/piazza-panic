@@ -28,17 +28,22 @@ public class GameScreen extends BaseScreen {
     final Chef[] chefs;
     final Array<Customer> customers;
     final Array<IngredientActor> ingredientActors;
+    final Label messgaeLabel;
     private boolean tabPressed;
     final int width, height;
     private int chefSelector;
+    private long binMessageTimer;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
         this.width = width;
         this.height = height;
         this.mode = mode;
+        this.messgaeLabel = new Label(null, this.game.labelStyle[1]);
+        this.messgaeLabel.setAlignment(Align.center);
         this.tabPressed = false;
         this.chefSelector = 0;
+        this.binMessageTimer = -1;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
@@ -118,7 +123,9 @@ public class GameScreen extends BaseScreen {
 
         Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
-        this.uiTable.add(oldestOrder).expand().align(Align.topRight);
+        this.uiTable.add(oldestOrder).expandX().align(Align.topRight);
+        this.uiTable.row();
+        this.uiTable.add(this.messgaeLabel).expand().align(Align.center);
 
         oldestOrder.addListener(new InputListener() {
 
@@ -137,6 +144,7 @@ public class GameScreen extends BaseScreen {
     private long movementTimer = 0;
 
     public void update(float dt) {
+        this.timerCheck();
         if (this.customers.get(0).getX() == 1150 && this.customers.get(0).getY() == 100)
             this.movementTimer++;
         if (this.movementTimer == 5 * 60) {
@@ -237,9 +245,28 @@ public class GameScreen extends BaseScreen {
         for (Station station : this.stations) {
             if (station.getLociRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle()))
                 switch (station.getStationType()) {
-                    case BIN -> this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
+                    case BIN -> {
+                        if (this.chefs[this.chefSelector].getInventoryItem() == null) {
+                            this.messgaeLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
+                            this.binMessageTimer = new Date().getTime() + 5000L;
+                        } else
+                            this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
+                    }
+                    case CHOPPING -> System.out.println(StationType.CHOPPING);
+                    case COUNTER -> System.out.println(StationType.COUNTER);
+                    case FOOD_CHEST -> System.out.println(StationType.FOOD_CHEST);
+                    case PREP -> System.out.println(StationType.PREP);
+                    case SERVING -> System.out.println(StationType.SERVING);
                     default -> System.out.println("Invalid station type: " + station.getStationType());
                 }
         }
+    }
+
+    private void timerCheck() {
+        if (this.binMessageTimer != -1)
+            if (new Date().getTime() >= this.binMessageTimer) {
+                this.binMessageTimer = -1;
+                this.messgaeLabel.setText(null);
+            }
     }
 }
