@@ -102,8 +102,10 @@ public class GameScreen extends BaseScreen {
             });
         }
 
-        this.chefs = new Chef[2];
-        if (mode == Mode.ASSESSMENT_2) this.chefs = new Chef[3];
+        if (mode == Mode.ASSESSMENT_1)
+            this.chefs = new Chef[2];
+        else
+            this.chefs = new Chef[3];
 
         this.chefs[0] = new Chef(90, 90, this.mainStage, 1);
         this.chefs[1] = new Chef(90, 130, this.mainStage, 2);
