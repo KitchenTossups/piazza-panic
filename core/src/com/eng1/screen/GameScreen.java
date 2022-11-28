@@ -28,7 +28,7 @@ public class GameScreen extends BaseScreen {
     final Chef[] chefs;
     final Array<Customer> customers;
     final Array<IngredientActor> ingredientActors;
-    final Label messgaeLabel;
+    final Label messageLabel;
     private boolean tabPressed;
     final int width, height;
     private int chefSelector;
@@ -39,8 +39,8 @@ public class GameScreen extends BaseScreen {
         this.width = width;
         this.height = height;
         this.mode = mode;
-        this.messgaeLabel = new Label(null, this.game.labelStyle[1]);
-        this.messgaeLabel.setAlignment(Align.center);
+        this.messageLabel = new Label(null, this.game.labelStyle[1]);
+        this.messageLabel.setAlignment(Align.center);
         this.tabPressed = false;
         this.chefSelector = 0;
         this.binMessageTimer = -1;
@@ -125,7 +125,7 @@ public class GameScreen extends BaseScreen {
         this.uiTable.pad(10);
         this.uiTable.add(oldestOrder).expandX().align(Align.topRight);
         this.uiTable.row();
-        this.uiTable.add(this.messgaeLabel).expand().align(Align.center);
+        this.uiTable.add(this.messageLabel).expand().align(Align.center);
 
         oldestOrder.addListener(new InputListener() {
 
@@ -247,7 +247,7 @@ public class GameScreen extends BaseScreen {
                 switch (station.getStationType()) {
                     case BIN -> {
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
-                            this.messgaeLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
+                            this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
                             this.binMessageTimer = new Date().getTime() + 5000L;
                         } else
                             this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
@@ -266,7 +266,7 @@ public class GameScreen extends BaseScreen {
         if (this.binMessageTimer != -1)
             if (new Date().getTime() >= this.binMessageTimer) {
                 this.binMessageTimer = -1;
-                this.messgaeLabel.setText(null);
+                this.messageLabel.setText(null);
             }
     }
 }
