@@ -17,10 +17,10 @@ public class OrderScreen extends BaseScreen {
     private final Label label;
     private final Customer customer;
 
-    public OrderScreen(Customer customer, Label.LabelStyle[] styles, GameScreen gameScreen, PiazzaPanic game, float width, float height) {
+    public OrderScreen(Customer customer, Label.LabelStyle[] styles, GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
         background.loadTexture( "assets/background.png" );
-        background.setSize(width, height);
+        background.setSize(gameScreen.width, gameScreen.height);
         Label titleLabel = new Label(customer.getOrder().endProductName(), styles[0]);
         this.label = new Label(null, styles[1]);
         this.label.setAlignment(Align.center);
