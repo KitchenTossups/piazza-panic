@@ -2,21 +2,17 @@ package com.eng1.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.*;
 import com.eng1.*;
 import com.eng1.actor.*;
 import com.eng1.base.*;
 import com.eng1.non_actor.*;
 import com.eng1.room.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class GameScreen extends BaseScreen {
 
@@ -178,14 +174,14 @@ public class GameScreen extends BaseScreen {
             if (Gdx.input.isKeyPressed(Input.Keys.TAB) && !Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
                 if (!this.tabPressed)
                     switch (this.mode) {
-                        case ASSESSMENT_1 -> {
+                        case ASSESSMENT_1:
                             this.chefSelector++;
                             if (this.chefSelector == 2) this.chefSelector = 0;
-                        }
-                        case ASSESSMENT_2 -> {
+                            break;
+                        case ASSESSMENT_2:
                             this.chefSelector++;
                             if (this.chefSelector == 3) this.chefSelector = 0;
-                        }
+                            break;
                     }
                 this.tabPressed = true;
             } else
@@ -206,7 +202,7 @@ public class GameScreen extends BaseScreen {
                 this.chefs[this.chefSelector].setY(oldY);
             }
         switch (this.chefSelector) {
-            case 0 -> {
+            case 0:
                 if (this.mode == Mode.ASSESSMENT_2)
                     if (this.chefs[this.chefSelector].getBoundaryRectangle().overlaps(this.chefs[2].getBoundaryRectangle())) {
                         this.chefs[this.chefSelector].setX(oldX);
@@ -216,8 +212,8 @@ public class GameScreen extends BaseScreen {
                     this.chefs[this.chefSelector].setX(oldX);
                     this.chefs[this.chefSelector].setY(oldY);
                 }
-            }
-            case 1 -> {
+                break;
+            case 1:
                 if (this.mode == Mode.ASSESSMENT_2)
                     if (this.chefs[this.chefSelector].getBoundaryRectangle().overlaps(this.chefs[2].getBoundaryRectangle())) {
                         this.chefs[this.chefSelector].setX(oldX);
@@ -227,8 +223,8 @@ public class GameScreen extends BaseScreen {
                     this.chefs[this.chefSelector].setX(oldX);
                     this.chefs[this.chefSelector].setY(oldY);
                 }
-            }
-            case 2 -> {
+                break;
+            case 2:
                 if (this.chefs[this.chefSelector].getBoundaryRectangle().overlaps(this.chefs[0].getBoundaryRectangle())) {
                     this.chefs[this.chefSelector].setX(oldX);
                     this.chefs[this.chefSelector].setY(oldY);
@@ -237,7 +233,7 @@ public class GameScreen extends BaseScreen {
                     this.chefs[this.chefSelector].setX(oldX);
                     this.chefs[this.chefSelector].setY(oldY);
                 }
-            }
+                break;
         }
     }
 
@@ -245,19 +241,31 @@ public class GameScreen extends BaseScreen {
         for (Station station : this.stations) {
             if (station.getLociRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle()))
                 switch (station.getStationType()) {
-                    case BIN -> {
+                    case BIN:
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
                             this.binMessageTimer = new Date().getTime() + 5000L;
                         } else
                             this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
-                    }
-                    case CHOPPING -> System.out.println(StationType.CHOPPING);
-                    case COUNTER -> System.out.println(StationType.COUNTER);
-                    case FOOD_CHEST -> System.out.println(StationType.FOOD_CHEST);
-                    case PREP -> System.out.println(StationType.PREP);
-                    case SERVING -> System.out.println(StationType.SERVING);
-                    default -> System.out.println("Invalid station type: " + station.getStationType());
+                        break;
+                    case CHOPPING:
+                        System.out.println(StationType.CHOPPING);
+                        break;
+                    case COUNTER:
+                        System.out.println(StationType.COUNTER);
+                        break;
+                    case FOOD_CHEST:
+                        System.out.println(StationType.FOOD_CHEST);
+                        break;
+                    case PREP:
+                        System.out.println(StationType.PREP);
+                        break;
+                    case SERVING:
+                        System.out.println(StationType.SERVING);
+                        break;
+                    default:
+                        System.out.println("Invalid station type: " + station.getStationType());
+                        break;
                 }
         }
     }

@@ -11,27 +11,20 @@ public enum StationType {
     @Override
     public String toString() {
         switch (this) {
-            case FOOD_CHEST -> {
+            case FOOD_CHEST:
                 return "Food Chest";
-            }
-            case BIN -> {
+            case BIN:
                 return "Bin";
-            }
-            case CHOPPING -> {
+            case CHOPPING:
                 return "Chopping Station";
-            }
-            case PREP -> {
+            case PREP:
                 return "Preparation Station";
-            }
-            case COUNTER -> {
+            case COUNTER:
                 return "Counter Top";
-            }
-            case SERVING -> {
+            case SERVING:
                 return "Serving Station";
-            }
-            default -> {
+            default:
                 return null;
-            }
         }
     }
 }

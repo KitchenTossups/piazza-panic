@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.non_actor.Ingredient;
 import com.eng1.base.BaseActor;
 
+@SuppressWarnings("unused")
 public class IngredientActor extends BaseActor {
 
     private final Ingredient ingredient;
@@ -24,11 +25,15 @@ public class IngredientActor extends BaseActor {
 
         TextureRegion[][] temp = TextureRegion.split(texture, frameWidth, frameHeight);
 
-        switch (ingredient.itemName()) {
-            case "0" -> this.setTexture(temp[0][2]);
-            case "1" -> this.setTexture(temp[0][5]);
-            default -> {
-            }
+        switch (ingredient.getItemName()) {
+            case "0":
+                this.setTexture(temp[0][2]);
+                break;
+            case "1":
+                this.setTexture(temp[0][5]);
+                break;
+            default:
+                break;
         }
     }
 

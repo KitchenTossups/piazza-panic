@@ -3,10 +3,9 @@ package com.eng1.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
-import com.eng1.PiazzaPanic;
-import com.eng1.actor.Customer;
-import com.eng1.base.BaseActor;
-import com.eng1.base.BaseScreen;
+import com.eng1.*;
+import com.eng1.actor.*;
+import com.eng1.base.*;
 
 import java.util.Date;
 
@@ -21,7 +20,7 @@ public class OrderScreen extends BaseScreen {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
         background.loadTexture( "assets/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
-        Label titleLabel = new Label(customer.getOrder().endProductName(), styles[0]);
+        Label titleLabel = new Label(customer.getOrder().getEndProductName(), styles[0]);
         this.label = new Label(null, styles[1]);
         this.label.setAlignment(Align.center);
         this.uiTable.pad(50);
