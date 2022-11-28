@@ -11,8 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.eng1.*;
 import com.eng1.actor.*;
 import com.eng1.base.*;
-import com.eng1.non_actor.Ingredient;
-import com.eng1.non_actor.Recipe;
+import com.eng1.non_actor.*;
 import com.eng1.room.*;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class GameScreen extends BaseScreen {
         this.camera.setToOrtho(false, width, height);
 
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "assets/background.png" );
+        background.loadTexture("assets/background.png");
         background.setSize(this.width, this.height);
 
         this.counters = new Array<>();
