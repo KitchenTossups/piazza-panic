@@ -23,14 +23,15 @@ public class GameScreen extends BaseScreen {
 
     final PiazzaPanic game;
     final Mode mode;
-    OrthographicCamera camera;
-    Array<Station> stations; // servingCounter, burgerStation, saladStation, recipeStation;
-    Array<Counter> counters;
-    Chef[] chefs;
-    Array<Customer> customers;
-    Array<IngredientActor> ingredientActors;
+    final OrthographicCamera camera;
+    final Array<Station> stations; // servingCounter, burgerStation, saladStation, recipeStation;
+    final Array<Counter> counters;
+    final Chef[] chefs;
+    final Array<Customer> customers;
+    final Array<IngredientActor> ingredientActors;
     private boolean tabPressed;
-    int width, height, chefSelector;
+    final int width, height;
+    private int chefSelector;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
