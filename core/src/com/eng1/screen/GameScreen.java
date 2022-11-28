@@ -94,7 +94,7 @@ public class GameScreen extends BaseScreen {
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     try {
                         if (customer.getOrderPlaced() <= new Date().getTime())
-                            GameScreen.this.game.setActiveScreen(new OrderScreen(customer, GameScreen.this.game.labelStyle, GameScreen.this, GameScreen.this.game, GameScreen.this.width, GameScreen.this.height));
+                            GameScreen.this.game.setActiveScreen(new OrderScreen(customer, GameScreen.this.game.labelStyle, GameScreen.this, GameScreen.this.game));
                     } catch (Exception ignored) {
 
                     }
