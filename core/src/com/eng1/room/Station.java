@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.StationType;
 import com.eng1.base.BaseActor;
 
+@SuppressWarnings("unused")
 public class Station extends BaseActor {
 
     private final StationType stationType;
@@ -14,12 +15,24 @@ public class Station extends BaseActor {
         super(x, y, s, loci);
 
         switch (stationType) {
-            case BIN -> this.loadTexture("bin.png", width, height);
-            case SERVING -> this.loadTexture("green.png", width, height);
-            case FOOD_CHEST -> this.loadTexture("yellow.png", width, height);
-            case CHOPPING -> this.loadTexture("blue.png", width, height);
-            case COUNTER -> this.loadTexture("purple.png", width, height);
-            case PREP -> this.loadTexture("red.png", width, height);
+            case BIN:
+                this.loadTexture("bin.png", width, height);
+                break;
+            case SERVING:
+                this.loadTexture("green.png", width, height);
+                break;
+            case FOOD_CHEST:
+                this.loadTexture("yellow.png", width, height);
+                break;
+            case CHOPPING:
+                this.loadTexture("blue.png", width, height);
+                break;
+            case COUNTER:
+                this.loadTexture("purple.png", width, height);
+                break;
+            case PREP:
+                this.loadTexture("red.png", width, height);
+                break;
         }
 
         this.stationType = stationType;
