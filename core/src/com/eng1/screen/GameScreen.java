@@ -236,7 +236,10 @@ public class GameScreen extends BaseScreen {
     private void stationProximity() {
         for (Station station : this.stations) {
             if (station.getLociRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle()))
-                System.out.println(station.getStationType().toString());
+                switch (station.getStationType()) {
+                    case BIN -> this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
+                    default -> System.out.println("Invalid station type: " + station.getStationType());
+                }
         }
     }
 }
