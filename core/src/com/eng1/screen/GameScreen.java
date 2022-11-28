@@ -116,7 +116,7 @@ public class GameScreen extends BaseScreen {
         this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient("0")));
         this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient("1")));
 
-        Label oldestOrder = new Label("Click here for\noldest order!", this.game.labelStyle[1]);
+        Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
         this.uiTable.add(oldestOrder).expand().align(Align.topRight);
 
