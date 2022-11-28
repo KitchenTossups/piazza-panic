@@ -8,15 +8,17 @@ public class PiazzaPanic extends BaseGame {
     private final int width, height;
 
     private final Mode mode;
+    private final float loci;
 
-    public PiazzaPanic(int width, int height, Mode mode) {
+    public PiazzaPanic(int width, int height, Mode mode, float loci) {
         this.width = width;
         this.height = height;
         this.mode = mode;
+        this.loci = loci;
     }
 
     public void create() {
         super.create();
-        this.setActiveScreen(new MainMenuScreen(this, this.width, this.height, this.mode));
+        this.setActiveScreen(new MainMenuScreen(this, this.width, this.height, this.mode, this.loci));
     }
 }

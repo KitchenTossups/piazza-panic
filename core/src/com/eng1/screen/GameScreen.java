@@ -32,7 +32,7 @@ public class GameScreen extends BaseScreen {
     private boolean tabPressed;
     int width, height, chefSelector;
 
-    public GameScreen(PiazzaPanic game, int width, int height, Mode mode) {
+    public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
         this.width = width;
         this.height = height;
@@ -49,22 +49,22 @@ public class GameScreen extends BaseScreen {
 
         this.counters = new Array<>();
 
-        this.counters.add(new Counter(0f, height - 40f, (int) (width / 5f * 4f), 40, this.mainStage)); // Top
-        this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 40, this.mainStage));   // Bottom
-        this.counters.add(new Counter(0f, 0f, 40, height, this.mainStage));    // Left
-        this.counters.add(new Counter((width / 5f * 4f), 0f, 40, height, this.mainStage));    // Right
-        this.counters.add(new Counter(width / 5f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));  // Counter 1
-        this.counters.add(new Counter(width / 5f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage)); // Counter 2
+        this.counters.add(new Counter(0f, height - 80f, (int) (width / 5f * 4f), 80, this.mainStage)); // Top
+        this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 80, this.mainStage));   // Bottom
+        this.counters.add(new Counter(0f, 0f, 80, height, this.mainStage));    // Left
+        this.counters.add(new Counter((width / 5f * 4f), 0f, 80, height, this.mainStage));    // Right
+        this.counters.add(new Counter(width / 5f + 40f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));  // Counter 1
+        this.counters.add(new Counter(width / 5f + 40f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage)); // Counter 2
 
         this.stations = new Array<>();
 
-        this.stations.add(new Station(0, 200f, 40, 40, 40, this.mainStage, StationType.PREP));
-        this.stations.add(new Station(0, 400f, 40, 40, 40, this.mainStage, StationType.PREP));
-        this.stations.add(new Station(0, 0, 40, 40, 40, this.mainStage, StationType.BIN));
-        this.stations.add(new Station(0, 680f, 40, 40, 40, this.mainStage, StationType.FOOD_CHEST));
-        this.stations.add(new Station(200f, 0, 40, 40, 40, this.mainStage, StationType.CHOPPING));
-        this.stations.add(new Station(width / 5f, (height / 3f * 2f) - 40f, 80, 80, 40, this.mainStage, StationType.COUNTER));
-        this.stations.add(new Station((width / 5f * 4f), (height / 3f) - 40f, 40, 240, 40, this.mainStage, StationType.SERVING));
+        this.stations.add(new Station(0, 200f, 80, 80, loci, this.mainStage, StationType.PREP));
+        this.stations.add(new Station(0, 400f, 80, 80, loci, this.mainStage, StationType.PREP));
+        this.stations.add(new Station(0, 0, 80, 80, loci, this.mainStage, StationType.BIN));
+        this.stations.add(new Station(0, 640f, 80, 80, loci, this.mainStage, StationType.FOOD_CHEST));
+        this.stations.add(new Station(200f, 0, 80, 80, loci, this.mainStage, StationType.CHOPPING));
+        this.stations.add(new Station(width / 5f + 40f, (height / 3f * 2f) - 40f, 80, 80, loci, this.mainStage, StationType.COUNTER));
+        this.stations.add(new Station((width / 5f * 4f), (height / 3f) - 40f, 80, 280, loci, this.mainStage, StationType.SERVING));
 
         this.customers = new Array<>();
 

@@ -7,11 +7,12 @@ public class PiazzaPanicLauncher {
 	public static void main (String[] arg) {
 		final int width = 1280, height = 720;
 		final Mode mode = Mode.ASSESSMENT_1;
+		final float loci = 40f;
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.useVsync(true);
 		config.setWindowedMode(width, height);
 		config.setTitle("Piazza Panic");
-		new Lwjgl3Application(new PiazzaPanic(width, height, mode), config);
+		new Lwjgl3Application(new PiazzaPanic(width, height, mode, loci), config);
 	}
 }
