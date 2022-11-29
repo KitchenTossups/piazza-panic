@@ -71,10 +71,10 @@ public class GameScreen extends BaseScreen {
 
         List<Ingredient> temp = new ArrayList<>();
 
-        temp.add(new Ingredient("TestI1"));
-        temp.add(new Ingredient("TestI2"));
-        temp.add(new Ingredient("TestI3"));
-        temp.add(new Ingredient("TestI4"));
+        temp.add(new Ingredient("TestI1", IngredientState.UNPREPARED));
+        temp.add(new Ingredient("TestI2", IngredientState.UNCOOKED));
+        temp.add(new Ingredient("TestI3", IngredientState.UNCUT));
+        temp.add(new Ingredient("TestI4", IngredientState.UNPREPARED));
 
         this.customers.add(new Customer(1300, 100, this.uiStage, new Recipe("TestR", temp)));
 
@@ -114,8 +114,8 @@ public class GameScreen extends BaseScreen {
 
         this.ingredientActors = new Array<>();
 
-        this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient("0")));
-        this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient("1")));
+        this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient("0", IngredientState.UNCOOKED)));
+        this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient("1", IngredientState.UNCOOKED)));
 
         Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
