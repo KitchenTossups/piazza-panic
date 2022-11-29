@@ -189,10 +189,8 @@ public class GameScreen extends BaseScreen {
                 this.tabPressed = true;
             } else
                 this.tabPressed = false;
-            if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.E))
                 this.stationProximity();
-//                this.game.setActiveScreen(new MainMenuScreen(new PiazzaPanic(this.width, this.height, this.mode), this.width, this.height, this.mode));
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
