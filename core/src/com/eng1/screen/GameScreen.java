@@ -196,6 +196,10 @@ public class GameScreen extends BaseScreen {
     }
 
     private void checkCollision(float oldX, float oldY) {
+        if (this.chefs[this.chefSelector].getX() + this.chefs[this.chefSelector].getWidth() > this.width || this.chefs[this.chefSelector].getX() < 0)
+            this.chefs[this.chefSelector].setX(oldX);
+        if (this.chefs[this.chefSelector].getY() + this.chefs[this.chefSelector].getHeight() > this.height || this.chefs[this.chefSelector].getY() < 0)
+            this.chefs[this.chefSelector].setY(oldY);
         for (Counter counter : this.counters)
             if (counter.getBoundaryRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle())) {
                 this.chefs[this.chefSelector].setX(oldX);
