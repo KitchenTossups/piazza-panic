@@ -185,7 +185,7 @@ public class BaseActor extends Actor {
 
     }
 
-    public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop, float x, float y) {
+    public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop, float w, float h) {
         Array<TextureRegion> textureArray = new Array<>();
 
         for (String fileName : fileNames) {
@@ -202,7 +202,7 @@ public class BaseActor extends Actor {
             anim.setPlayMode(Animation.PlayMode.NORMAL);
 
         if (this.animation == null)
-            this.setAnimation(anim, x, y);
+            this.setAnimation(anim, w, h);
     }
 
     /**
@@ -251,10 +251,10 @@ public class BaseActor extends Actor {
         this.loadAnimationFromFiles(fileNames, 1, true);
     }
 
-    public void loadTexture(String fileName, float x, float y) {
+    public void loadTexture(String fileName, float w, float h) {
         String[] fileNames = new String[1];
         fileNames[0] = fileName;
-        this.loadAnimationFromFiles(fileNames, 1, true, x, y);
+        this.loadAnimationFromFiles(fileNames, 1, true, w, h);
     }
 
     public void setTexture(Texture texture) {
