@@ -27,8 +27,8 @@ public class GameScreen extends BaseScreen {
     final Label messageLabel;
     private boolean tabPressed;
     final int width, height;
-    private int chefSelector;
-    private long binMessageTimer;
+    private int chefSelector, binnedItems = 0;
+    private long binMessageTimer, movementTimer = 0;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
@@ -136,8 +136,6 @@ public class GameScreen extends BaseScreen {
             }
         });
     }
-
-    private long movementTimer = 0;
 
     public void update(float dt) {
         this.timerCheck();
@@ -280,5 +278,13 @@ public class GameScreen extends BaseScreen {
                 this.binMessageTimer = -1;
                 this.messageLabel.setText(null);
             }
+    }
+
+    public int getBinnedItems() {
+        return this.binnedItems;
+    }
+
+    public void increaseBinnedItems() {
+        this.binnedItems++;
     }
 }
