@@ -21,6 +21,8 @@ public class Table extends BaseActor {
         pixmap.fillRectangle(300, 50, 100, 100);
         pixmap.fillRectangle(590, 50, 100, 100);
         pixmap.fillRectangle(880, 50, 100, 100);
+        pixmap.setColor(new Color(0, 0, 1, 1));
+        pixmap.fillRectangle(590, 200, 100, 100);
         this.setTexture(new Texture(pixmap));
         pixmap.dispose();
     }
