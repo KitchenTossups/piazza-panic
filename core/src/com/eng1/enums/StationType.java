@@ -1,4 +1,4 @@
-package com.eng1;
+package com.eng1.enums;
 
 public enum StationType {
     FOOD_CHEST,
