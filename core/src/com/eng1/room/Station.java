@@ -1,8 +1,10 @@
 package com.eng1.room;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.eng1.StationType;
-import com.eng1.base.BaseActor;
+import com.eng1.*;
+import com.eng1.base.*;
+import com.eng1.enums.*;
+import com.eng1.screen.*;
 
 @SuppressWarnings("unused")
 public class Station extends BaseActor {
@@ -29,10 +31,14 @@ public class Station extends BaseActor {
                 break;
             case COUNTER:
                 this.loadTexture("purple.png", width, height);
+                this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.COUNTER_SCREEN);
                 break;
             case PREP:
                 this.loadTexture("red.png", width, height);
+                this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.PREP_SCREEN);
                 break;
+            default:
+                System.out.println("Invalid use of Station with station type!");
         }
 
         this.stationType = stationType;
