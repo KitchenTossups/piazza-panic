@@ -257,11 +257,12 @@ public class GameScreen extends BaseScreen {
             if (station.getLociRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle()))
                 switch (station.getStationType()) {
                     case BIN:
+                        System.out.println(StationType.BIN);
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
                             this.binMessageTimer = new Date().getTime() + 5000L;
                         } else
-                            this.game.setActiveScreen(new BinScreen(this.chefSelector, this.game.labelStyle, this, this.game));
+                            this.game.setActiveScreen(new BinScreen(this, this.game));
                         break;
                     case CHOPPING:
                         System.out.println(StationType.CHOPPING);
