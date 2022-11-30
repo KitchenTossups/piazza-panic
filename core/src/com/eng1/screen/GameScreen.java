@@ -15,6 +15,7 @@ import com.eng1.room.*;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class GameScreen extends BaseScreen {
 
     final PiazzaPanic game;
