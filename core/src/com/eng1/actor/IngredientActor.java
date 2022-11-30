@@ -40,4 +40,9 @@ public class IngredientActor extends BaseActor {
     public Ingredient getIngredient() {
         return this.ingredient;
     }
+
+    @Override
+    public String toString() {
+        return this.ingredient.getItemName();
+    }
 }
