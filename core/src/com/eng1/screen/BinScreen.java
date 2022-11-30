@@ -8,11 +8,11 @@ import com.eng1.base.*;
 
 public class BinScreen extends BaseScreen {
 
-    public BinScreen(int chefSelector, Label.LabelStyle[] styles, GameScreen gameScreen, PiazzaPanic game) {
+    public BinScreen(GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
         background.loadTexture( "assets/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
-        Label titleLabel = new Label("This is the bin!", styles[0]), contents = new Label(String.format("You are currently holding: %s\nAre you sure you want to bin this?", gameScreen.chefs[chefSelector].getInventoryItem()), styles[1]), bin = new Label("BIN!", styles[1]), cancel = new Label("CANCEL!", styles[1]);
+        Label titleLabel = new Label("This is the bin!", game.labelStyle[0]), contents = new Label(String.format("You are currently holding: %s\nAre you sure you want to bin this?", gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem()), game.labelStyle[1]), bin = new Label("BIN!", game.labelStyle[1]), cancel = new Label("CANCEL!", game.labelStyle[1]);
         titleLabel.setAlignment(Align.center);
         contents.setAlignment(Align.center);
         bin.setAlignment(Align.center);
@@ -33,7 +33,7 @@ public class BinScreen extends BaseScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                gameScreen.chefs[chefSelector].setInventoryItem(null);
+                gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                 gameScreen.increaseBinnedItems();
                 game.setActiveScreen(gameScreen);
             }
