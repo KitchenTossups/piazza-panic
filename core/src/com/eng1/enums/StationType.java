@@ -1,26 +1,29 @@
 package com.eng1.enums;
 
 public enum StationType {
-    FOOD_CHEST,
     BIN,
     CHOPPING,
-    PREP,
     COUNTER,
+    FOOD_CHEST,
+    GRILL,
+    PREP,
     SERVING;
 
     @Override
     public String toString() {
         switch (this) {
-            case FOOD_CHEST:
-                return "Food Chest";
             case BIN:
                 return "Bin";
             case CHOPPING:
                 return "Chopping Station";
-            case PREP:
-                return "Preparation Station";
             case COUNTER:
                 return "Counter Top";
+            case FOOD_CHEST:
+                return "Food Chest";
+            case GRILL:
+                return "Grill";
+            case PREP:
+                return "Preparation Station";
             case SERVING:
                 return "Serving Station";
             default:
