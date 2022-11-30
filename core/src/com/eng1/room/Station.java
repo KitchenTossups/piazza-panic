@@ -13,8 +13,26 @@ public class Station extends BaseActor {
 
     private Object storage;
 
-    public Station(float x, float y, int width, int height, float loci, Stage s, StationType stationType) {
-        super(x, y, s, loci);
+    private FoodChestType foodChestType = null;
+
+    /**
+     * This is for the stations that have to store items on the page, it retains the data instead of creating a new screen
+     * @param x x position
+     * @param y y position
+     * @param width width
+     * @param height height
+     * @param loci loci
+     * @param stationType station type
+     * @param gameScreen GameScreen
+     * @param game Piazza Panic game
+     * @see StationType
+     * @see GameScreen
+     * @see PiazzaPanic
+     */
+    public Station(float x, float y, int width, int height, float loci, StationType stationType, GameScreen gameScreen, PiazzaPanic game) {
+        super(x, y, gameScreen.getMainStage(), loci);
+
+        this.stationType = stationType;
 
         switch (stationType) {
             case BIN:
@@ -40,8 +58,32 @@ public class Station extends BaseActor {
             default:
                 System.out.println("Invalid use of Station with station type!");
         }
+    }
+
+    public Station(float x, float y, int width, int height, float loci, StationType stationType, Stage s) {
+        super(x, y, s, loci);
 
         this.stationType = stationType;
+
+        switch (stationType) {
+            case BIN:
+                this.loadTexture("bin.png", width, height);
+                break;
+            case SERVING:
+                this.loadTexture("green.png", width, height);
+                break;
+            default:
+                System.out.println("Invalid use of Station with station type!");
+        }
+    }
+
+    public Station(float x, float y, int width, int height, float loci, FoodChestType foodChestType, Stage s) {
+        super(x, y, s, loci);
+
+        this.stationType = StationType.FOOD_CHEST;
+        this.foodChestType = foodChestType;
+
+        this.loadTexture("yellow.png", width, height);
     }
 
     public StationType getStationType() {
