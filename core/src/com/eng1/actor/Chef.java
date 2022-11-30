@@ -12,7 +12,7 @@ public class Chef extends BaseActor {
     public Chef(float x, float y, Stage s, int chefNumber) {
         super(x, y, s);
 
-        this.loadTexture("chef" + chefNumber + ".png");
+        this.loadTexture("images/chef" + chefNumber + ".png");
     }
 
     public Object getInventoryItem() {

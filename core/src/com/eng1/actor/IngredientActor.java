@@ -19,7 +19,7 @@ public class IngredientActor extends BaseActor {
 
         int rows = 32;
         int cols = 32;
-        Texture texture = new Texture(Gdx.files.internal("meals.png"), true);
+        Texture texture = new Texture(Gdx.files.internal("spritemap/meals.png"), true);
         int frameWidth = texture.getWidth() / cols;
         int frameHeight = texture.getHeight() / rows;
 

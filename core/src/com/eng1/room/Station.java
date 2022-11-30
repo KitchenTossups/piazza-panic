@@ -38,15 +38,15 @@ public class Station extends BaseActor {
 
         switch (stationType) {
             case CHOPPING:
-                this.loadTexture("blue.png", width, height);
+                this.loadTexture("squared/blue.png", width, height);
                 this.screen = new ChoppingScreen(gameScreen, game);
                 break;
             case COUNTER:
-                this.loadTexture("purple.png", width, height);
+                this.loadTexture("squared/purple.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.COUNTER_SCREEN);
                 break;
             case PREP:
-                this.loadTexture("red.png", width, height);
+                this.loadTexture("squared/red.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.PREP_SCREEN);
                 break;
             default:
@@ -61,10 +61,10 @@ public class Station extends BaseActor {
 
         switch (stationType) {
             case BIN:
-                this.loadTexture("bin.png", width, height);
+                this.loadTexture("images/bin.png", width, height);
                 break;
             case SERVING:
-                this.loadTexture("green.png", width, height);
+                this.loadTexture("squared/green.png", width, height);
                 break;
             default:
                 System.out.println("Invalid use of Station with station type!");
@@ -77,7 +77,7 @@ public class Station extends BaseActor {
         this.stationType = StationType.FOOD_CHEST;
         this.foodChestType = foodChestType;
 
-        this.loadTexture("yellow.png", width, height);
+        this.loadTexture("squared/yellow.png", width, height);
     }
 
     public StationType getStationType() {

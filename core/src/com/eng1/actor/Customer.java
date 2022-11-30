@@ -21,7 +21,7 @@ public class Customer extends BaseActor {
 
         this.setTouchable(Touchable.enabled);
 
-        this.loadTexture("person.jpg", 32, 32);
+        this.loadTexture("images/person.jpg", 32, 32);
     }
 
     public Recipe getOrder() {

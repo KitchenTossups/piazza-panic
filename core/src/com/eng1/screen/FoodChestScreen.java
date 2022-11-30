@@ -12,7 +12,7 @@ public class FoodChestScreen extends BaseScreen {
 
     public FoodChestScreen(GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture("assets/background.png");
+        background.loadTexture("background/background.png");
         background.setSize(gameScreen.width, gameScreen.height);
         this.gameScreen = gameScreen;
         this.game = game;

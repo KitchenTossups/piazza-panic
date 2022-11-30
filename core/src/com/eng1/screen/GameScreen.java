@@ -45,7 +45,7 @@ public class GameScreen extends BaseScreen {
         this.camera.setToOrtho(false, width, height);
 
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture("assets/background.png");
+        background.loadTexture("background/background.png");
         background.setSize(this.width, this.height);
 
         this.counters = new ArrayList<>();

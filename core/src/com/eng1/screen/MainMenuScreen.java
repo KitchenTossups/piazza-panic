@@ -24,7 +24,7 @@ public class MainMenuScreen extends BaseScreen {
         camera.setToOrtho(false, width, height);
 
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "main_menu.png" );
+        background.loadTexture( "background/main_menu.png" );
         background.setSize(this.width, this.height);
     }
     public void update(float dt) {

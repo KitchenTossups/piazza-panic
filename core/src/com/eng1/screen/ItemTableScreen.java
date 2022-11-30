@@ -14,7 +14,7 @@ public class ItemTableScreen extends BaseScreen {
 
     public ItemTableScreen(GameScreen gameScreen, PiazzaPanic game, ItemTableType itemTableType) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "assets/background.png" );
+        background.loadTexture( "background/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
         new Table(this.mainStage);
         this.gameScreen = gameScreen;

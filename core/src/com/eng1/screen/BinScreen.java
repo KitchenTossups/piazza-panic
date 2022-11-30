@@ -10,7 +10,7 @@ public class BinScreen extends BaseScreen {
 
     public BinScreen(GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "assets/background.png" );
+        background.loadTexture( "background/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
         Label titleLabel = new Label("This is the bin!", game.labelStyle[0]), contents = new Label(String.format("You are currently holding: %s\nAre you sure you want to bin this?", gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem()), game.labelStyle[1]), bin = new Label("BIN!", game.labelStyle[1]), cancel = new Label("CANCEL!", game.labelStyle[1]);
         titleLabel.setAlignment(Align.center);
