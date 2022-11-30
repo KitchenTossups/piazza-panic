@@ -266,18 +266,35 @@ public class GameScreen extends BaseScreen {
                         break;
                     case CHOPPING:
                         System.out.println(StationType.CHOPPING);
+                        this.game.setActiveScreen(station.getScreen());
                         break;
                     case COUNTER:
                         System.out.println(StationType.COUNTER);
+                        this.game.setActiveScreen(station.getScreen());
                         break;
                     case FOOD_CHEST:
-                        System.out.println(StationType.FOOD_CHEST);
+                        System.out.printf("%s - %s\n", StationType.FOOD_CHEST, station.getFoodChestType());
+                        this.game.setActiveScreen(new FoodChestScreen(this, this.game));
                         break;
                     case PREP:
                         System.out.println(StationType.PREP);
+                        this.game.setActiveScreen(station.getScreen());
                         break;
                     case SERVING:
                         System.out.println(StationType.SERVING);
+                        if (this.chefs[this.chefSelector].getInventoryItem() instanceof FoodActor)
+                            if (((FoodActor) (this.chefs[this.chefSelector].getInventoryItem())).getFood().ready()) {
+                                System.out.println("SERVED!");
+                                this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((FoodActor) this.chefs[this.chefSelector].getInventoryItem()).getFood().getRecipe().getEndProductName()));
+                                this.servingTimer = new Date().getTime() + 5000L;
+                            } else {
+                                this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
+                                this.servingTimer = new Date().getTime() + 5000L;
+                            }
+                        else {
+                            this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
+                            this.servingTimer = new Date().getTime() + 5000L;
+                        }
                         break;
                     default:
                         System.out.println("Invalid station type: " + station.getStationType());
