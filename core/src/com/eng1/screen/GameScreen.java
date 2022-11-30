@@ -319,11 +319,34 @@ public class GameScreen extends BaseScreen {
             }
     }
 
+    /**
+     * Get the selected chef number
+     * @return int chefSelector
+     */
+    public int getChefSelector() {
+        return this.chefSelector;
+    }
+
+    /**
+     * Get the number of binned items
+     * @return int binnedItems
+     */
     public int getBinnedItems() {
         return this.binnedItems;
     }
 
+    /**
+     * Increase the number of binned items
+     */
     public void increaseBinnedItems() {
         this.binnedItems++;
+    }
+
+    /**
+     * Get the main stage
+     * @return Stage mainStage
+     */
+    public Stage getMainStage() {
+        return this.mainStage;
     }
 }
