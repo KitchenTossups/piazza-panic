@@ -11,7 +11,9 @@ public class Station extends BaseActor {
 
     private final StationType stationType;
 
-    private Object storage;
+    private Object storage = null;
+
+    private BaseScreen screen = null;
 
     private FoodChestType foodChestType = null;
 
@@ -35,17 +37,9 @@ public class Station extends BaseActor {
         this.stationType = stationType;
 
         switch (stationType) {
-            case BIN:
-                this.loadTexture("bin.png", width, height);
-                break;
-            case SERVING:
-                this.loadTexture("green.png", width, height);
-                break;
-            case FOOD_CHEST:
-                this.loadTexture("yellow.png", width, height);
-                break;
             case CHOPPING:
                 this.loadTexture("blue.png", width, height);
+                this.screen = new ChoppingScreen(gameScreen, game);
                 break;
             case COUNTER:
                 this.loadTexture("purple.png", width, height);
@@ -96,5 +90,13 @@ public class Station extends BaseActor {
 
     public void setStorage(Object storage) {
         this.storage = storage;
+    }
+
+    public BaseScreen getScreen() {
+        return this.screen;
+    }
+
+    public FoodChestType getFoodChestType() {
+        return this.foodChestType;
     }
 }
