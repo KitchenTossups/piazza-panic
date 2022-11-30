@@ -303,10 +303,18 @@ public class GameScreen extends BaseScreen {
         }
     }
 
+    /**
+     * This checks if a message has been on the screen for a set amount of time and removes it
+     */
     private void timerCheck() {
         if (this.binMessageTimer != -1)
             if (new Date().getTime() >= this.binMessageTimer) {
                 this.binMessageTimer = -1;
+                this.messageLabel.setText(null);
+            }
+        if (this.servingTimer != -1)
+            if (new Date().getTime() >= this.servingTimer) {
+                this.servingTimer = -1;
                 this.messageLabel.setText(null);
             }
     }
