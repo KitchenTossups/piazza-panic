@@ -309,6 +309,7 @@ public class BaseActor extends Actor {
     public void setOpacity(float opacity) {
         this.getColor().a = opacity;
     }
+
 //     ----------------------------------------------
 //     physics/motion methods
 //     ----------------------------------------------

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public abstract class BaseGame extends Game {
+
     /**
      * Stores reference to game; used when calling setActiveScreen method.
      */
