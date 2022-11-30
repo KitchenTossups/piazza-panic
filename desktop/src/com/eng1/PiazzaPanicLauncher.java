@@ -1,6 +1,7 @@
 package com.eng1;
 
 import com.badlogic.gdx.backends.lwjgl3.*;
+import com.eng1.enums.Mode;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class PiazzaPanicLauncher {

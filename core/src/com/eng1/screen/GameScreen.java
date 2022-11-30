@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.*;
 import com.eng1.*;
 import com.eng1.actor.*;
 import com.eng1.base.*;
+import com.eng1.enums.*;
 import com.eng1.non_actor.*;
 import com.eng1.room.*;
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.eng1.*;
 import com.eng1.base.*;
+import com.eng1.enums.Mode;
 
 public class MainMenuScreen extends BaseScreen {
 
