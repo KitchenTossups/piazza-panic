@@ -20,16 +20,16 @@ public class GameScreen extends BaseScreen {
     final PiazzaPanic game;
     final Mode mode;
     final OrthographicCamera camera;
-    final Array<Station> stations; // servingCounter, burgerStation, saladStation, recipeStation;
-    final Array<Counter> counters;
+    final List<Station> stations;
+    final List<Counter> counters;
     final Chef[] chefs;
-    final Array<Customer> customers;
-    final Array<IngredientActor> ingredientActors;
+    final List<Customer> customers;
+    final List<IngredientActor> ingredientActors;
     final Label messageLabel;
     private boolean tabPressed;
     final int width, height;
-    private int chefSelector, binnedItems = 0;
-    private long binMessageTimer, movementTimer = 0;
+    private int chefSelector = 0, binnedItems = 0;
+    private long binMessageTimer = -1, servingTimer = -1, movementTimer = 0;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
@@ -39,8 +39,6 @@ public class GameScreen extends BaseScreen {
         this.messageLabel = new Label(null, this.game.labelStyle[1]);
         this.messageLabel.setAlignment(Align.center);
         this.tabPressed = false;
-        this.chefSelector = 0;
-        this.binMessageTimer = -1;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
@@ -49,26 +47,17 @@ public class GameScreen extends BaseScreen {
         background.loadTexture("assets/background.png");
         background.setSize(this.width, this.height);
 
-        this.counters = new Array<>();
+        this.counters = new ArrayList<>();
 
         this.counters.add(new Counter(0f, height - 80f, (int) (width / 5f * 4f), 80, this.mainStage)); // Top
         this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 80, this.mainStage));   // Bottom
         this.counters.add(new Counter(0f, 0f, 80, height, this.mainStage));    // Left
         this.counters.add(new Counter((width / 5f * 4f), 0f, 80, height, this.mainStage));    // Right
-        this.counters.add(new Counter(width / 5f + 40f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));  // Counter 1
-        this.counters.add(new Counter(width / 5f + 40f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage)); // Counter 2
+//        this.counters.add(new Counter(width / 5f + 40f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));  // Counter 1
+//        this.counters.add(new Counter(width / 5f + 40f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage)); // Counter 2
+        this.counters.add(new Counter(width / 5f + 40f, (height / 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));
 
-        this.stations = new Array<>();
-
-        this.stations.add(new Station(0, 200f, 80, 80, loci, this.mainStage, StationType.PREP));
-        this.stations.add(new Station(0, 400f, 80, 80, loci, this.mainStage, StationType.PREP));
-        this.stations.add(new Station(0, 0, 80, 80, loci, this.mainStage, StationType.BIN));
-        this.stations.add(new Station(0, 640f, 80, 80, loci, this.mainStage, StationType.FOOD_CHEST));
-        this.stations.add(new Station(200f, 0, 80, 80, loci, this.mainStage, StationType.CHOPPING));
-        this.stations.add(new Station(width / 5f + 40f, (height / 3f * 2f) - 40f, 80, 80, loci, this.mainStage, StationType.COUNTER));
-        this.stations.add(new Station((width / 5f * 4f), (height / 3f) - 40f, 80, 280, loci, this.mainStage, StationType.SERVING));
-
-        this.customers = new Array<>();
+        this.customers = new ArrayList<>();
 
         List<Ingredient> temp = new ArrayList<>();
 
@@ -113,7 +102,7 @@ public class GameScreen extends BaseScreen {
         this.chefs[1] = new Chef(90, 130, this.mainStage, 2);
         if (mode == Mode.ASSESSMENT_2) this.chefs[2] = new Chef(60, 140, this.mainStage, 3);
 
-        this.ingredientActors = new Array<>();
+        this.ingredientActors = new ArrayList<>();
 
         this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient("0", IngredientState.UNCOOKED)));
         this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient("1", IngredientState.UNCOOKED)));
@@ -141,6 +130,24 @@ public class GameScreen extends BaseScreen {
                 }
             }
         });
+
+        this.stations = new ArrayList<>();
+
+        this.stations.add(new Station(width / 5f + 40f, height - 80f, 80, 80, loci, StationType.PREP, this, this.game));
+        this.stations.add(new Station((width / 5f + 40f) + 136f + 80f, height - 80f, 80, 80, loci, StationType.PREP, this, this.game));
+        this.stations.add(new Station((width / 5f + 40f) + 2f * (136f + 80f), height - 80f, 80, 80, loci, StationType.PREP, this, this.game));
+        this.stations.add(new Station(0, 0, 80, 80, loci, StationType.BIN, this.mainStage));
+        this.stations.add(new Station(width / 5f + 40f, 0, 80, 80, loci, FoodChestType.DRY_FOOD, this.mainStage));
+        this.stations.add(new Station((width / 5f + 40f) + 136f + 80f, 0, 80, 80, loci, FoodChestType.FRESH_FOOD, this.mainStage));
+        this.stations.add(new Station((width / 5f + 40f) + 2f * (136f + 80f), 0, 80, 80, loci, FoodChestType.FROZEN_FOOD, this.mainStage));
+        this.stations.add(new Station(0, height / 2f - 40f, 80, 80, loci, StationType.CHOPPING, this, this.game));
+//        this.stations.add(new Station(width / 5f + 40f, (height / 3f * 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+//        this.stations.add(new Station((width / 5f + 40f) + 136f + 80f, (height / 3f * 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+//        this.stations.add(new Station((width / 5f + 40f) + 2f * (136f + 80f), (height / 3f * 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+        this.stations.add(new Station(width / 5f + 40f, (height / 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+        this.stations.add(new Station((width / 5f + 40f) + 136f + 80f, (height / 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+        this.stations.add(new Station((width / 5f + 40f) + 2f * (136f + 80f), (height / 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
+        this.stations.add(new Station((width / 5f * 4f), (height / 3f) - 40f, 80, 280, loci, StationType.SERVING, this.mainStage));
     }
 
     public void update(float dt) {
@@ -148,6 +155,7 @@ public class GameScreen extends BaseScreen {
         if (this.customers.get(0).getX() == 1150 && this.customers.get(0).getY() == 100)
             this.movementTimer++;
         if (this.movementTimer == 5 * 60) {
+            this.movementTimer = 0;
             MoveToAction action = new MoveToAction();
             action.setX(1150);
             action.setY(550);
