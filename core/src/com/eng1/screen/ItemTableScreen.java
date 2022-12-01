@@ -11,6 +11,7 @@ public class ItemTableScreen extends BaseScreen {
     private final GameScreen gameScreen;
     private final PiazzaPanic game;
     private final ItemTableType itemTableType;
+    private final Object[] items;
 
     public ItemTableScreen(GameScreen gameScreen, PiazzaPanic game, ItemTableType itemTableType) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
@@ -20,6 +21,7 @@ public class ItemTableScreen extends BaseScreen {
         this.gameScreen = gameScreen;
         this.game = game;
         this.itemTableType = itemTableType;
+        this.items = new Object[3];
     }
 
     @Override
