@@ -2,8 +2,8 @@ package com.eng1.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.eng1.enums.ItemTableType;
-import com.eng1.PiazzaPanic;
-import com.eng1.actor.Table;
+import com.eng1.*;
+import com.eng1.actor.*;
 import com.eng1.base.*;
 
 public class ItemTableScreen extends BaseScreen {

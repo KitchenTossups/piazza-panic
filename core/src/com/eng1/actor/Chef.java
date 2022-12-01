@@ -1,8 +1,7 @@
 package com.eng1.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.eng1.non_actor.Food;
-import com.eng1.non_actor.Ingredient;
+import com.eng1.non_actor.*;
 import com.eng1.base.BaseActor;
 
 public class Chef extends BaseActor {
