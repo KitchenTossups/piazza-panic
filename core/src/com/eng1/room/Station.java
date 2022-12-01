@@ -45,6 +45,10 @@ public class Station extends BaseActor {
                 this.loadTexture("squared/purple.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.COUNTER_SCREEN);
                 break;
+            case GRILL:
+                this.loadTexture("squared/brown.png", width, height);
+                this.screen = new GrillScreen(gameScreen, game);
+                break;
             case PREP:
                 this.loadTexture("squared/red.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.PREP_SCREEN);

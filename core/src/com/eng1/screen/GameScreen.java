@@ -149,6 +149,7 @@ public class GameScreen extends BaseScreen {
         this.stations.add(new Station((width / 5f + 40f) + 136f + 80f, (height / 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
         this.stations.add(new Station((width / 5f + 40f) + 2f * (136f + 80f), (height / 2f) - 40f, 80, 80, loci, StationType.COUNTER, this, this.game));
         this.stations.add(new Station((width / 5f * 4f), (height / 3f) - 40f, 80, 280, loci, StationType.SERVING, this.mainStage));
+        this.stations.add(new Station(0, height - 80f, 80, 80, loci, StationType.GRILL, this, this.game));
     }
 
     public void update(float dt) {
@@ -276,6 +277,9 @@ public class GameScreen extends BaseScreen {
                         System.out.printf("%s - %s\n", StationType.FOOD_CHEST, station.getFoodChestType());
                         this.game.setActiveScreen(new FoodChestScreen(this, this.game));
                         break;
+                    case GRILL:
+                        System.out.println(StationType.GRILL);
+                        this.game.setActiveScreen(station.getScreen());
                     case PREP:
                         System.out.println(StationType.PREP);
                         this.game.setActiveScreen(station.getScreen());
