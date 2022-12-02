@@ -51,4 +51,8 @@ public class ChoppingScreen extends BaseScreen {
             this.game.setActiveScreen(this.gameScreen);
         }
     }
+
+    public IngredientActor getIngredientActor() {
+        return this.ingredientActor;
+    }
 }

@@ -258,8 +258,26 @@ public class GameScreen extends BaseScreen {
                             this.game.setActiveScreen(new BinScreen(this, this.game));
                         break;
                     case CHOPPING:
-                        System.out.println(StationType.CHOPPING);
-                        this.game.setActiveScreen(station.getScreen());
+                        if (this.chefs[this.chefSelector].getInventoryItem() == null) {
+                            if (((ChoppingScreen) station.getScreen()).getIngredientActor() == null) {
+                                this.messageLabel.setText("This chef has nothing in their inventory!\nYou aren't allowed to chop yourself!");
+                                this.messageTimer = new Date().getTime() + 5000L;
+                            } else
+                                this.game.setActiveScreen(station.getScreen());
+                        } else if (this.chefs[this.chefSelector].getInventoryItem() instanceof Ingredient) {
+                            if (((Ingredient) this.chefs[this.chefSelector].getInventoryItem()).getState() == IngredientState.UNCUT) {
+                                this.game.setActiveScreen(station.getScreen());
+                            } else if (((Ingredient) this.chefs[this.chefSelector].getInventoryItem()).getState() == IngredientState.CUT) {
+                                this.messageLabel.setText("This chef has cut ingredients in their inventory!\nYou can't cut an item twice!");
+                                this.messageTimer = new Date().getTime() + 5000L;
+                            } else {
+                                this.messageLabel.setText("This chef has nothing in their inventor that can be cut!");
+                                this.messageTimer = new Date().getTime() + 5000L;
+                            }
+                        } else {
+                            this.messageLabel.setText("This chef has no ingredient in their inventory!");
+                            this.messageTimer = new Date().getTime() + 5000L;
+                        }
                         break;
                     case COUNTER:
                         System.out.println(StationType.COUNTER);
