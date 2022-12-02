@@ -30,7 +30,7 @@ public class GameScreen extends BaseScreen {
     private boolean tabPressed;
     final int width, height;
     private int chefSelector = 0, binnedItems = 0;
-    private long binMessageTimer = -1, servingTimer = -1, movementTimer = 0;
+    private long messageTimer = -1, movementTimer = 0;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci) {
         this.game = game;
@@ -251,10 +251,9 @@ public class GameScreen extends BaseScreen {
             if (station.getLociRectangle().overlaps(this.chefs[this.chefSelector].getBoundaryRectangle()))
                 switch (station.getStationType()) {
                     case BIN:
-                        System.out.println(StationType.BIN);
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
-                            this.binMessageTimer = new Date().getTime() + 5000L;
+                            this.messageTimer = new Date().getTime() + 5000L;
                         } else
                             this.game.setActiveScreen(new BinScreen(this, this.game));
                         break;
@@ -267,8 +266,12 @@ public class GameScreen extends BaseScreen {
                         this.game.setActiveScreen(station.getScreen());
                         break;
                     case FOOD_CHEST:
-                        System.out.printf("%s - %s\n", StationType.FOOD_CHEST, station.getFoodChestType());
-                        this.game.setActiveScreen(new FoodChestScreen(this, this.game));
+                        if (this.chefs[this.chefSelector].getInventoryItem() != null) {
+                            this.messageLabel.setText("This chef has something in their ingredient!\nYou have no inventory space available!");
+                            this.messageTimer = new Date().getTime() + 5000L;
+                        } else {
+                            this.game.setActiveScreen(new FoodChestScreen(this, this.game));
+                        }
                         break;
                     case GRILL:
                         System.out.println(StationType.GRILL);
@@ -278,19 +281,18 @@ public class GameScreen extends BaseScreen {
                         this.game.setActiveScreen(station.getScreen());
                         break;
                     case SERVING:
-                        System.out.println(StationType.SERVING);
                         if (this.chefs[this.chefSelector].getInventoryItem() instanceof FoodActor)
                             if (((FoodActor) (this.chefs[this.chefSelector].getInventoryItem())).getFood().ready()) {
                                 System.out.println("SERVED!");
-                                this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((FoodActor) this.chefs[this.chefSelector].getInventoryItem()).getFood().getRecipe().getEndProductName()));
-                                this.servingTimer = new Date().getTime() + 5000L;
+                                this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((FoodActor) this.chefs[this.chefSelector].getInventoryItem()).getFood().getRecipe().getEndProduct()));
+                                this.messageTimer = new Date().getTime() + 5000L;
                             } else {
                                 this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
-                                this.servingTimer = new Date().getTime() + 5000L;
+                                this.messageTimer = new Date().getTime() + 5000L;
                             }
                         else {
                             this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
-                            this.servingTimer = new Date().getTime() + 5000L;
+                            this.messageTimer = new Date().getTime() + 5000L;
                         }
                         break;
                     default:
