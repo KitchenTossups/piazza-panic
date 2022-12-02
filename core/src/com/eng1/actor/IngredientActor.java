@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.non_actor.Ingredient;
 import com.eng1.base.BaseActor;
 
+import java.util.Arrays;
+
 @SuppressWarnings("unused")
 public class IngredientActor extends BaseActor {
 
@@ -43,6 +45,11 @@ public class IngredientActor extends BaseActor {
 
     public Ingredient getIngredient() {
         return this.ingredient;
+    }
+
+    public void makeReady() {
+        System.out.println(Arrays.deepToString(this.textureRegions));
+        System.out.println(this.index);
     }
 
     @Override
