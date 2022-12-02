@@ -98,8 +98,8 @@ public class GameScreen extends BaseScreen {
 
         this.ingredientActors = new ArrayList<>();
 
-        this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient("0", IngredientState.UNCOOKED)));
-        this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient("1", IngredientState.UNCOOKED)));
+//        this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient(Item.TEST_4, IngredientState.UNCOOKED)));
+//        this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient(Item.TEST_5, IngredientState.UNCOOKED)));
 
         Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
