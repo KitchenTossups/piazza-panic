@@ -20,7 +20,7 @@ public class OrderScreen extends BaseScreen {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
         background.loadTexture( "background/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
-        Label titleLabel = new Label(customer.getOrder().getEndProductName(), styles[0]);
+        Label titleLabel = new Label(customer.getOrder().getEndProduct().toString(), styles[0]);
         this.label = new Label(null, styles[1]);
         this.label.setAlignment(Align.center);
         this.uiTable.pad(50);

@@ -3,17 +3,17 @@ package com.eng1.non_actor;
 import com.eng1.enums.IngredientState;
 
 public class Ingredient {
-    private final String itemName;
 
+    private final Item item;
     private IngredientState state;
 
-    public Ingredient(String itemName, IngredientState state) {
-        this.itemName = itemName;
+    public Ingredient(Item item, IngredientState state) {
+        this.item = item;
         this.state = state;
     }
 
-    public String getItemName() {
-        return this.itemName;
+    public Item getItem() {
+        return this.item;
     }
 
     public IngredientState getState() {

@@ -11,6 +11,8 @@ import com.eng1.base.BaseActor;
 public class IngredientActor extends BaseActor {
 
     private final Ingredient ingredient;
+    private final TextureRegion[][] textureRegions;
+    private String index;
 
     public IngredientActor(float x, float y, Stage s, Ingredient ingredient) {
         super(x, y, s);
@@ -23,14 +25,16 @@ public class IngredientActor extends BaseActor {
         int frameWidth = texture.getWidth() / cols;
         int frameHeight = texture.getHeight() / rows;
 
-        TextureRegion[][] temp = TextureRegion.split(texture, frameWidth, frameHeight);
+        this.textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
 
-        switch (ingredient.getItemName()) {
-            case "0":
-                this.setTexture(temp[0][2]);
+        switch (ingredient.getItem()) {
+            case TEST_0:
+                this.setTexture(this.textureRegions[0][2]);
+                this.index = "0:2";
                 break;
-            case "1":
-                this.setTexture(temp[0][5]);
+            case TEST_1:
+                this.setTexture(this.textureRegions[0][5]);
+                this.index = "0:5";
                 break;
             default:
                 break;
@@ -43,6 +47,6 @@ public class IngredientActor extends BaseActor {
 
     @Override
     public String toString() {
-        return this.ingredient.getItemName();
+        return this.ingredient.getItem().toString();
     }
 }
