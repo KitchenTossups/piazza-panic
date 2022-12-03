@@ -94,7 +94,7 @@ public class GameScreen extends BaseScreen {
 
         this.chefs[0] = new Chef(90, 90, this.mainStage, 1);
         this.chefs[1] = new Chef(90, 130, this.mainStage, 2);
-        if (mode == Mode.ASSESSMENT_2) this.chefs[2] = new Chef(60, 140, this.mainStage, 3);
+        if (mode == Mode.ASSESSMENT_2) this.chefs[2] = new Chef(90, 170, this.mainStage, 3);
 
         this.ingredientActors = new ArrayList<>();
 
