@@ -36,25 +36,16 @@ public class Recipe {
     private List<Ingredient> generateIngredientList() {
         List<Ingredient> ingredients = new ArrayList<>();
         switch (this.endProduct) {
-            case TEST_0:
-                ingredients.add(new Ingredient(Item.TEST_0, IngredientState.UNPREPARED));
-                ingredients.add(new Ingredient(Item.TEST_1, IngredientState.UNCOOKED));
-                ingredients.add(new Ingredient(Item.TEST_2, IngredientState.UNCUT));
-                ingredients.add(new Ingredient(Item.TEST_3, IngredientState.UNPREPARED));
+            case BURGER:
+                ingredients.add(new Ingredient(Item.BOTTOMBUN, IngredientState.PREPARED));
+                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
+                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.UNPREPARED));
+                ingredients.add(new Ingredient(Item.TOPBUN, IngredientState.PREPARED));
                 break;
-            case TEST_1:
-                ingredients.add(new Ingredient(Item.TEST_0, IngredientState.UNPREPARED));
-                ingredients.add(new Ingredient(Item.TEST_3, IngredientState.UNPREPARED));
-                ingredients.add(new Ingredient(Item.TEST_4, IngredientState.UNCOOKED));
-                ingredients.add(new Ingredient(Item.TEST_5, IngredientState.UNCUT));
-                break;
-            case TEST_2:
-                ingredients.add(new Ingredient(Item.TEST_3, IngredientState.UNPREPARED));
-                ingredients.add(new Ingredient(Item.TEST_4, IngredientState.UNCOOKED));
-                break;
-            case TEST_3:
-                ingredients.add(new Ingredient(Item.TEST_0, IngredientState.UNPREPARED));
-                ingredients.add(new Ingredient(Item.TEST_5, IngredientState.UNCUT));
+            case SALAD:
+                ingredients.add(new Ingredient(Item.LETTUCE, IngredientState.PREPARED));
+                ingredients.add(new Ingredient(Item.TOMATO, IngredientState.PREPARED));
+                ingredients.add(new Ingredient(Item.ONION, IngredientState.PREPARED));
                 break;
         }
         return ingredients;

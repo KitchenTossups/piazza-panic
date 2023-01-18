@@ -30,14 +30,20 @@ public class IngredientActor extends BaseActor {
         this.textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
 
         switch (ingredient.getItem()) {
-            case TEST_0:
-                this.setTexture(this.textureRegions[0][2]);
-                this.index = "0:2";
-                break;
-            case TEST_1:
-                this.setTexture(this.textureRegions[0][5]);
-                this.index = "0:5";
-                break;
+            case TOPBUN:
+                this.loadTexture("images/TopBun.png");
+            case BOTTOMBUN:
+                this.loadTexture("images/BottomBun.png");
+            case PATTY:
+                this.loadTexture("images/Patty.png");
+            case CHEESE:
+                this.loadTexture("images/Cheese.png");
+            case LETTUCE:
+                this.loadTexture("images/Lettuce.png");
+            case TOMATO:
+                this.loadTexture("images/Tomato.png");
+            case ONION:
+                this.loadTexture("images/Onion.png");
             default:
                 break;
         }

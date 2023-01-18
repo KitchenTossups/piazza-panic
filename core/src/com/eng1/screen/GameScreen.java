@@ -60,7 +60,7 @@ public class GameScreen extends BaseScreen {
 
         this.customers = new ArrayList<>();
 
-        this.customers.add(new Customer(1300, 100, this.uiStage, new Recipe(Product.TEST_0)));
+        this.customers.add(new Customer(1300, 100, this.uiStage, new Recipe(Product.BURGER)));
 
         for (Customer customer : this.customers) {
             MoveToAction action = new MoveToAction();
