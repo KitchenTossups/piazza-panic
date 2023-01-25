@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 /**
  * @author Lee Stemkoski
+ * @author Liam Burnand (modified code)
  */
 public abstract class BaseGame extends Game {
 

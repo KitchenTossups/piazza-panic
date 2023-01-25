@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.*;
  * Most game objects should extend this class; lists of extensions can be retrieved by stage and class name.
  *
  * @author Lee Stemkoski
+ * @author Liam Burnand (modified code)
  * @see #Actor
  */
 @SuppressWarnings("unused")

@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * @author Lee Stemkoski
+ * @author Liam Burnand (modified code)
  */
 public abstract class BaseScreen implements Screen, InputProcessor {
     protected Stage mainStage, uiStage;
