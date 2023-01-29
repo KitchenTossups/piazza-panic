@@ -11,15 +11,17 @@ public class Customer extends BaseActor {
 
     private final Recipe order;
 
-    private final long orderPlaced;
+    private final long orderPlaced, customerNumber;
 
-    public Customer(float x, float y, Stage s, Recipe order) {
+    public Customer(float x, float y, Stage s, Recipe order, long customerNumber, long delay) {
         super(x, y, s);
         this.order = order;
 
-        this.orderPlaced = new Date().getTime() + 11000;
+        this.orderPlaced = new Date().getTime() + 11000 + delay;
 
         this.setTouchable(Touchable.enabled);
+
+        this.customerNumber = customerNumber;
 
         this.loadTexture("images/person.jpg", 32, 32);
     }
@@ -30,5 +32,9 @@ public class Customer extends BaseActor {
 
     public long getOrderPlaced() {
         return this.orderPlaced;
+    }
+
+    public long getCustomerNumber() {
+        return customerNumber;
     }
 }

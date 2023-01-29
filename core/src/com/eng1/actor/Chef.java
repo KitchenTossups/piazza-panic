@@ -11,7 +11,7 @@ public class Chef extends BaseActor {
     public Chef(float x, float y, Stage s, int chefNumber) {
         super(x, y, s);
 
-        this.loadTexture("images/chef" + chefNumber + ".png");
+        this.loadTexture("images/ChefB" + chefNumber + ".png");
     }
 
     public Object getInventoryItem() {
@@ -19,7 +19,7 @@ public class Chef extends BaseActor {
     }
 
     public void setInventoryItem(Object inventoryItem) {
-        if (inventoryItem instanceof Food || inventoryItem instanceof Ingredient)
+        if (inventoryItem instanceof Food || inventoryItem instanceof Ingredient || inventoryItem == null)
             this.inventoryItem = inventoryItem;
     }
 }

@@ -34,10 +34,10 @@ public class OrderScreen extends BaseScreen {
 
     @Override
     public void update(float dt) {
-        this.label.setText(String.format(String.format("Order placed %d seconds ago\n\n%s\n\nClick anywhere to return", (new Date().getTime() - this.customer.getOrderPlaced()) / 1000, this.customer.getOrder().getIngredients())));
+        this.label.setText(String.format(String.format("Order number %d\n\nOrder placed %d seconds ago\n\n%s\n\nClick anywhere to return", this.customer.getCustomerNumber(), (new Date().getTime() - this.customer.getOrderPlaced()) / 1000, this.customer.getOrder().getIngredients())));
         if (Gdx.input.isTouched()) {
-            this.game.setActiveScreen(this.gameScreen);
             this.dispose();
+            this.game.setActiveScreen(this.gameScreen);
         }
     }
 }

@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 public class BaseActor extends Actor {
     private Animation<TextureRegion> animation;
     private float elapsedTime, loci;
+    private boolean animationPaused;
 
     private Rectangle boundaryRectangle;
 
@@ -39,6 +40,7 @@ public class BaseActor extends Actor {
         // initialize animation data
         this.animation = null;
         this.elapsedTime = 0;
+        this.animationPaused = false;
 
         this.boundaryPolygon = null;
         this.boundaryRectangle = null;
@@ -140,6 +142,15 @@ public class BaseActor extends Actor {
             this.setAnimation(anim, w, h);
     }
 
+    public void loadAnimationFromTextureRegion(Array<TextureRegion> array, float frameDuration, float w, float h) {
+        Animation<TextureRegion> anim = new Animation<>(frameDuration, array);
+
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        if (this.animation == null)
+            this.setAnimation(anim, w, h);
+    }
+
     /**
      * Creates an animation from a spritesheet: a rectangular grid of images stored in a single file.
      *
@@ -177,6 +188,8 @@ public class BaseActor extends Actor {
 
     /**
      * Convenience method for creating a 1-frame animation from a single texture.
+     * <p>
+     * Original credit - <a href="https://github.com/mariorez/libgdx-maze-runman">mariorez</a>
      *
      * @param fileName names of image file
      */
@@ -190,6 +203,10 @@ public class BaseActor extends Actor {
         String[] fileNames = new String[1];
         fileNames[0] = fileName;
         this.loadAnimationFromFiles(fileNames, 1, true, w, h);
+    }
+
+    public void loadTexture(String[] fileNames, float w, float h) {
+        this.loadAnimationFromFiles(fileNames, 1, false, w, h);
     }
 
     public void setTexture(Texture texture) {
@@ -215,6 +232,15 @@ public class BaseActor extends Actor {
 
         if (this.animation == null)
             this.setAnimation(anim);
+    }
+
+    /**
+     * Set the pause state of the animation.
+     *
+     * @param pause true to pause animation, false to resume animation
+     */
+    public void setAnimationPaused(boolean pause) {
+        animationPaused = pause;
     }
 
     /**
@@ -253,7 +279,9 @@ public class BaseActor extends Actor {
      */
     public void act(float dt) {
         super.act(dt);
-        this.elapsedTime += dt;
+
+        if (!animationPaused)
+            elapsedTime += dt;
     }
 
     /**

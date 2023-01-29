@@ -1,5 +1,7 @@
 package com.eng1.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.*;
@@ -35,6 +37,8 @@ public class BinScreen extends BaseScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                 gameScreen.increaseBinnedItems();
+                Gdx.audio.newSound(Gdx.files.internal("sounds/BinSound.mp3")).play();
+                dispose();
                 game.setActiveScreen(gameScreen);
             }
         });
@@ -46,6 +50,8 @@ public class BinScreen extends BaseScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+                dispose();
                 game.setActiveScreen(gameScreen);
             }
         });

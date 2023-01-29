@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 /**
+ * Removes most of the unused but necessary code for creation
+ * <p>
+ * Original credit - <a href="https://github.com/mariorez/libgdx-maze-runman">mariorez</a>
+ *
  * @author Lee Stemkoski
  * @author Liam Burnand (modified code)
  */

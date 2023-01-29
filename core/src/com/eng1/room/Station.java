@@ -37,20 +37,16 @@ public class Station extends BaseActor {
         this.stationType = stationType;
 
         switch (stationType) {
-            case CHOPPING:
-                this.loadTexture("squared/blue.png", width, height);
-                this.screen = new ChoppingScreen(gameScreen, game);
-                break;
             case COUNTER:
-                this.loadTexture("squared/purple.png", width, height);
+                this.loadTexture("images/Countertop2.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.COUNTER_SCREEN);
                 break;
             case GRILL:
-                this.loadTexture("squared/brown.png", width, height);
+                this.loadTexture("images/Grill1.png", width, height);
                 this.screen = new GrillScreen(gameScreen, game);
                 break;
             case PREP:
-                this.loadTexture("squared/red.png", width, height);
+                this.loadTexture("images/PrepStation1.png", width, height);
                 this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.PREP_SCREEN);
                 break;
             default:
@@ -67,6 +63,9 @@ public class Station extends BaseActor {
             case BIN:
                 this.loadTexture("images/bin.png", width, height);
                 break;
+            case CHOPPING:
+                this.loadTexture("images/ChoppingStation1.png", width, height);
+                break;
             case SERVING:
                 this.loadTexture("squared/green.png", width, height);
                 break;
@@ -81,7 +80,17 @@ public class Station extends BaseActor {
         this.stationType = StationType.FOOD_CHEST;
         this.foodChestType = foodChestType;
 
-        this.loadTexture("squared/yellow.png", width, height);
+        switch (foodChestType) {
+            case DRY_FOOD:
+                this.loadTexture("images/Cupboard1.png", width, height);
+                break;
+            case FRESH_FOOD:
+                this.loadTexture("images/Fridge1.png", width, height);
+                break;
+            case FROZEN_FOOD:
+                this.loadTexture("images/Freezer1.png", width, height);
+                break;
+        }
     }
 
     public StationType getStationType() {

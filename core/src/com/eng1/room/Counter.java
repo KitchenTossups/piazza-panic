@@ -1,18 +1,28 @@
 package com.eng1.room;
 
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
+import org.w3c.dom.Text;
 
 public class Counter extends BaseActor {
 
     public Counter(float x, float y, int width, int height, Stage s) {
         super(x, y, s);
 
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0, 0, 1, 1));
-        pixmap.fillRectangle(0, 0, width, height);
-        this.setTexture(new Texture(pixmap));
-        pixmap.dispose();
+        Texture texture = new Texture("images/Countertop2.png");
+        texture.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+
+        TextureRegion textureRegion = new TextureRegion(texture);
+        textureRegion.setRegion(0, 0, width, height);
+
+        this.setTexture(textureRegion);
+
+//        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+//        pixmap.setColor(new Color(0, 0, 1, 1));
+//        pixmap.fillRectangle(0, 0, width, height);
+//        this.setTexture(new Texture(pixmap));
+//        pixmap.dispose();
     }
 }

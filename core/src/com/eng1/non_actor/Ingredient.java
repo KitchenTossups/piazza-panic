@@ -24,4 +24,9 @@ public class Ingredient {
     public void setState(IngredientState state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return this.item.toString();
+    }
 }

@@ -2,6 +2,7 @@ package com.eng1.enums;
 
 public enum Product {
     BURGER,
+    CHEESEBURGER,
     SALAD;
 
     @Override
@@ -9,6 +10,8 @@ public enum Product {
         switch (this) {
             case BURGER:
                 return "Burger";
+            case CHEESEBURGER:
+                return "Cheeseburger";
             case SALAD:
                 return "Salad";
             default:

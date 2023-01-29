@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.eng1.screen.GameScreen;
 
 /**
+ * Makes creation of a screen simpler
+ * <p>
+ * Original credit - <a href="https://github.com/mariorez/libgdx-maze-runman">mariorez</a>
+ *
  * @author Lee Stemkoski
  * @author Liam Burnand (modified code)
  */
@@ -83,6 +88,9 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         InputMultiplexer im = (InputMultiplexer) Gdx.input.getInputProcessor();
         im.removeProcessor(this);
         im.removeProcessor(this.uiStage);
+    }
+
+    public void updateGameScreen(GameScreen gameScreen) {
     }
 
     // methods required by InputProcessor interface
