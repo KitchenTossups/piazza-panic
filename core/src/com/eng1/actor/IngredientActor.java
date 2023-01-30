@@ -2,15 +2,13 @@ package com.eng1.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.eng1.enums.IngredientState;
+import com.eng1.enums.Item;
 import com.eng1.non_actor.Ingredient;
 import com.eng1.base.BaseActor;
-
-import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class IngredientActor extends BaseActor {
@@ -32,7 +30,7 @@ public class IngredientActor extends BaseActor {
 
         String image = "";
 
-        String[] images = {};
+        String[] images;
 
         boolean bypass = false;
 
@@ -61,27 +59,17 @@ public class IngredientActor extends BaseActor {
                 texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
                 textureArray.add(new TextureRegion(texture1));
                 textureArray.add(textureRegions[1][1]);
-                loadAnimationFromTextureRegion(textureArray, 1, 80, 80);
+                loadAnimationFromTextureRegion(textureArray, 0.1f, 80, 80);
                 break;
             case TOMATO:
                 bypass = true;
                 images = new String[]{"images/Tomato2.png", "images/Tomato.png"};
                 loadTexture(images, 80, 80);
-//                texture1 = new Texture(Gdx.files.internal("images/Tomato.png"));
-//                texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-//                textureArray.add(new TextureRegion(texture1));
-//                textureArray.add(textureRegions[7][12]);
-//                loadAnimationFromTextureRegion(textureArray, 1, 80, 80);
                 break;
             case ONION:
                 bypass = true;
                 images = new String[]{"images/Onion2.png", "images/Onion.png"};
                 loadTexture(images, 80, 80);
-//                texture1 = new Texture(Gdx.files.internal("images/Onion.png"));
-//                texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-//                textureArray.add(new TextureRegion(texture1));
-//                textureArray.add(textureRegions[7][10]);
-//                loadAnimationFromTextureRegion(textureArray, 1, 80, 80);
                 break;
             default:
                 break;
@@ -122,6 +110,13 @@ public class IngredientActor extends BaseActor {
         }
     }
 
+    public void makeOverCooked() {
+        if (this.ingredient.getItem() == Item.PATTY)
+            this.ingredient.setState(IngredientState.OVERCOOKED);
+        else
+            System.out.println("Error making " + this.ingredient.getItem().toString() + " to Overcooked");
+    }
+
     final boolean[] pause = {true};
 
     class MakeReady implements Runnable {
@@ -130,7 +125,7 @@ public class IngredientActor extends BaseActor {
         public void run() {
             try {
                 pause[0] = false;
-                Thread.sleep(1100);
+                Thread.sleep(110);
             } catch (Exception e) {
                 e.printStackTrace();
             }

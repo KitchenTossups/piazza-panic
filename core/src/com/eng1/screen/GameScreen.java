@@ -31,12 +31,13 @@ public class GameScreen extends BaseScreen {
     final Label messageLabel;
     final CustomerCommunicator customerCommunicator;
     private boolean tabPressed;
+    private final boolean verbose;
     final int width, height;
     private int chefSelector = 0, binnedItems = 0, customerNumber = 1;
     private long messageTimer = -1;
     private final float loci;
 
-    public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty) {
+    public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty, boolean verbose) {
         this.game = game;
         this.width = width;
         this.height = height;
@@ -46,6 +47,7 @@ public class GameScreen extends BaseScreen {
         this.tabPressed = false;
         this.loci = loci;
         this.difficulty = difficulty;
+        this.verbose = verbose;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
@@ -68,11 +70,20 @@ public class GameScreen extends BaseScreen {
 
         this.customerCommunicator = new CustomerCommunicator();
 
-        addCustomer(new Recipe(Product.CHEESEBURGER), 0);
-        addCustomer(new Recipe(Product.SALAD), 6000);
-        addCustomer(new Recipe(Product.CHEESEBURGER), 12000);
-        addCustomer(new Recipe(Product.BURGER), 18000);
-        addCustomer(new Recipe(Product.BURGER), 24000);
+        int maxCustomers = 0;
+        switch (difficulty) {
+            case EASY:
+                maxCustomers = 3;
+                break;
+            case MEDIUM:
+                maxCustomers = 5;
+                break;
+            case HARD:
+                maxCustomers = 8;
+                break;
+        }
+        for (int i = 0; i < maxCustomers; i++)
+            addCustomer(new Recipe(Product.getRandomProduct()), 20000 * i);
 
         if (mode == Mode.ASSESSMENT_1)
             this.chefs = new Chef[2];
@@ -206,15 +217,21 @@ public class GameScreen extends BaseScreen {
             action.setY(100);
             action.setDuration(3);
             this.customer.addAction(action);
+            this.customer.setDirection(Customer.Direction.WEST);
+            this.customer.setMoving(true);
             try {
-                Thread.sleep(6000);
+                Thread.sleep(3000);
+                this.customer.setMoving(false);
+                Thread.sleep(3000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (this.customer.getCustomerNumber() / 13f > 0)
-                action2.setX(1150 + (40 * (int) (this.customer.getCustomerNumber() / 13f)));
+            this.customer.setMoving(true);
+            this.customer.setDirection(Customer.Direction.NORTH);
+            if (this.customer.getCustomerNumber() / 12f > 0)
+                action2.setX(1150 + (50 * (int) (this.customer.getCustomerNumber() / 12f)));
             else action2.setX(1150);
-            action2.setY(600 - (40 * ((this.customer.getCustomerNumber() - 1) % 12)));
+            action2.setY(600 - (50 * ((this.customer.getCustomerNumber() - 1) % 12)));
             action2.setDuration(3);
             this.customer.addAction(action2);
             this.customer.addListener(new InputListener() {
@@ -235,6 +252,14 @@ public class GameScreen extends BaseScreen {
                 }
             });
             try {
+                Thread.sleep(3000);
+                this.customer.setDirection(Customer.Direction.WEST);
+                Thread.sleep(500);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            this.customer.setMoving(false);
+            try {
 //                System.out.println("Waiting " + this.customer.getOrderPlaced());
                 long packet = this.customerCommunicator.receive();
                 while (packet != this.customer.getOrderPlaced()) {
@@ -251,7 +276,15 @@ public class GameScreen extends BaseScreen {
             action1.setX(1300);
             action1.setY(550);
             action1.setDuration(2);
+            this.customer.setMoving(true);
+            this.customer.setDirection(Customer.Direction.EAST);
             this.customer.addAction(action1);
+            try {
+                Thread.sleep(200);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            customers.remove(this.customer);
 //            System.out.println("Finished " + this.customer.getOrderPlaced());
         }
 
@@ -405,12 +438,6 @@ public class GameScreen extends BaseScreen {
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
                         break;
-                    case COUNTER:
-                        screen = station.getScreen();
-                        screen.updateGameScreen(this);
-                        Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
-                        this.game.setActiveScreen(screen);
-                        break;
                     case FOOD_CHEST:
                         if (this.chefs[this.chefSelector].getInventoryItem() != null) {
                             Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
@@ -422,15 +449,31 @@ public class GameScreen extends BaseScreen {
                         }
                         break;
                     case GRILL:
-                        screen = station.getScreen();
-                        screen.updateGameScreen(this);
-                        Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
-                        this.game.setActiveScreen(screen);
+                        Object object = this.chefs[this.getChefSelector()].getInventoryItem();
+                        boolean pass = true;
+                        if (object != null)
+                            if (object instanceof Ingredient) {
+                                if (((Ingredient) object).getState() != IngredientState.UNCOOKED)
+                                    pass = false;
+                            } else
+                                pass = false;
+                        if (pass) {
+                            GrillScreen grillScreen = (GrillScreen) station.getScreen();
+                            grillScreen.updateGameScreen(this);
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            this.game.setActiveScreen(grillScreen);
+                        } else {
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            this.messageLabel.setText("This chef has something in their inventory that cannot be on a grill!");
+                            this.messageTimer = new Date().getTime() + 5000L;
+                        }
+                        break;
+                    case COUNTER:   // Shares the open with prep
                     case PREP:
-                        screen = station.getScreen();
-                        screen.updateGameScreen(this);
+                        ItemTableScreen itemTableScreen = (ItemTableScreen) station.getScreen();
+                        itemTableScreen.updateGameScreen(this);
                         Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
-                        this.game.setActiveScreen(screen);
+                        this.game.setActiveScreen(itemTableScreen);
                         break;
                     case SERVING:
                         if (this.chefs[this.chefSelector].getInventoryItem() instanceof FoodActor)

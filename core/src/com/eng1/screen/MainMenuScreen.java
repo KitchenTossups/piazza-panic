@@ -14,14 +14,16 @@ public class MainMenuScreen extends BaseScreen {
     private final Mode mode;
     private final float loci;
     private final Difficulty difficulty;
+    private final boolean verbose;
 
-    public MainMenuScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty) {
+    public MainMenuScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty, boolean verbose) {
         this.game = game;
         this.width = width;
         this.height = height;
         this.mode = mode;
         this.loci = loci;
         this.difficulty = difficulty;
+        this.verbose = verbose;
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, width, height);
@@ -34,7 +36,7 @@ public class MainMenuScreen extends BaseScreen {
     public void update(float dt) {
         if (Gdx.input.isTouched()) {
             this.dispose();
-            this.game.setActiveScreen(new GameScreen(this.game, this.width, this.height, this.mode, this.loci, this.difficulty));
+            this.game.setActiveScreen(new GameScreen(this.game, this.width, this.height, this.mode, this.loci, this.difficulty, this.verbose));
         }
     }
 }

@@ -1,12 +1,13 @@
 package com.eng1.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.*;
 import com.eng1.*;
 import com.eng1.base.*;
+import com.eng1.enums.IngredientState;
+import com.eng1.non_actor.Ingredient;
 
 public class BinScreen extends BaseScreen {
 
@@ -14,7 +15,12 @@ public class BinScreen extends BaseScreen {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
         background.loadTexture( "background/background.png" );
         background.setSize(gameScreen.width, gameScreen.height);
-        Label titleLabel = new Label("This is the bin!", game.labelStyle[0]), contents = new Label(String.format("You are currently holding: %s\nAre you sure you want to bin this?", gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem()), game.labelStyle[1]), bin = new Label("BIN!", game.labelStyle[1]), cancel = new Label("CANCEL!", game.labelStyle[1]);
+        Object object = gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem();
+        String holding = object.toString();
+        if (object instanceof Ingredient)
+            if (((Ingredient) object).getState() != IngredientState.NOT_APPLICABLE)
+                holding += " - " + ((Ingredient) object).getState().toString();
+        Label titleLabel = new Label("This is the bin!", game.labelStyle[0]), contents = new Label(String.format("You are currently holding: %s\nAre you sure you want to bin this?", holding), game.labelStyle[1]), bin = new Label("BIN!", game.labelStyle[1]), cancel = new Label("CANCEL!", game.labelStyle[1]);
         titleLabel.setAlignment(Align.center);
         contents.setAlignment(Align.center);
         bin.setAlignment(Align.center);

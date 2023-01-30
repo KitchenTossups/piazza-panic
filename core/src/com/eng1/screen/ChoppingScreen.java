@@ -61,7 +61,6 @@ public class ChoppingScreen extends BaseScreen {
             public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
                 if (!accepted[0]) {
                     payload.getDragActor().setPosition(this.x, this.y);
-                    gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                 }
             }
         });
@@ -81,6 +80,7 @@ public class ChoppingScreen extends BaseScreen {
             @Override
             public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                 if (ingredientActor.getIngredient().getState() == IngredientState.UNCUT) {
+                    gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                     float x1 = tableSpace.getX();
                     float y1 = tableSpace.getY();
                     source.getActor().setPosition(x1 + 10, y1 + 10);
