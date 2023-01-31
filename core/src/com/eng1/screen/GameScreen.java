@@ -58,7 +58,7 @@ public class GameScreen extends BaseScreen {
 
         Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/BackgroundMusic.mp3"));
         backgroundMusic.setLooping(true);
-//        backgroundMusic.play();
+        backgroundMusic.play();
 
         BaseActor background = new BaseActor(0, 0, this.mainStage), customerFloor = new BaseActor(1025, 0, this.mainStage);
         background.loadTexture("background/Floor1.png");
