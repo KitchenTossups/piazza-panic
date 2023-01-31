@@ -24,4 +24,13 @@ public class Ingredient {
     public void setState(IngredientState state) {
         this.state = state;
     }
+
+    public boolean matches(Ingredient ingredient) {
+        return this.state == ingredient.getState() && this.item == ingredient.getItem();
+    }
+
+    @Override
+    public String toString() {
+        return this.item.toString();
+    }
 }

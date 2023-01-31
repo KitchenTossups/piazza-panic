@@ -1,8 +1,8 @@
 package com.eng1.enums;
 
 public enum Item {
-    TOPBUN,
-    BOTTOMBUN,
+    TOP_BUN,
+    BOTTOM_BUN,
     PATTY,
     CHEESE,
     LETTUCE,
@@ -13,9 +13,9 @@ public enum Item {
     @Override
     public String toString() {
         switch (this) {
-            case TOPBUN:
+            case TOP_BUN:
                 return "Top Bun";
-            case BOTTOMBUN:
+            case BOTTOM_BUN:
                 return "Bottom Bun";
             case PATTY:
                 return "Patty";
