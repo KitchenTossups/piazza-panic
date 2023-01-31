@@ -21,12 +21,17 @@ public class PiazzaPanicLauncher {
 			System.out.println(Arrays.toString(args));
 		System.out.printf("Assessment mode - %s\nDifficulty setting - %s\nLoci set %f\nVerbose mode - %s\n", mode.toString(), difficulty.toString(), loci, verbose ? "Enabled" : "Disabled");
         if (run) {
-            Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-            config.setForegroundFPS(60);
-            config.useVsync(true);
-            config.setWindowedMode(width, height);
-            config.setTitle("Piazza Panic");
-            new Lwjgl3Application(new PiazzaPanic(width, height, mode, loci, difficulty, verbose), config);
+			System.out.println("If the game crashes immediately after then use --help to figure out why!");
+			try {
+				Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+				config.setForegroundFPS(60);
+				config.useVsync(true);
+				config.setWindowedMode(width, height);
+				config.setTitle("Piazza Panic");
+				new Lwjgl3Application(new PiazzaPanic(width, height, mode, loci, difficulty, verbose), config);
+			} catch (Exception e) {
+				System.out.println("Error starting, use --help to see possible arguments\n\n" + e.getMessage());
+			}
         }
     }
 
