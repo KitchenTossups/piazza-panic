@@ -320,7 +320,7 @@ public class GrillScreen extends BaseScreen {
             }
             inventoryItem = null;
             if (game.isVerbose()) System.out.println(Arrays.toString(timePlaced));
-            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play(gameScreen.getMasterVolume());
             this.game.setActiveScreen(this.gameScreen);
         }
     }

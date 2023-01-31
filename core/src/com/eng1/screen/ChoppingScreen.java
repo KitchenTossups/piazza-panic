@@ -153,7 +153,7 @@ public class ChoppingScreen extends BaseScreen {
             this.knife.setY(-100f);
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q) && ingredientActor.getY() == 10) {
-            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play(gameScreen.getMasterVolume());
             dispose();
             this.game.setActiveScreen(this.gameScreen);
         }

@@ -43,7 +43,7 @@ public class BinScreen extends BaseScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                 gameScreen.increaseBinnedItems();
-                Gdx.audio.newSound(Gdx.files.internal("sounds/BinSound.mp3")).play();
+                Gdx.audio.newSound(Gdx.files.internal("sounds/BinSound.mp3")).play(gameScreen.getMasterVolume());
                 dispose();
                 game.setActiveScreen(gameScreen);
             }
@@ -56,7 +56,7 @@ public class BinScreen extends BaseScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+                Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play(gameScreen.getMasterVolume());
                 dispose();
                 game.setActiveScreen(gameScreen);
             }

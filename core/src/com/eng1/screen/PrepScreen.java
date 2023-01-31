@@ -338,7 +338,7 @@ public class PrepScreen extends BaseScreen {
 
             }
             inventoryItem = null;
-            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play(gameScreen.getMasterVolume());
             this.game.setActiveScreen(this.gameScreen);
         }
     }

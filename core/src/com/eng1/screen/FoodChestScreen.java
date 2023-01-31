@@ -105,7 +105,7 @@ public class FoodChestScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
+            Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play(gameScreen.getMasterVolume());
             dispose();
             this.game.setActiveScreen(this.gameScreen);
         }

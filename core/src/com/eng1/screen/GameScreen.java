@@ -37,6 +37,8 @@ public class GameScreen extends BaseScreen {
     private long messageTimer = -1, lastFoodActorCustomerTime = -1;
     private final float loci;
     private final long startTime;
+    private float masterVolume = 1f;
+    private Music backgroundMusic;
 
     public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty) {
         this.startTime = new Date().getTime();
@@ -395,39 +397,39 @@ public class GameScreen extends BaseScreen {
                     case BIN:
                         if (game.isVerbose()) System.out.println("Bin");
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         } else if (this.chefs[chefSelector].getInventoryItem() instanceof Food) {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("You can't bin a plate of food!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         } else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                             this.game.setActiveScreen(new BinScreen(this, this.game));
                         }
                         break;
                     case CHOPPING:
                         if (game.isVerbose()) System.out.println("Chopping");
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou aren't allowed to chop yourself!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         } else if (this.chefs[this.chefSelector].getInventoryItem() instanceof Ingredient) {
                             if (((Ingredient) this.chefs[this.chefSelector].getInventoryItem()).getState() == IngredientState.UNCUT) {
-                                Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                                Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                                 this.game.setActiveScreen(new ChoppingScreen(this, this.game));
                             } else if (((Ingredient) this.chefs[this.chefSelector].getInventoryItem()).getState() == IngredientState.CUT) {
-                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                                 this.messageLabel.setText("This chef has cut ingredients in their inventory!\nYou can't cut an item twice!");
                                 this.messageTimer = new Date().getTime() + 5000L;
                             } else {
-                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                                 this.messageLabel.setText("This chef has nothing in their inventory that can be cut!");
                                 this.messageTimer = new Date().getTime() + 5000L;
                             }
                         } else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has no ingredient in their inventory!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
@@ -435,11 +437,11 @@ public class GameScreen extends BaseScreen {
                     case FOOD_CHEST:
                         if (game.isVerbose()) System.out.println("Food chest");
                         if (this.chefs[this.chefSelector].getInventoryItem() != null) {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has something in their inventory!\nYou have no inventory space available!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         } else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                             this.game.setActiveScreen(new FoodChestScreen(station.getFoodChestType(), this, this.game));
                         }
                         break;
@@ -456,10 +458,10 @@ public class GameScreen extends BaseScreen {
                         if (pass) {
                             GrillScreen grillScreen = (GrillScreen) station.getScreen();
                             grillScreen.updateGameScreen(this);
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                             this.game.setActiveScreen(grillScreen);
                         } else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has something in their inventory that cannot be on a grill!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
@@ -468,7 +470,7 @@ public class GameScreen extends BaseScreen {
                         if (game.isVerbose()) System.out.println("Counter");
                         CounterScreen counterScreen = (CounterScreen) station.getScreen();
                         counterScreen.updateGameScreen(this);
-                        Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                        Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                         this.game.setActiveScreen(counterScreen);
                         break;
                     case PREP:
@@ -476,10 +478,10 @@ public class GameScreen extends BaseScreen {
                         if (/*this.chefs[this.chefSelector].getInventoryItem() instanceof Food || */this.chefs[this.chefSelector].getInventoryItem() instanceof Ingredient || this.chefs[this.chefSelector].getInventoryItem() == null) {
                             PrepScreen prepScreen = (PrepScreen) station.getScreen();
                             prepScreen.updateGameScreen(this);
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play(masterVolume);
                             this.game.setActiveScreen(prepScreen);
                         } else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has nothing able to be put on the prep table in their inventory!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
@@ -489,7 +491,7 @@ public class GameScreen extends BaseScreen {
                         if (this.chefs[this.chefSelector].getInventoryItem() instanceof Food)
                             if (((Food) (this.chefs[this.chefSelector].getInventoryItem())).ready()) {
                                 if (game.isVerbose()) System.out.println("SERVED!");
-                                Gdx.audio.newSound(Gdx.files.internal("sounds/BellSound.mp3")).play();
+                                Gdx.audio.newSound(Gdx.files.internal("sounds/BellSound.mp3")).play(masterVolume);
                                 this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((Food) this.chefs[this.chefSelector].getInventoryItem()).getRecipe().getEndProduct()));
                                 this.messageTimer = new Date().getTime() + 2500L;
                                 try {
@@ -503,18 +505,18 @@ public class GameScreen extends BaseScreen {
                                 this.chefs[getChefSelector()].setInventoryItem(null);
                                 this.customers.removeIf(customer -> customer.getOrderPlaced() == getLastFoodActorCustomerTime());
                             } else {
-                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                                Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                                 this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
                                 this.messageTimer = new Date().getTime() + 5000L;
                             }
                         else {
-                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                             this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
                         break;
                     default:
-                        Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                        Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                         System.out.println("Invalid station type: " + station.getStationType());
                         break;
                 }
@@ -564,6 +566,14 @@ public class GameScreen extends BaseScreen {
         this.stations.add(new Station(0, this.height - 80f, 80, 80, this.loci, StationType.GRILL, this, this.game));
     }
 
+    @Override
+    public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.ESCAPE){
+            this.game.setActiveScreen(new PauseScreen(this, this.game));
+        }
+        return true;
+    }
+
     /**
      * Get the selected chef number
      *
@@ -604,5 +614,15 @@ public class GameScreen extends BaseScreen {
 
     public void setLastFoodActorCustomerTime(long lastFoodActorCustomerTime) {
         this.lastFoodActorCustomerTime = lastFoodActorCustomerTime;
+    }
+    public float getMasterVolume(){return  this.masterVolume;}
+    public void setMasterVolume(float masterVolume){
+        this.masterVolume = masterVolume;
+    }
+    public void playBackGroundMusic(){
+        backgroundMusic.play();
+    }
+    public void pauseBackGroundMusic(){
+        backgroundMusic.pause();
     }
 }
