@@ -3,9 +3,6 @@ package com.eng1;
 import com.badlogic.gdx.backends.lwjgl3.*;
 import com.eng1.enums.Difficulty;
 import com.eng1.enums.Mode;
-import com.eng1.test.DragAndDropTest;
-import com.eng1.test.Grouping;
-import com.eng1.test.LearnGdx;
 
 import java.util.Arrays;
 
