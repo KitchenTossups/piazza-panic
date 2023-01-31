@@ -63,7 +63,7 @@ public class PrepScreen extends BaseScreen {
 
             @Override
             public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                System.out.println("Prep inventory drag init");
+                if (game.isVerbose()) System.out.println("Prep inventory drag init");
                 if (gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem() == null) {
                     getActor().setColor(Color.GREEN);
                     return true;
@@ -80,10 +80,6 @@ public class PrepScreen extends BaseScreen {
             @Override
             public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                 source.getActor().setPosition(this.x, this.y);
-                System.out.println(this.x + " " + this.y);
-                System.out.println(source.getActor().getClass());
-                System.out.println(source.getActor().getX() + " " + source.getActor().getY());
-                System.out.println(source.getActor().getWidth() + " " + source.getActor().getHeight());
                 accepted[0] = true;
                 BaseActor object = (BaseActor) payload.getDragActor();
                 if (object instanceof IngredientActor)
@@ -106,13 +102,13 @@ public class PrepScreen extends BaseScreen {
         });
         for (int i = 0; i < 3; i++) {
             int finalI = i;
-            System.out.println("Prep drag init " + i);
+            if (game.isVerbose()) System.out.println("Prep drag init " + i);
             this.dragAndDrop.addTarget(new DragAndDrop.Target(tableSpaces[finalI]) {
                 final float x = tableSpaces[finalI].getX(), y = tableSpaces[finalI].getY();
 
                 @Override
                 public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    System.out.println("Prep drag");
+                    if (game.isVerbose()) System.out.println("Prep drag");
                     if (items[finalI] == null) {
                         if (source.getActor() instanceof FoodActor) {
                             if (game.isVerbose()) System.out.println("Prep drag allow null " + finalI);
@@ -139,7 +135,7 @@ public class PrepScreen extends BaseScreen {
 
                 @Override
                 public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    System.out.println(source.getActor());
+                    if (game.isVerbose()) System.out.println(source.getActor());
                     if (source.getActor() instanceof IngredientActor) {
                         if (items[finalI].getStep() != -1) {
                             source.getActor().setPosition(this.x + 10, this.y + 10);
@@ -219,7 +215,7 @@ public class PrepScreen extends BaseScreen {
                             if (items[j] == null) {
                                 if (game.isVerbose()) System.out.println("Prep add found null");
                                 items[j] = new FoodActor(tableSpaces[j].getX(), tableSpaces[j].getY(), mainStage, new Food(customer.getOrder(), customer.getOrderPlaced()), game.isVerbose());
-                                System.out.println(items[j]);
+                                if (game.isVerbose()) System.out.println(items[j]);
                                 placeLabel[j].setText(String.format("%s\nNext ingredient: %s", customer.getOrder().getEndProduct().toString(), items[j].getFood().getRecipe().getIngredientsRaw().get(items[j].getStep())));
                                 placeLabel[j].setVisible(true);
                                 gameScreen.setLastFoodActorCustomerTime(customer.getOrderPlaced());
