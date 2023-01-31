@@ -25,7 +25,11 @@ public class PiazzaPanic extends BaseGame {
 
     public void create() {
         super.create();
-        this.setActiveScreen(new MainMenuScreen(this, this.width, this.height, this.mode, this.loci, this.difficulty, this.verbose));
+        this.setActiveScreen(new MainMenuScreen(this, this.width, this.height, this.mode, this.loci, this.difficulty));
+    }
+
+    public boolean isVerbose() {
+        return this.verbose;
     }
 
     @Override

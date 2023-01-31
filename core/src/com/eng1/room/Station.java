@@ -38,8 +38,8 @@ public class Station extends BaseActor {
 
         switch (stationType) {
             case COUNTER:
-                this.loadTexture("images/Countertop2.png", width, height);
-                this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.COUNTER_SCREEN);
+                this.loadTexture("images/Countertop1.png", width, height);
+                this.screen = new CounterScreen(gameScreen, game);
                 break;
             case GRILL:
                 this.loadTexture("images/Grill1.png", width, height);
@@ -47,7 +47,7 @@ public class Station extends BaseActor {
                 break;
             case PREP:
                 this.loadTexture("images/PrepStation1.png", width, height);
-                this.screen = new ItemTableScreen(gameScreen, game, ItemTableType.PREP_SCREEN);
+                this.screen = new PrepScreen(gameScreen, game);
                 break;
             default:
                 System.out.println("Invalid use of Station with station type!");

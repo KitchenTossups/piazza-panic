@@ -34,4 +34,13 @@ public class Food {
     public boolean ready() {
         return this.recipe.satisfied(this);
     }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "recipe=" + recipe +
+                ", customerOrderTime=" + customerOrderTime +
+                ", currentIngredients=" + currentIngredients +
+                '}';
+    }
 }

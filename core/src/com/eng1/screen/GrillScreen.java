@@ -21,6 +21,7 @@ import com.eng1.non_actor.Ingredient;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 public class GrillScreen extends BaseScreen {
 
@@ -88,18 +89,18 @@ public class GrillScreen extends BaseScreen {
             public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                 if (((IngredientActor) payload.getDragActor()).getIngredient().getState() == IngredientState.COOKED || ((IngredientActor) payload.getDragActor()).getIngredient().getState() == IngredientState.OVERCOOKED) {
                     source.getActor().setPosition(this.x + 10, this.y + 10);
-                    System.out.println(source.getActor().getX());
+                    if (game.isVerbose()) System.out.println(source.getActor().getX());
                     accepted[0] = true;
-                    gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(payload.getDragActor());
-                    System.out.println("Accepted");
+                    gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(((IngredientActor) payload.getDragActor()).getIngredient());
+                    if (game.isVerbose()) System.out.println("Accepted Inventory");
                     for (int i = 0; i < 3; i++) {
                         IngredientActor actor = items[i];
-                        System.out.println(actor);
-                        System.out.println("Searching");
+                        if (game.isVerbose()) System.out.println(actor);
+                        if (game.isVerbose()) System.out.println("Searching Inventory");
                         if (actor == source.getActor()) {
-                            System.out.println("Found " + i);
+                            if (game.isVerbose()) System.out.println("Inventory found " + i);
                             gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(((IngredientActor) payload.getDragActor()).getIngredient());
-                            System.out.println(gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem().toString());
+                            if (game.isVerbose()) System.out.println(gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem().toString());
 //                            items[i].remove();
                             items[i] = null;
                             steams[i].setVisible(false);
@@ -114,7 +115,7 @@ public class GrillScreen extends BaseScreen {
 //
 //                            }
 //                            inventoryItem = null;
-                            System.out.println("Remove 110");
+                            if (game.isVerbose()) System.out.println("Remove Inventory");
                         }
                     }
                 } else accepted[0] = false;
@@ -128,20 +129,20 @@ public class GrillScreen extends BaseScreen {
                 @Override
                 public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                     if (!unlock[finalI]) {
-                        System.out.println("Drag fail unlock " + finalI);
+                        if (game.isVerbose()) System.out.println("Grill drag fail unlock " + finalI);
                         return false;
                     }
                     if (items[finalI] == null) {
-                        System.out.println("Drag allow null " + finalI);
+                        if (game.isVerbose()) System.out.println("Grill drag allow null " + finalI);
                         getActor().setColor(Color.GREEN);
                         return true;
                     }
                     if (((IngredientActor) source.getActor()).getIngredient().getState() == IngredientState.UNCOOKED) {
-                        System.out.println("Drag allow uncooked " + finalI);
+                        if (game.isVerbose()) System.out.println("Grill drag allow uncooked " + finalI);
                         getActor().setColor(Color.GREEN);
                         return true;
                     }
-                    System.out.println("Drag fail end " + finalI);
+                    if (game.isVerbose()) System.out.println("Grill drag fail end " + finalI);
                     getActor().setColor(Color.RED);
                     return false;
                 }
@@ -162,7 +163,7 @@ public class GrillScreen extends BaseScreen {
                         unlock[finalI] = false;
                         gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
                         inventoryItem = null;
-                        System.out.println("Remove 153");
+                        if (game.isVerbose()) System.out.println("Grill remove " + finalI);
                         timePlaced[finalI] = new Date().getTime();
                     } else accepted[0] = false;
                 }
@@ -171,26 +172,27 @@ public class GrillScreen extends BaseScreen {
         for (int i = 0; i < 3; i++) {
             labels[i] = new Label(null, game.labelStyle[1]);
             labels[i].setAlignment(Align.center);
-            labels[i].setPosition(275 + (290 * i), 350);
-            labels[i].setSize(150, 100);
+            labels[i].setPosition(225 + (290 * i), 350);
+            labels[i].setSize(250, 100);
+
             this.uiStage.addActor(labels[i]);
             int finalI = i;
             labels[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("Touched " + finalI);
+                    if (game.isVerbose()) System.out.println("Grill touched " + finalI);
                     return true;
                 }
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    System.out.println("Start up " + finalI + " " + items[finalI].getIngredient().getState());
+                    if (game.isVerbose()) System.out.println("Grill start up " + finalI + " " + items[finalI].getIngredient().getState());
                     if (items[finalI].getIngredient().getState() == IngredientState.UNCOOKED) {
                         needFlip[finalI] = false;
                         flipped[finalI] = true;
                         flipTime[finalI] = new Date().getTime();
                         items[finalI].makeReady();
-                        System.out.println("Invisible");
+                        if (game.isVerbose()) System.out.println("Grill invisible " + finalI);
                         labels[finalI].setVisible(false);
                         labels[finalI].setText(null);
                     }
@@ -205,21 +207,24 @@ public class GrillScreen extends BaseScreen {
         @Override
         public void run() {
             while (true) {
+                boolean allOff = true;
                 for (int i = 0; i < 3; i++) {
+                    if (labels[i].isVisible())
+                        allOff = false;
                     if (timePlaced[i] != -1) {
                         long timeElapsed = new Date().getTime() - timePlaced[i];
                         if (timeElapsed >= 30000) {
                             if (!flipped[i] && !needFlip[i]) {
                                 needFlip[i] = true;
-                                System.out.println(i + " needs flipping!");
+                                if (game.isVerbose()) System.out.println(i + " needs flipping!");
                                 labels[i].setText("Flip now!\nPress here to flip");
-                                System.out.println("Visible");
+                                if (game.isVerbose()) System.out.println("Grill thread visible " + i);
                                 labels[i].setVisible(true);
                             }
                         }
                     } else if (labels[i].isVisible()) {
                         labels[i].setVisible(false);
-                        System.out.println("Invisible");
+                        if (game.isVerbose()) System.out.println("Grill thread invisible " + i);
                     }
                     if (flipTime[i] != -1) {
                         long timeElapsed = new Date().getTime() - flipTime[i];
@@ -227,24 +232,25 @@ public class GrillScreen extends BaseScreen {
                             if (!finished[i]) {
                                 finished[i] = true;
                                 unlock[i] = true;
-                                System.out.println(i + " has finished!");
+                                if (game.isVerbose()) System.out.println(i + " has finished!");
                                 labels[i].setText("Finished!\nRemove now!");
                                 labels[i].setVisible(true);
-                                System.out.println("Visible");
+                                if (game.isVerbose()) System.out.println("Grill thread visible " + i);
                                 items[i].makeReady();
                             }
                         }
                         if (timeElapsed >= 60000 && gameScreen.mode == Mode.ASSESSMENT_2) {
                             if (items[i].getIngredient().getState() == IngredientState.COOKED) {
                                 items[i].getIngredient().setState(IngredientState.OVERCOOKED);
-                                System.out.println(i + " is overcooked!");
+                                if (game.isVerbose()) System.out.println(i + " is overcooked!");
                                 labels[i].setText("Overcooked!\nRemove now!");
-                                System.out.println("Visible");
+                                if (game.isVerbose()) System.out.println("Grill thread visible " + i);
                                 labels[i].setVisible(true);
                             }
                         }
                     }
                 }
+                gameScreen.grillLabel.setVisible(!allOff);
             }
         }
     }
@@ -259,35 +265,34 @@ public class GrillScreen extends BaseScreen {
             IngredientActor finalIngredientActor = ingredientActor;
             this.dragAndDrop.addSource(new DragAndDrop.Source(ingredientActor) {
                 final float x = finalIngredientActor.getX(), y = finalIngredientActor.getY();
-                int pos = -1;
 
                 @Override
                 public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
                     boolean spareSpace = false;
                     for (IngredientActor space : items) {
-                        System.out.println("Payload loop");
-                        if (space == null || space == finalIngredientActor) {
-                            System.out.println("Payload space");
+                        if (game.isVerbose()) System.out.println("Payload loop");
+                        if (space == null || (space == finalIngredientActor && inventoryItem == null)) {
+                            if (game.isVerbose()) System.out.println("Payload space");
                             spareSpace = true;
                             break;
                         }
                     }
                     if (!spareSpace)
                         return null;
-                    System.out.println("Payload after");
+                    if (game.isVerbose()) System.out.println("Payload after");
                     DragAndDrop.Payload payload = new DragAndDrop.Payload();
                     payload.setDragActor(finalIngredientActor);
                     for (int i = 0; i < 3; i++) {
                         IngredientActor actor = items[i];
-                        System.out.println("Payload loop 2");
+                        if (game.isVerbose()) System.out.println("Payload loop 2");
                         if (actor == finalIngredientActor) {
-                            System.out.println("Payload found");
+                            if (game.isVerbose()) System.out.println("Payload found");
                             if (unlock[i])
                                 return payload;
                             return null;
                         }
                     }
-                    System.out.println("Payload!");
+                    if (game.isVerbose()) System.out.println("Payload!");
                     return payload;
                 }
 
@@ -301,13 +306,7 @@ public class GrillScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            try {
-                IngredientActor ingredientActor1 = (IngredientActor) uiStage.hit(620, 20, true);
-                ingredientActor1.remove();
-            } catch (Exception ignored) {
-                System.out.println("Not ingredient");
-            }
-            System.out.println(uiStage.hit(620, 20, true));
+            super.removeRemainingFromInventorySpace(game.isVerbose());
             try {
                 assert ingredientActor != null;
                 ingredientActor.remove();
@@ -320,7 +319,7 @@ public class GrillScreen extends BaseScreen {
 
             }
             inventoryItem = null;
-            System.out.println(Arrays.toString(timePlaced));
+            if (game.isVerbose()) System.out.println(Arrays.toString(timePlaced));
             Gdx.audio.newSound(Gdx.files.internal("sounds/CloseStation.mp3")).play();
             this.game.setActiveScreen(this.gameScreen);
         }

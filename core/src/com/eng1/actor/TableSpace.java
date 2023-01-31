@@ -17,10 +17,11 @@ public class TableSpace extends BaseActor {
                 pixmap.fillRectangle(0, 0, 100, 100);
                 break;
             case OUTLINE:
-                pixmap.fillRectangle(0, 0, 5, 100);
                 pixmap.fillRectangle(0, 0, 100, 5);
-                pixmap.fillRectangle(95, 0, 5, 100);
+            case OUTLINE_OPEN_TOP:
                 pixmap.fillRectangle(0, 95, 100, 5);
+                pixmap.fillRectangle(0, 0, 5, 100);
+                pixmap.fillRectangle(95, 0, 5, 100);
                 break;
         }
         this.setTexture(new Texture(pixmap));

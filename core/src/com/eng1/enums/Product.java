@@ -5,6 +5,7 @@ import java.util.Random;
 public enum Product {
     BURGER,
     CHEESEBURGER,
+//    DOUBLE_CHEESEBURGER,
     SALAD;
 
     private static final Random RANDOM = new Random();
@@ -21,6 +22,8 @@ public enum Product {
                 return "Burger";
             case CHEESEBURGER:
                 return "Cheeseburger";
+//            case DOUBLE_CHEESEBURGER:
+//                return "Double Cheeseburger";
             case SALAD:
                 return "Salad";
             default:

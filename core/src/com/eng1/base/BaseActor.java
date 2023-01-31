@@ -252,6 +252,18 @@ public class BaseActor extends Actor {
             this.setAnimation(anim);
     }
 
+    public void setTexture(TextureRegion textureRegion, float w, float h) {
+        Array<TextureRegion> textureArray = new Array<>();
+        textureArray.add(textureRegion);
+
+        Animation<TextureRegion> anim = new Animation<>(1, textureArray);
+
+        anim.setPlayMode(Animation.PlayMode.LOOP);
+
+        if (this.animation == null)
+            this.setAnimation(anim, w, h);
+    }
+
     // ----------------------------------------------
     // Physics/Motion methods
     // ----------------------------------------------

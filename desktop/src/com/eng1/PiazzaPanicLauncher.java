@@ -3,6 +3,9 @@ package com.eng1;
 import com.badlogic.gdx.backends.lwjgl3.*;
 import com.eng1.enums.Difficulty;
 import com.eng1.enums.Mode;
+import com.eng1.test.DragAndDropTest;
+import com.eng1.test.Grouping;
+import com.eng1.test.LearnGdx;
 
 import java.util.Arrays;
 
@@ -19,6 +22,7 @@ public class PiazzaPanicLauncher {
         boolean run = argumentHandler(args);
 		if (verbose)
 			System.out.println(Arrays.toString(args));
+		System.out.printf("Assessment mode - %s\nDifficulty setting - %s\nLoci set %f\nVerbose mode - %s\n", mode.toString(), difficulty.toString(), loci, verbose ? "Enabled" : "Disabled");
         if (run) {
             Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
             config.setForegroundFPS(60);
@@ -26,7 +30,6 @@ public class PiazzaPanicLauncher {
             config.setWindowedMode(width, height);
             config.setTitle("Piazza Panic");
             new Lwjgl3Application(new PiazzaPanic(width, height, mode, loci, difficulty, verbose), config);
-//            new Lwjgl3Application(new DragAndDropTest());
         }
     }
 
@@ -121,6 +124,7 @@ public class PiazzaPanicLauncher {
 					break;
 				case "v":
 					verbose = true;
+					break;
 				default:
 					throw new RuntimeException("Invalid use of arguments, use --help in order to find correct usage");
 			}

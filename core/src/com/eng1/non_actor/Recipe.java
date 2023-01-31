@@ -25,7 +25,10 @@ public class Recipe {
     public boolean satisfied(Food food) {
         if (food.getCurrentIngredients().size() != this.ingredients.size())
             return false;
-        return new HashSet<>(food.getCurrentIngredients()).containsAll(this.ingredients);
+        for (int i = 0; i < this.ingredients.size(); i++)
+            if (!this.ingredients.get(i).matches(food.getCurrentIngredients().get(i)))
+                return false;
+        return true;
     }
 
     public String getIngredients() {
@@ -44,17 +47,33 @@ public class Recipe {
                 ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
                 ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
                 break;
+//            case DOUBLE_CHEESEBURGER:
+//                ingredients.add(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
+//                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
+//                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
+//                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
+//                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
+//                ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
+//                break;
             case BURGER:
                 ingredients.add(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
                 ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
                 ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
                 break;
             case SALAD:
-                ingredients.add(new Ingredient(Item.LETTUCE, IngredientState.PREPARED));
-                ingredients.add(new Ingredient(Item.TOMATO, IngredientState.PREPARED));
-                ingredients.add(new Ingredient(Item.ONION, IngredientState.PREPARED));
+                ingredients.add(new Ingredient(Item.LETTUCE, IngredientState.CUT));
+                ingredients.add(new Ingredient(Item.TOMATO, IngredientState.CUT));
+                ingredients.add(new Ingredient(Item.ONION, IngredientState.CUT));
                 break;
         }
         return ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "endProduct=" + endProduct.toString() +
+                ", ingredients=" + ingredients.toString() +
+                '}';
     }
 }

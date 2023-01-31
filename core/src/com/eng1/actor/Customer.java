@@ -16,8 +16,9 @@ import java.util.Random;
 public class Customer extends BaseActor {
 
     private final Recipe order;
-
     private final long orderPlaced, customerNumber;
+    private boolean moving;
+    private Direction direction;
 
     Animation<TextureRegion> north;
     Animation<TextureRegion> south;
@@ -95,9 +96,6 @@ public class Customer extends BaseActor {
         EAST
     }
 
-    private boolean moving;
-    private Direction direction;
-
     @Override
     public void act(float dt) {
         super.act(dt);
@@ -123,5 +121,14 @@ public class Customer extends BaseActor {
                     break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "order=" + order.toString() +
+                ", orderPlaced=" + orderPlaced +
+                ", customerNumber=" + customerNumber +
+                '}';
     }
 }

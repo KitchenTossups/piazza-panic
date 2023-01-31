@@ -30,7 +30,7 @@ public class IngredientActor extends BaseActor {
 
         String image = "";
 
-        String[] images;
+        String[] images = null;
 
         boolean bypass = false;
 
@@ -40,36 +40,89 @@ public class IngredientActor extends BaseActor {
 
         switch (ingredient.getItem()) {
             case TOP_BUN:
-                image = "images/TopBun.png";
+                if (ingredient.getState() != IngredientState.NOT_APPLICABLE)
+                    remove();
+                else
+                    image = "images/TopBun.png";
                 break;
             case BOTTOM_BUN:
-                image = "images/BottomBun.png";
+                if (ingredient.getState() != IngredientState.NOT_APPLICABLE)
+                    remove();
+                else
+                    image = "images/BottomBun.png";
                 break;
             case PATTY:
                 bypass = true;
-                images = new String[]{"images/Patty.png", "images/PattyHalfCooked.png", "images/PattyCooked.png"};
-                loadTexture(images, 80, 80);
+                switch (ingredient.getState()) {
+                    case UNCOOKED:
+                        images = new String[]{"images/Patty.png", "images/PattyHalfCooked.png", "images/PattyCooked.png", "images/PattyOvercooked.png"};
+                        break;
+                    case HALF_COOKED:
+                        images = new String[]{"images/PattyHalfCooked.png", "images/PattyCooked.png", "images/PattyOvercooked.png"};
+                        break;
+                    case COOKED:
+                        images = new String[]{"images/PattyCooked.png", "images/PattyOvercooked.png"};
+                        break;
+                    case OVERCOOKED:
+                        images = new String[]{"images/PattyOvercooked.png"};
+                        break;
+                    default:
+                        remove();
+                        break;
+                }
+                if (images != null)
+                    loadTexture(images, 80, 80);
                 break;
             case CHEESE:
-                image = "images/Cheese.png";
+                if (ingredient.getState() != IngredientState.NOT_APPLICABLE)
+                    remove();
+                else
+                    image = "images/Cheese.png";
                 break;
             case LETTUCE:
                 bypass = true;
-                texture1 = new Texture(Gdx.files.internal("images/Lettuce.png"));
-                texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                textureArray.add(new TextureRegion(texture1));
-                textureArray.add(textureRegions[1][1]);
-                loadAnimationFromTextureRegion(textureArray, 0.1f, 80, 80);
+                switch (ingredient.getState()) {
+                    case UNCUT:
+                        texture1 = new Texture(Gdx.files.internal("images/Lettuce.png"));
+                        texture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+                        textureArray.add(new TextureRegion(texture1));
+                    case CUT:
+                        textureArray.add(textureRegions[1][1]);
+                        loadAnimationFromTextureRegion(textureArray, 0.1f, 80, 80);
+                        break;
+                    default:
+                        remove();
+                }
                 break;
             case TOMATO:
                 bypass = true;
-                images = new String[]{"images/Tomato2.png", "images/Tomato.png"};
-                loadTexture(images, 80, 80);
+                switch (ingredient.getState()) {
+                    case UNCUT:
+                        images = new String[]{"images/Tomato2.png", "images/Tomato.png"};
+                        break;
+                    case CUT:
+                        images = new String[]{"images/Tomato.png"};
+                        break;
+                    default:
+                        remove();
+                }
+                if (images != null)
+                    loadTexture(images, 80, 80);
                 break;
             case ONION:
                 bypass = true;
-                images = new String[]{"images/Onion2.png", "images/Onion.png"};
-                loadTexture(images, 80, 80);
+                switch (ingredient.getState()) {
+                    case UNCUT:
+                        images = new String[]{"images/Onion2.png", "images/Onion.png"};
+                        break;
+                    case CUT:
+                        images = new String[]{"images/Onion.png"};
+                        break;
+                    default:
+                        remove();
+                }
+                if (images != null)
+                    loadTexture(images, 80, 80);
                 break;
             default:
                 break;

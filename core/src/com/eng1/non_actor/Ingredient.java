@@ -25,6 +25,10 @@ public class Ingredient {
         this.state = state;
     }
 
+    public boolean matches(Ingredient ingredient) {
+        return this.state == ingredient.getState() && this.item == ingredient.getItem();
+    }
+
     @Override
     public String toString() {
         return this.item.toString();

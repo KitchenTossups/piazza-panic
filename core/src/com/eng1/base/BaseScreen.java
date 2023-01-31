@@ -9,6 +9,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eng1.screen.GameScreen;
 
+import java.util.Objects;
+
 /**
  * Makes creation of a screen simpler
  * <p>
@@ -91,6 +93,20 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     }
 
     public void updateGameScreen(GameScreen gameScreen) {
+    }
+
+    public void removeRemainingFromInventorySpace(boolean verbose) {
+        BaseActor inPlace1 = (BaseActor) uiStage.hit(620, 20, true), inPlace2 = (BaseActor) uiStage.hit(620, 80, true);
+        while (!Objects.equals(inPlace1.toString(), "Inventory")) {
+            if (verbose) System.out.println(inPlace1);
+            inPlace1.remove();
+            inPlace1 = (BaseActor) uiStage.hit(620, 20, true);
+        }
+        while (!Objects.equals(inPlace2.toString(), "Inventory")) {
+            if (verbose) System.out.println(inPlace2);
+            inPlace2.remove();
+            inPlace2 = (BaseActor) uiStage.hit(620, 80, true);
+        }
     }
 
     // methods required by InputProcessor interface

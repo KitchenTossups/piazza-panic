@@ -14,6 +14,7 @@ import com.eng1.enums.*;
 import com.eng1.non_actor.*;
 import com.eng1.room.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @SuppressWarnings("unused")
@@ -28,33 +29,36 @@ public class GameScreen extends BaseScreen {
     final Chef[] chefs;
     final List<Customer> customers;
     final List<IngredientActor> ingredientActors;
-    final Label messageLabel;
-    final CustomerCommunicator customerCommunicator;
+    final Label messageLabel, grillLabel;
+    final Message message;
     private boolean tabPressed;
-    private final boolean verbose;
     final int width, height;
     private int chefSelector = 0, binnedItems = 0, customerNumber = 1;
-    private long messageTimer = -1;
+    private long messageTimer = -1, lastFoodActorCustomerTime = -1;
     private final float loci;
+    private final long startTime;
 
-    public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty, boolean verbose) {
+    public GameScreen(PiazzaPanic game, int width, int height, Mode mode, float loci, Difficulty difficulty) {
+        this.startTime = new Date().getTime();
         this.game = game;
         this.width = width;
         this.height = height;
         this.mode = mode;
         this.messageLabel = new Label(null, this.game.labelStyle[1]);
         this.messageLabel.setAlignment(Align.center);
+        this.grillLabel = new Label("ATTENTION AT GRILL!", this.game.labelStyle[1]);
+        this.grillLabel.setAlignment(Align.center);
+        this.grillLabel.setVisible(false);
         this.tabPressed = false;
         this.loci = loci;
         this.difficulty = difficulty;
-        this.verbose = verbose;
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, width, height);
 
         Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/BackgroundMusic.mp3"));
         backgroundMusic.setLooping(true);
-        backgroundMusic.play();
+//        backgroundMusic.play();
 
         BaseActor background = new BaseActor(0, 0, this.mainStage), customerFloor = new BaseActor(1025, 0, this.mainStage);
         background.loadTexture("background/Floor1.png");
@@ -68,7 +72,7 @@ public class GameScreen extends BaseScreen {
 
         this.customers = new ArrayList<>();
 
-        this.customerCommunicator = new CustomerCommunicator();
+        this.message = new Message(23);
 
         int maxCustomers = 0;
         switch (difficulty) {
@@ -101,6 +105,8 @@ public class GameScreen extends BaseScreen {
 
         Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
+        this.uiStage.addActor(this.grillLabel);
+        this.grillLabel.setPosition(10, this.height - 46);
         this.uiTable.add(oldestOrder).expandX().align(Align.topRight);
         this.uiTable.row();
         this.uiTable.add(this.messageLabel).expand().align(Align.center);
@@ -127,86 +133,64 @@ public class GameScreen extends BaseScreen {
 
         stations();
 
+//        FoodActor foodActor = new FoodActor(100, 200, uiStage, new Food(new Recipe(Product.CHEESEBURGER), 1), game.isVerbose());
+//        foodActor.addNextItem(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
+//        foodActor.addNextItem(new Ingredient(Item.PATTY, IngredientState.COOKED));
+//        System.out.println(foodActor.getFood().ready() ? "Ready!" : "Not ready!");
+//        System.out.println(foodActor.addNextItem(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE)));
+//        System.out.println(foodActor.addNextItem(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE)));
+//        System.out.println(foodActor.addNextItem(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE)));
+//        System.out.println(foodActor.getFood().ready() ? "Ready!" : "Not ready!");
+
 //        new IngredientActor(100, 200, uiStage, new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
 //        p = new IngredientActor(100, 215, uiStage, new Ingredient(Item.PATTY, IngredientState.UNCOOKED));
 //        new IngredientActor(100, 230, uiStage, new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
 //        new IngredientActor(100, 245, uiStage, new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
 //        p.makeReady();
 //        p.makeReady();
-
     }
 
 //    IngredientActor p;
 
     private void addCustomer(Recipe recipe, long delay) {
         Customer customer = new Customer(1300, 100, this.uiStage, recipe, customerNumber++, delay);
+        if (game.isVerbose()) System.out.println(customer);
         this.customers.add(customer);
-        CustomerMove customerMove = new CustomerMove(customer, this.customerCommunicator, delay);
+        CustomerMove customerMove = new CustomerMove(customer, this.message, delay);
         customerMove.start();
     }
 
-    private static class CustomerCommunicator {
-        private long packet;
+    private static class Message {
+        private long time;
 
-        // True if receiver should wait
-        // False if sender should wait
-        private boolean transfer = true;
-
-        public synchronized long receive() {
-//            System.out.println("RECEIVE START");
-            while (transfer) {
-//                System.out.println("RECEIVE WAIT");
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.err.println("Thread Interrupted");
-                }
-            }
-            transfer = true;
-
-            long returnPacket = packet;
-//            System.out.println("RECEIVED");
-            notifyAll();
-//            System.out.println("RECEIVE NOTIFY");
-            return returnPacket;
+        public Message(long time) {
+            this.time = time;
         }
 
-        public synchronized void send(long packet) {
-//            System.out.println("START SEND");
-            while (!transfer) {
-//                System.out.println("WAIT SEND");
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.err.println("Thread Interrupted");
-                }
-            }
-            transfer = false;
+        public long getTime() {
+            return time;
+        }
 
-            this.packet = packet;
-//            System.out.println("SENT");
-            notifyAll();
-//            System.out.println("SEND NOTIFY");
+        public void setTime(long time) {
+            this.time = time;
         }
     }
 
     private class CustomerMove implements Runnable {
         private Thread t;
         private final Customer customer;
-        private final CustomerCommunicator customerCommunicator;
+        private final Message message;
         private final long delay;
 
-        CustomerMove(Customer customer, CustomerCommunicator customerCommunicator, long delay) {
+        CustomerMove(Customer customer, Message message, long delay) {
             this.customer = customer;
-            this.customerCommunicator = customerCommunicator;
+            this.message = message;
             this.delay = delay;
-//            System.out.println("Creating " + this.customer.getOrderPlaced());
+            if (game.isVerbose()) System.out.println("Creating " + this.customer.getOrderPlaced());
         }
 
         public void run() {
-//            System.out.println("Running " + this.customer.getOrderPlaced());
+            if (game.isVerbose()) System.out.println("Running " + this.customer.getOrderPlaced());
             try {
                 Thread.sleep(delay);
             } catch (Exception e) {
@@ -259,16 +243,23 @@ public class GameScreen extends BaseScreen {
                 e.printStackTrace();
             }
             this.customer.setMoving(false);
-            try {
-//                System.out.println("Waiting " + this.customer.getOrderPlaced());
-                long packet = this.customerCommunicator.receive();
-                while (packet != this.customer.getOrderPlaced()) {
-                    packet = this.customerCommunicator.receive();
+            if (game.isVerbose()) System.out.println("Waiting " + this.customer.getOrderPlaced());
+            boolean run = true;
+            while (run) {
+                synchronized (this.message) {
+                    try {
+                        this.message.wait();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    long time = this.message.getTime();
+                    if (time == customer.getOrderPlaced())
+                        run = false;
+                    else
+                        System.out.println(this.customer.getOrderPlaced() + " ignoring message: " + time);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-//            System.out.println("After waiting " + this.customer.getOrderPlaced());
+            if (game.isVerbose()) System.out.println("After waiting " + this.customer.getOrderPlaced());
 
             for (Action action3 : this.customer.getActions())
                 this.customer.removeAction(action3);
@@ -285,11 +276,11 @@ public class GameScreen extends BaseScreen {
                 e.printStackTrace();
             }
             customers.remove(this.customer);
-//            System.out.println("Finished " + this.customer.getOrderPlaced());
+            if (game.isVerbose()) System.out.println("Finished " + this.customer.getOrderPlaced());
         }
 
         public void start() {
-//            System.out.println("Starting " + this.customer.getOrderPlaced());
+            if (game.isVerbose()) System.out.println("Starting " + this.customer.getOrderPlaced());
             if (t == null) {
                 t = new Thread(this, String.valueOf(this.customer.getOrderPlaced()));
                 t.start();
@@ -299,16 +290,6 @@ public class GameScreen extends BaseScreen {
 
     public void update(float dt) {
         this.timerCheck();
-//        if (this.customers.get(0).getX() == 1150 && this.customers.get(0).getY() == 100)
-//            this.movementTimer++;
-//        if (this.movementTimer == 5 * 60) {
-//            this.movementTimer = 0;
-//            MoveToAction action = new MoveToAction();
-//            action.setX(1150);
-//            action.setY(550);
-//            action.setDuration(3);
-//            this.customers.get(0).addAction(action);
-//        }
         try {
             if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
                 float oldY = this.chefs[this.chefSelector].getY();
@@ -332,6 +313,7 @@ public class GameScreen extends BaseScreen {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.TAB) && !Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
                 if (!this.tabPressed) {
+                    if (game.isVerbose()) System.out.println("Tab pressed");
                     switch (this.mode) {
                         case ASSESSMENT_1:
                             this.chefSelector++;
@@ -346,8 +328,14 @@ public class GameScreen extends BaseScreen {
                 this.tabPressed = true;
             } else
                 this.tabPressed = false;
-            if (Gdx.input.isKeyPressed(Input.Keys.E))
+            if (Gdx.input.isKeyJustPressed(Input.Keys.E))
                 this.stationProximity();
+            if (this.customers.size() == 0) {
+                System.out.println("FINISHED");
+                System.out.println("This game lasted " + (new Date().getTime() - startTime / 1000) + " seconds");
+                dispose();
+                this.game.setActiveScreen(new EndScreen(this.width, this.height, getBinnedItems(), this.game.labelStyle, startTime));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -405,9 +393,14 @@ public class GameScreen extends BaseScreen {
                 BaseScreen screen;
                 switch (station.getStationType()) {
                     case BIN:
+                        if (game.isVerbose()) System.out.println("Bin");
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
                             Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou can't bin emptiness!");
+                            this.messageTimer = new Date().getTime() + 5000L;
+                        } else if (this.chefs[chefSelector].getInventoryItem() instanceof Food) {
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            this.messageLabel.setText("You can't bin a plate of food!");
                             this.messageTimer = new Date().getTime() + 5000L;
                         } else {
                             Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
@@ -415,6 +408,7 @@ public class GameScreen extends BaseScreen {
                         }
                         break;
                     case CHOPPING:
+                        if (game.isVerbose()) System.out.println("Chopping");
                         if (this.chefs[this.chefSelector].getInventoryItem() == null) {
                             Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
                             this.messageLabel.setText("This chef has nothing in their inventory!\nYou aren't allowed to chop yourself!");
@@ -439,6 +433,7 @@ public class GameScreen extends BaseScreen {
                         }
                         break;
                     case FOOD_CHEST:
+                        if (game.isVerbose()) System.out.println("Food chest");
                         if (this.chefs[this.chefSelector].getInventoryItem() != null) {
                             Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
                             this.messageLabel.setText("This chef has something in their inventory!\nYou have no inventory space available!");
@@ -449,6 +444,7 @@ public class GameScreen extends BaseScreen {
                         }
                         break;
                     case GRILL:
+                        if (game.isVerbose()) System.out.println("Grill");
                         Object object = this.chefs[this.getChefSelector()].getInventoryItem();
                         boolean pass = true;
                         if (object != null)
@@ -468,20 +464,44 @@ public class GameScreen extends BaseScreen {
                             this.messageTimer = new Date().getTime() + 5000L;
                         }
                         break;
-                    case COUNTER:   // Shares the open with prep
-                    case PREP:
-                        ItemTableScreen itemTableScreen = (ItemTableScreen) station.getScreen();
-                        itemTableScreen.updateGameScreen(this);
+                    case COUNTER:
+                        if (game.isVerbose()) System.out.println("Counter");
+                        CounterScreen counterScreen = (CounterScreen) station.getScreen();
+                        counterScreen.updateGameScreen(this);
                         Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
-                        this.game.setActiveScreen(itemTableScreen);
+                        this.game.setActiveScreen(counterScreen);
+                        break;
+                    case PREP:
+                        if (game.isVerbose()) System.out.println("Prep");
+                        if (/*this.chefs[this.chefSelector].getInventoryItem() instanceof Food || */this.chefs[this.chefSelector].getInventoryItem() instanceof Ingredient || this.chefs[this.chefSelector].getInventoryItem() == null) {
+                            PrepScreen prepScreen = (PrepScreen) station.getScreen();
+                            prepScreen.updateGameScreen(this);
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/OpenStation.mp3")).play();
+                            this.game.setActiveScreen(prepScreen);
+                        } else {
+                            Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
+                            this.messageLabel.setText("This chef has nothing able to be put on the prep table in their inventory!");
+                            this.messageTimer = new Date().getTime() + 5000L;
+                        }
                         break;
                     case SERVING:
-                        if (this.chefs[this.chefSelector].getInventoryItem() instanceof FoodActor)
-                            if (((FoodActor) (this.chefs[this.chefSelector].getInventoryItem())).getFood().ready()) {
-                                System.out.println("SERVED!");
+                        if (game.isVerbose()) System.out.println("Serving");
+                        if (this.chefs[this.chefSelector].getInventoryItem() instanceof Food)
+                            if (((Food) (this.chefs[this.chefSelector].getInventoryItem())).ready()) {
+                                if (game.isVerbose()) System.out.println("SERVED!");
                                 Gdx.audio.newSound(Gdx.files.internal("sounds/BellSound.mp3")).play();
-                                this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((FoodActor) this.chefs[this.chefSelector].getInventoryItem()).getFood().getRecipe().getEndProduct()));
+                                this.messageLabel.setText(String.format("Dinner is served!\nYou have served %s!", ((Food) this.chefs[this.chefSelector].getInventoryItem()).getRecipe().getEndProduct()));
                                 this.messageTimer = new Date().getTime() + 2500L;
+                                try {
+                                    synchronized (this.message) {
+                                        this.message.setTime(((Food) this.chefs[this.chefSelector].getInventoryItem()).getCustomerOrderTime());
+                                        this.message.notifyAll();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                this.chefs[getChefSelector()].setInventoryItem(null);
+                                this.customers.removeIf(customer -> customer.getOrderPlaced() == getLastFoodActorCustomerTime());
                             } else {
                                 Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play();
                                 this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
@@ -514,6 +534,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void counters() {
+        if (game.isVerbose()) System.out.println("Counters init");
         this.counters.add(new Counter(0f, height - 80f, (int) (width / 5f * 4f), 80, this.mainStage)); // Top
         this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 80, this.mainStage));   // Bottom
         this.counters.add(new Counter(0f, 0f, 80, height, this.mainStage));    // Left
@@ -524,6 +545,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void stations() {
+        if (game.isVerbose()) System.out.println("Stations prep");
         this.stations.add(new Station(this.width / 5f + 40f, this.height - 80f, 80, 80, this.loci, StationType.PREP, this, this.game));
         this.stations.add(new Station((this.width / 5f + 40f) + 136f + 80f, this.height - 80f, 80, 80, this.loci, StationType.PREP, this, this.game));
         this.stations.add(new Station((this.width / 5f + 40f) + 2f * (136f + 80f), this.height - 80f, 80, 80, this.loci, StationType.PREP, this, this.game));
@@ -574,5 +596,13 @@ public class GameScreen extends BaseScreen {
      */
     public Stage getMainStage() {
         return this.mainStage;
+    }
+
+    public long getLastFoodActorCustomerTime() {
+        return lastFoodActorCustomerTime;
+    }
+
+    public void setLastFoodActorCustomerTime(long lastFoodActorCustomerTime) {
+        this.lastFoodActorCustomerTime = lastFoodActorCustomerTime;
     }
 }
