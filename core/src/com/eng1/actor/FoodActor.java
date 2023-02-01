@@ -104,7 +104,7 @@ public class FoodActor extends BaseActor {
             if (this.verbose) System.out.println("Add next item null");
             return false;
         }
-        if (!ingredientActors.get(step).getIngredient().matches(ingredient)) {
+        if (ingredientActors.get(step).getIngredient().notMatches(ingredient)) {
             if (this.verbose)
                 System.out.println("Add next item not expected, given " + ingredient + " - " + ingredient.getState() + ", expected " + ingredientActors.get(step).getIngredient() + " - " + ingredientActors.get(step).getIngredient().getState());
             return false;

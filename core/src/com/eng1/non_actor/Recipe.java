@@ -26,7 +26,7 @@ public class Recipe {
         if (food.getCurrentIngredients().size() != this.ingredients.size())
             return false;
         for (int i = 0; i < this.ingredients.size(); i++)
-            if (!this.ingredients.get(i).matches(food.getCurrentIngredients().get(i)))
+            if (this.ingredients.get(i).notMatches(food.getCurrentIngredients().get(i)))
                 return false;
         return true;
     }
