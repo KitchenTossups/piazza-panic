@@ -19,17 +19,10 @@ import com.badlogic.gdx.graphics.g2d.*;
  * @author Liam Burnand (modified code)
  * @see #Actor
  */
-@SuppressWarnings("unused")
 public class BaseActor extends Actor {
     private Animation<TextureRegion> animation;
     private float elapsedTime, loci;
     private boolean animationPaused;
-
-    private Vector2 velocityVec;
-    private Vector2 accelerationVec;
-    private float acceleration;
-    private float maxSpeed;
-    private float deceleration;
 
     private Rectangle boundaryRectangle;
 
@@ -51,12 +44,6 @@ public class BaseActor extends Actor {
         this.boundaryPolygon = null;
         this.boundaryRectangle = null;
         this.loci = -1;
-
-        velocityVec = new Vector2(0, 0);
-        accelerationVec = new Vector2(0, 0);
-        acceleration = 0;
-        maxSpeed = 1000;
-        deceleration = 0;
     }
 
     public BaseActor(float x, float y, Stage s, float loci) {
@@ -78,12 +65,6 @@ public class BaseActor extends Actor {
         this.boundaryRectangle = null;
 
         this.loci = loci;
-
-        velocityVec = new Vector2(0, 0);
-        accelerationVec = new Vector2(0, 0);
-        acceleration = 0;
-        maxSpeed = 1000;
-        deceleration = 0;
     }
 
     /**
@@ -161,41 +142,6 @@ public class BaseActor extends Actor {
     }
 
     /**
-     * Creates an animation from a spritesheet: a rectangular grid of images stored in a single file.
-     *
-     * @param fileName      name of file containing spritesheet
-     * @param rows          number of rows of images in spritesheet
-     * @param cols          number of columns of images in spritesheet
-     * @param frameDuration how long each frame should be displayed
-     * @param loop          should the animation loop
-     */
-    public void loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop) {
-        Texture texture = new Texture(Gdx.files.internal(fileName), true);
-        texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        int frameWidth = texture.getWidth() / cols;
-        int frameHeight = texture.getHeight() / rows;
-
-        TextureRegion[][] temp = TextureRegion.split(texture, frameWidth, frameHeight);
-
-        Array<TextureRegion> textureArray = new Array<>();
-
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
-                textureArray.add(temp[r][c]);
-
-        Animation<TextureRegion> anim = new Animation<>(frameDuration, textureArray);
-
-        if (loop)
-            anim.setPlayMode(Animation.PlayMode.LOOP);
-        else
-            anim.setPlayMode(Animation.PlayMode.NORMAL);
-
-        if (this.animation == null)
-            this.setAnimation(anim);
-
-    }
-
-    /**
      * Convenience method for creating a 1-frame animation from a single texture.
      * <p>
      * Original credit - <a href="https://github.com/mariorez/libgdx-maze-runman">mariorez</a>
@@ -253,150 +199,6 @@ public class BaseActor extends Actor {
 
         if (this.animation == null)
             this.setAnimation(anim, w, h);
-    }
-
-    // ----------------------------------------------
-    // Physics/Motion methods
-    // ----------------------------------------------
-
-    /**
-     * Set acceleration of this object.
-     *
-     * @param acceleration Acceleration in (pixels/second) per second.
-     */
-    public void setAcceleration(float acceleration) {
-        this.acceleration = acceleration;
-    }
-
-    /**
-     * Set deceleration of this object.
-     * Deceleration is only applied when object is not accelerating.
-     *
-     * @param deceleration Deceleration in (pixels/second) per second.
-     */
-    public void setDeceleration(float deceleration) {
-        this.deceleration = deceleration;
-    }
-
-    /**
-     * Set maximum speed of this object.
-     *
-     * @param maxSpeed Maximum speed of this object in (pixels/second).
-     */
-    public void setMaxSpeed(float maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
-
-    /**
-     * Set the speed of movement (in pixels/second) in current direction.
-     * If current speed is zero (direction is undefined), direction will be set to 0 degrees.
-     *
-     * @param speed of movement (pixels/second)
-     */
-    public void setSpeed(float speed) {
-        // if length is zero, then assume motion angle is zero degrees
-        if (velocityVec.len() == 0)
-            velocityVec.set(speed, 0);
-        else
-            velocityVec.setLength(speed);
-    }
-
-    /**
-     * Calculates the speed of movement (in pixels/second).
-     *
-     * @return speed of movement (pixels/second)
-     */
-    public float getSpeed() {
-        return velocityVec.len();
-    }
-
-    /**
-     * Determines if this object is moving (if speed is greater than zero).
-     *
-     * @return false when speed is zero, true otherwise
-     */
-    public boolean isMoving() {
-        return (getSpeed() > 0);
-    }
-
-    /**
-     * Sets the angle of motion (in degrees).
-     * If current speed is zero, this will have no effect.
-     *
-     * @param angle of motion (degrees)
-     */
-    public void setMotionAngle(float angle) {
-        velocityVec.setAngleDeg(angle);
-    }
-
-    /**
-     * Get the angle of motion (in degrees), calculated from the velocity vector.
-     * <br>
-     * To align actor image angle with motion angle, use <code>setRotation( getMotionAngle() )</code>.
-     *
-     * @return angle of motion (degrees)
-     */
-    public float getMotionAngle() {
-        return velocityVec.angleDeg();
-    }
-
-    /**
-     * Update accelerate vector by angle and value stored in acceleration field.
-     * Acceleration is applied by <code>applyPhysics</code> method.
-     *
-     * @param angle Angle (degrees) in which to accelerate.
-     * @see #acceleration
-     * @see #applyPhysics
-     */
-    public void accelerateAtAngle(float angle) {
-        accelerationVec.add(
-                new Vector2(acceleration, 0).setAngleDeg(angle));
-    }
-
-    /**
-     * Update accelerate vector by current rotation angle and value stored in acceleration field.
-     * Acceleration is applied by <code>applyPhysics</code> method.
-     *
-     * @see #acceleration
-     * @see #applyPhysics
-     */
-    public void accelerateForward() {
-        accelerateAtAngle(getRotation());
-    }
-
-    /**
-     * Adjust velocity vector based on acceleration vector,
-     * then adjust position based on velocity vector. <br>
-     * If not accelerating, deceleration value is applied. <br>
-     * Speed is limited by maxSpeed value. <br>
-     * Acceleration vector reset to (0,0) at end of method. <br>
-     *
-     * @param deltaTime Time elapsed since previous frame (delta time); typically obtained from <code>act</code> method.
-     * @see #acceleration
-     * @see #deceleration
-     * @see #maxSpeed
-     */
-    public void applyPhysics(float deltaTime) {
-        // apply acceleration
-        velocityVec.add(accelerationVec.x * deltaTime, accelerationVec.y * deltaTime);
-
-        float speed = getSpeed();
-
-        // decrease speed (decelerate) when not accelerating
-        if (accelerationVec.len() == 0)
-            speed -= deceleration * deltaTime;
-
-        // keep speed within set bounds
-        speed = MathUtils.clamp(speed, 0, maxSpeed);
-
-        // update velocity
-        setSpeed(speed);
-
-        // update position according to value stored in velocity vector
-        moveBy(velocityVec.x * deltaTime, velocityVec.y * deltaTime);
-
-        // reset acceleration
-        accelerationVec.set(0, 0);
     }
 
     /**
