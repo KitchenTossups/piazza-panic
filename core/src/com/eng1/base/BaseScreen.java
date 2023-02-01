@@ -20,8 +20,8 @@ import java.util.Objects;
  * @author Liam Burnand (modified code)
  */
 public abstract class BaseScreen implements Screen, InputProcessor {
-    protected Stage mainStage, uiStage;
-    protected Table uiTable;
+    protected final Stage mainStage, uiStage;
+    protected final Table uiTable;
 
     public BaseScreen() {
         this.mainStage = new Stage();

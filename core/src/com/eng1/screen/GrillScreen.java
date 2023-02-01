@@ -33,9 +33,9 @@ public class GrillScreen extends BaseScreen {
     final DragAndDrop dragAndDrop;
     final Inventory inventory;
     IngredientActor inventoryItem = null;
-    Label[] labels = new Label[3];
-    TableSpace[] tableSpaces = new TableSpace[3];
-    Steam[] steams = new Steam[3];
+    final Label[] labels = new Label[3];
+    final TableSpace[] tableSpaces = new TableSpace[3];
+    final Steam[] steams = new Steam[3];
 
     public GrillScreen(GameScreen gameScreen, PiazzaPanic game) {
         Arrays.fill(timePlaced, -1);
