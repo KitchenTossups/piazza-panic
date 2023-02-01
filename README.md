@@ -17,7 +17,7 @@ The program has some optional arguments that can be appended in order to change 
 
 <code>--assessment=[assessment number]</code> This will determine what assessment to initialise, it will default to 1 if none is specified. Valid options are: <code>1</code> or <code>2</code>
 
-<code>--difficulty=[difficulty]</code> This will set the difficulty level of the game, the valid options are: <code>easy</code>, <code>medium</code> and <code>hard</code>. Easy will have 3 customers, medium has 5 and hard will have 8 customers. Defaults to medium and is case sensitive.
+<code>--difficulty=[difficulty]</code> This will set the difficulty level of the game, the valid options are: <code>easy</code>, <code>medium</code> and <code>hard</code>. Easy will have 3 customers, medium has 5 and hard will have 8 customers. Defaults to medium and is case-sensitive.
 
 <code>--loci=[distance]</code> This sets the distance that you can be within of a station in order to interact with it, the default is 40 (in pixels). Valid options are from 5 until the limit of a float variable. P.S. I know this isn't a true loci so to the mathematicians I apologise.
 
