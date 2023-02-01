@@ -44,8 +44,8 @@ public class FoodActor extends BaseActor {
 
         float spacing = 15;
 
-//        if (this.food.getRecipe().getEndProduct() == Product.SALAD)
-//            spacing = 25;
+        if (this.food.getRecipe().getEndProduct() == Product.SALAD)
+            spacing = 25;
 
         for (Ingredient ingredient : this.food.getRecipe().getIngredientsRaw()) {
             if (this.verbose)
@@ -53,9 +53,9 @@ public class FoodActor extends BaseActor {
             IngredientActor ingredientActor = new IngredientActor(x + 10, y + spacing, s, ingredient);
             ingredientActor.setVisible(false);
             ingredientActors.add(ingredientActor);
-//            if (this.food.getRecipe().getEndProduct() == Product.SALAD)
-//                spacing += 5;
-//            else
+            if (this.food.getRecipe().getEndProduct() == Product.SALAD)
+                spacing += 5;
+            else
                 spacing += 15;
         }
 
