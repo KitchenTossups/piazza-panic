@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
-import org.w3c.dom.Text;
 
 public class Counter extends BaseActor {
 
