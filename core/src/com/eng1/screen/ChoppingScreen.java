@@ -127,7 +127,6 @@ public class ChoppingScreen extends BaseScreen {
             knife.clearActions();
             knife.setY(-100f);
             accepted[1] = true;
-//            new IngredientActor()
             ingredientActor.makeReady();
         }
     }
@@ -157,9 +156,5 @@ public class ChoppingScreen extends BaseScreen {
             dispose();
             this.game.setActiveScreen(this.gameScreen);
         }
-    }
-
-    public IngredientActor getIngredientActor() {
-        return this.ingredientActor;
     }
 }

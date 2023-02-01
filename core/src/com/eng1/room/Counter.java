@@ -18,11 +18,5 @@ public class Counter extends BaseActor {
         textureRegion.setRegion(0, 0, width, height);
 
         this.setTexture(textureRegion);
-
-//        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-//        pixmap.setColor(new Color(0, 0, 1, 1));
-//        pixmap.fillRectangle(0, 0, width, height);
-//        this.setTexture(new Texture(pixmap));
-//        pixmap.dispose();
     }
 }
