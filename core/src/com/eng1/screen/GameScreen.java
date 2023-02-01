@@ -35,7 +35,7 @@ public class GameScreen extends BaseScreen {
     private int chefSelector = 0, binnedItems = 0, customerNumber = 1;
     private long messageTimer = -1, lastFoodActorCustomerTime = -1;
     private final float loci;
-    private final long startTime;
+    final long startTime;
     private float masterVolume = 1f;
     private Music backgroundMusic;
 
