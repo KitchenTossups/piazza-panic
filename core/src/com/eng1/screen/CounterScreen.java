@@ -106,7 +106,7 @@ public class CounterScreen extends BaseScreen {
 
                 @Override
                 public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                    source.getActor().setPosition(this.x + 10, this.y + 10);
+                    source.getActor().setPosition(this.x + 20, this.y + 10);
                     accepted[0] = true;
                     items[finalI] = inventoryItem;
                     gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(null);
@@ -126,7 +126,6 @@ public class CounterScreen extends BaseScreen {
                 IngredientActor ingredientActor = new IngredientActor(inventory.getX() + 10, inventory.getY() + 10, uiStage, (Ingredient) object);
                 inventoryItem = ingredientActor;
                 actor = ingredientActor;
-
             } else if (object instanceof Food) {
                 FoodActor foodActor = new FoodActor(inventory.getX() + 10, inventory.getY() + 10, uiStage, (Food) object, game.isVerbose());
                 inventoryItem = foodActor;
