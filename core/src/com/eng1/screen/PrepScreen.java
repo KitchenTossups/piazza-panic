@@ -46,7 +46,7 @@ public class PrepScreen extends BaseScreen {
         this.items = new FoodActor[3];
         Arrays.fill(this.items, null);
         this.uiTable.pad(10);
-        this.uiTable.add(new Label("Press \"Q\" to exit this screen", this.game.labelStyle[1])).expand().align(Align.topRight);
+        this.uiTable.add(new Label("Press \"Q\" to exit this screen\nThings may not drag properly\njust drop it to see a change", this.game.labelStyle[1])).expand().align(Align.topRight);
         this.uiTable.row();
         for (int i = 0; i < 3; i++) {
             placeLabel[i] = new Label(null, game.labelStyle[1]);

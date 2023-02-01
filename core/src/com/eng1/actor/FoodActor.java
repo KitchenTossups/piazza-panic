@@ -5,23 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
 import com.eng1.enums.Product;
 import com.eng1.non_actor.Food;
 import com.eng1.non_actor.Ingredient;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FoodActor extends BaseActor {
 
     private final Food food;
-    private final TextureRegion[][] textureRegions;
     private final List<IngredientActor> ingredientActors = new ArrayList<>();
     private int step = 0;
     private final boolean verbose;
@@ -38,15 +32,15 @@ public class FoodActor extends BaseActor {
         int frameWidth = texture.getWidth() / cols;
         int frameHeight = texture.getHeight() / rows;
 
-        this.textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
+        TextureRegion[][] textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
 
         this.plate = new BaseActor(x, y, s);
 
-//        if (Objects.requireNonNull(this.food.getRecipe().getEndProduct()) == Product.SALAD) {
-//            this.plate.setTexture(this.textureRegions[0][2], 100, 100);
-//        } else {
-            this.plate.setTexture(this.textureRegions[0][5], 100, 100);
-//        }
+        if (Objects.requireNonNull(this.food.getRecipe().getEndProduct()) == Product.SALAD) {
+            this.plate.setTexture(textureRegions[0][2], 100, 100);
+        } else {
+            this.plate.setTexture(textureRegions[0][5], 100, 100);
+        }
 
         float spacing = 15;
 
