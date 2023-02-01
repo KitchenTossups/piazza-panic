@@ -26,7 +26,7 @@ public class Recipe {
         if (food.getCurrentIngredients().size() != this.ingredients.size())
             return false;
         for (int i = 0; i < this.ingredients.size(); i++)
-            if (!this.ingredients.get(i).matches(food.getCurrentIngredients().get(i)))
+            if (this.ingredients.get(i).notMatches(food.getCurrentIngredients().get(i)))
                 return false;
         return true;
     }
@@ -47,14 +47,14 @@ public class Recipe {
                 ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
                 ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
                 break;
-//            case DOUBLE_CHEESEBURGER:
-//                ingredients.add(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
-//                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
-//                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
-//                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
-//                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
-//                ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
-//                break;
+            case DOUBLE_CHEESEBURGER:
+                ingredients.add(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
+                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
+                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
+                ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));
+                ingredients.add(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
+                ingredients.add(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
+                break;
             case BURGER:
                 ingredients.add(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
                 ingredients.add(new Ingredient(Item.PATTY, IngredientState.COOKED));

@@ -20,10 +20,7 @@ public class Customer extends BaseActor {
     private boolean moving;
     private Direction direction;
 
-    Animation<TextureRegion> north;
-    Animation<TextureRegion> south;
-    Animation<TextureRegion> east;
-    Animation<TextureRegion> west;
+    final Animation<TextureRegion> north, south, east, west;
 
     public Customer(float x, float y, Stage s, Recipe order, long customerNumber, long delay) {
         super(x, y, s);

@@ -34,19 +34,19 @@ public class PrepScreen extends BaseScreen {
 
     public PrepScreen(GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture("background/background.png");
+        background.loadTexture("background/Floor1.png");
         background.setSize(gameScreen.width, gameScreen.height);
         new Table(this.mainStage);
-        this.inventory = new Inventory(uiStage);
-        this.tableSpaces[0] = new TableSpace(300, 150, TableSpaceType.OUTLINE_OPEN_TOP, uiStage);
-        this.tableSpaces[1] = new TableSpace(590, 150, TableSpaceType.OUTLINE_OPEN_TOP, uiStage);
-        this.tableSpaces[2] = new TableSpace(880, 150, TableSpaceType.OUTLINE_OPEN_TOP, uiStage);
+        this.inventory = new Inventory(600, 0, 105, 110, 0, uiStage);
+        this.tableSpaces[0] = new TableSpace(300, 150, TableSpaceType.BLANK, uiStage);
+        this.tableSpaces[1] = new TableSpace(590, 150, TableSpaceType.BLANK, uiStage);
+        this.tableSpaces[2] = new TableSpace(880, 150, TableSpaceType.BLANK, uiStage);
         this.gameScreen = gameScreen;
         this.game = game;
         this.items = new FoodActor[3];
         Arrays.fill(this.items, null);
         this.uiTable.pad(10);
-        this.uiTable.add(new Label("Press \"Q\" to exit this screen", this.game.labelStyle[1])).expand().align(Align.topRight);
+        this.uiTable.add(new Label("Press \"Q\" to exit this screen\nThings may not drag properly\njust drop it to see a change", this.game.labelStyle[1])).expand().align(Align.topRight);
         this.uiTable.row();
         for (int i = 0; i < 3; i++) {
             placeLabel[i] = new Label(null, game.labelStyle[1]);
@@ -214,7 +214,7 @@ public class PrepScreen extends BaseScreen {
                         for (int j = 0; j < 3; j++) {
                             if (items[j] == null) {
                                 if (game.isVerbose()) System.out.println("Prep add found null");
-                                items[j] = new FoodActor(tableSpaces[j].getX(), tableSpaces[j].getY(), mainStage, new Food(customer.getOrder(), customer.getOrderPlaced()), game.isVerbose());
+                                items[j] = new FoodActor(tableSpaces[j].getX() + 10, tableSpaces[j].getY(), mainStage, new Food(customer.getOrder(), customer.getOrderPlaced()), game.isVerbose());
                                 if (game.isVerbose()) System.out.println(items[j]);
                                 placeLabel[j].setText(String.format("%s\nNext ingredient: %s", customer.getOrder().getEndProduct().toString(), items[j].getFood().getRecipe().getIngredientsRaw().get(items[j].getStep())));
                                 placeLabel[j].setVisible(true);
@@ -234,7 +234,7 @@ public class PrepScreen extends BaseScreen {
                                     for (int j = 0; j < 3; j++) {
                                         if (items[j] == null) {
                                             if (game.isVerbose()) System.out.println("Prep add found null");
-                                            items[j] = new FoodActor(tableSpaces[j].getX(), tableSpaces[j].getY(), mainStage, new Food(customer.getOrder(), customer.getOrderPlaced()), game.isVerbose());
+                                            items[j] = new FoodActor(tableSpaces[j].getX() + 10, tableSpaces[j].getY(), mainStage, new Food(customer.getOrder(), customer.getOrderPlaced()), game.isVerbose());
                                             placeLabel[j].setText(String.format("%s\nNext ingredient: %s", customer.getOrder().getEndProduct().toString(), items[j].getFood().getRecipe().getIngredientsRaw().get(items[j].getStep())));
                                             placeLabel[j].setVisible(true);
                                             gameScreen.setLastFoodActorCustomerTime(customer.getOrderPlaced());

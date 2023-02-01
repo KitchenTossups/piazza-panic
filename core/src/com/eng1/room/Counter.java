@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
-import org.w3c.dom.Text;
 
 public class Counter extends BaseActor {
 
@@ -18,11 +17,5 @@ public class Counter extends BaseActor {
         textureRegion.setRegion(0, 0, width, height);
 
         this.setTexture(textureRegion);
-
-//        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-//        pixmap.setColor(new Color(0, 0, 1, 1));
-//        pixmap.fillRectangle(0, 0, width, height);
-//        this.setTexture(new Texture(pixmap));
-//        pixmap.dispose();
     }
 }

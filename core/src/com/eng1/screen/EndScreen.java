@@ -19,7 +19,7 @@ public class EndScreen extends BaseScreen {
         background.loadTexture( "background/background.png" );
         background.setSize(width, height);
 
-        Label titleLabel = new Label("Game Completed!", labelStyles[0]), contents = new Label(String.format("This game took %d seconds to complete with %d number of binned items!\nTouch anywhere to exit!", (new Date().getTime() - startTime / 1000), binnedItems), labelStyles[1]);
+        Label titleLabel = new Label("Game Completed!", labelStyles[0]), contents = new Label(String.format("This game took %d seconds to complete with %d number of binned items!\nTouch anywhere to exit!", (new Date().getTime() - startTime) / 1000, binnedItems), labelStyles[1]);
         titleLabel.setAlignment(Align.center);
         contents.setAlignment(Align.center);
         this.uiTable.pad(50);

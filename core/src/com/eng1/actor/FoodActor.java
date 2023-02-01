@@ -5,23 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
 import com.eng1.enums.Product;
 import com.eng1.non_actor.Food;
 import com.eng1.non_actor.Ingredient;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FoodActor extends BaseActor {
 
     private final Food food;
-    private final TextureRegion[][] textureRegions;
     private final List<IngredientActor> ingredientActors = new ArrayList<>();
     private int step = 0;
     private final boolean verbose;
@@ -38,20 +32,20 @@ public class FoodActor extends BaseActor {
         int frameWidth = texture.getWidth() / cols;
         int frameHeight = texture.getHeight() / rows;
 
-        this.textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
+        TextureRegion[][] textureRegions = TextureRegion.split(texture, frameWidth, frameHeight);
 
         this.plate = new BaseActor(x, y, s);
 
-//        if (Objects.requireNonNull(this.food.getRecipe().getEndProduct()) == Product.SALAD) {
-//            this.plate.setTexture(this.textureRegions[0][2], 100, 100);
-//        } else {
-            this.plate.setTexture(this.textureRegions[0][5], 100, 100);
-//        }
+        if (Objects.requireNonNull(this.food.getRecipe().getEndProduct()) == Product.SALAD) {
+            this.plate.setTexture(textureRegions[0][2], 100, 100);
+        } else {
+            this.plate.setTexture(textureRegions[0][5], 100, 100);
+        }
 
         float spacing = 15;
 
-//        if (this.food.getRecipe().getEndProduct() == Product.SALAD)
-//            spacing = 25;
+        if (this.food.getRecipe().getEndProduct() == Product.SALAD)
+            spacing = 25;
 
         for (Ingredient ingredient : this.food.getRecipe().getIngredientsRaw()) {
             if (this.verbose)
@@ -59,14 +53,14 @@ public class FoodActor extends BaseActor {
             IngredientActor ingredientActor = new IngredientActor(x + 10, y + spacing, s, ingredient);
             ingredientActor.setVisible(false);
             ingredientActors.add(ingredientActor);
-//            if (this.food.getRecipe().getEndProduct() == Product.SALAD)
-//                spacing += 5;
-//            else
+            if (this.food.getRecipe().getEndProduct() == Product.SALAD)
+                spacing += 5;
+            else
                 spacing += 15;
         }
 
         Pixmap pixmap = new Pixmap(100, 100, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(1, 0, 0, 0.125f));
+        pixmap.setColor(new Color(1, 0, 0, 0));
         pixmap.fillRectangle(0, 0, 100, 100);
         this.setTexture(new Texture(pixmap));
         pixmap.dispose();
@@ -110,7 +104,7 @@ public class FoodActor extends BaseActor {
             if (this.verbose) System.out.println("Add next item null");
             return false;
         }
-        if (!ingredientActors.get(step).getIngredient().matches(ingredient)) {
+        if (ingredientActors.get(step).getIngredient().notMatches(ingredient)) {
             if (this.verbose)
                 System.out.println("Add next item not expected, given " + ingredient + " - " + ingredient.getState() + ", expected " + ingredientActors.get(step).getIngredient() + " - " + ingredientActors.get(step).getIngredient().getState());
             return false;

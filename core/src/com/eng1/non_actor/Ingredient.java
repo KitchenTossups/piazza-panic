@@ -25,8 +25,8 @@ public class Ingredient {
         this.state = state;
     }
 
-    public boolean matches(Ingredient ingredient) {
-        return this.state == ingredient.getState() && this.item == ingredient.getItem();
+    public boolean notMatches(Ingredient ingredient) {
+        return this.state != ingredient.getState() || this.item != ingredient.getItem();
     }
 
     @Override

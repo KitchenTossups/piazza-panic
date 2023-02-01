@@ -23,8 +23,16 @@ public class TableSpace extends BaseActor {
                 pixmap.fillRectangle(0, 0, 5, 100);
                 pixmap.fillRectangle(95, 0, 5, 100);
                 break;
+            case BLANK:
+                Pixmap pixmap1 = new Pixmap(120, 120, Pixmap.Format.RGBA8888);
+                pixmap1.setColor(new Color(0, 0, 0, 0));
+                pixmap1.fillRectangle(0, 0, 120, 120);
+                this.setTexture(new Texture(pixmap1));
+                pixmap1.dispose();
         }
-        this.setTexture(new Texture(pixmap));
-        pixmap.dispose();
+        if (tableSpaceType != TableSpaceType.BLANK) {
+            this.setTexture(new Texture(pixmap));
+            pixmap.dispose();
+        }
     }
 }
