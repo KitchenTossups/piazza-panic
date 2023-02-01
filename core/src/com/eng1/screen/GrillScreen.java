@@ -68,7 +68,7 @@ public class GrillScreen extends BaseScreen {
         steams[0].setVisible(false);
         steams[1].setVisible(false);
         steams[2].setVisible(false);
-        this.inventory = new Inventory(uiStage);
+        this.inventory = new Inventory(590, 0, 100, 100, 1, uiStage);
         this.dragAndDrop = new DragAndDrop();
         this.dragAndDrop.addTarget(new DragAndDrop.Target(this.inventory) {
             final float x = inventory.getX(), y = inventory.getY();

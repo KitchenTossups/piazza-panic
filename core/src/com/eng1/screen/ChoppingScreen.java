@@ -34,7 +34,7 @@ public class ChoppingScreen extends BaseScreen {
         this.uiTable.pad(10);
         this.uiTable.add(new Label("Press \"Q\" to exit this screen when the chopping has completed", this.game.labelStyle[1])).expand().align(Align.topRight);
         this.uiTable.row();
-        Inventory inventory = new Inventory(uiStage);
+        Inventory inventory = new Inventory(590, 0, 100, 100, 1, uiStage);
         TableSpace tableSpace = new TableSpace(590, 300, TableSpaceType.OUTLINE, uiStage);
         this.ingredientActor = null;
         Ingredient ingredient = (Ingredient) this.gameScreen.chefs[this.gameScreen.getChefSelector()].getInventoryItem();

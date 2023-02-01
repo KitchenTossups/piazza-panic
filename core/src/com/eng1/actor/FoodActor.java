@@ -66,7 +66,7 @@ public class FoodActor extends BaseActor {
         }
 
         Pixmap pixmap = new Pixmap(100, 100, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(1, 0, 0, 0.125f));
+        pixmap.setColor(new Color(1, 0, 0, 0));
         pixmap.fillRectangle(0, 0, 100, 100);
         this.setTexture(new Texture(pixmap));
         pixmap.dispose();

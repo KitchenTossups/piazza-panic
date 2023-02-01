@@ -26,7 +26,7 @@ public class FoodChestScreen extends BaseScreen {
         this.gameScreen = gameScreen;
         this.game = game;
         String image = "";
-        Inventory inventory = new Inventory(this.uiStage);
+        Inventory inventory = new Inventory(590, 0, 100, 100, 1, this.uiStage);
         List<IngredientActor> ingredientActorList = new ArrayList<>();
         switch (foodChestType) {
             case DRY_FOOD:

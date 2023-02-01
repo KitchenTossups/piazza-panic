@@ -28,13 +28,13 @@ public class CounterScreen extends BaseScreen {
 
     public CounterScreen(GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture("background/background.png");
+        background.loadTexture("background/Floor1.png");
         background.setSize(gameScreen.width, gameScreen.height);
         new Table(this.mainStage);
-        this.inventory = new Inventory(uiStage);
-        tableSpaces[0] = new TableSpace(300, 150, TableSpaceType.OUTLINE, uiStage);
-        tableSpaces[1] = new TableSpace(590, 150, TableSpaceType.OUTLINE, uiStage);
-        tableSpaces[2] = new TableSpace(880, 150, TableSpaceType.OUTLINE, uiStage);
+        this.inventory = new Inventory(600, 0, 105, 110, 0, uiStage);
+        tableSpaces[0] = new TableSpace(300, 170, TableSpaceType.BLANK, uiStage);
+        tableSpaces[1] = new TableSpace(600, 170, TableSpaceType.BLANK, uiStage);
+        tableSpaces[2] = new TableSpace(890, 170, TableSpaceType.BLANK, uiStage);
         this.gameScreen = gameScreen;
         this.game = game;
         this.items = new BaseActor[3];
