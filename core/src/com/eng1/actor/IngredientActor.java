@@ -9,6 +9,7 @@ import com.eng1.enums.*;
 import com.eng1.non_actor.Ingredient;
 import com.eng1.base.BaseActor;
 
+@SuppressWarnings("unused")
 public class IngredientActor extends BaseActor {
 
     private final Ingredient ingredient;
