@@ -120,27 +120,13 @@ public class BaseActor extends Actor {
      * @param loop          should the animation loop
      */
     public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop) {
-        Array<TextureRegion> textureArray = new Array<>();
-
-        for (String fileName : fileNames) {
-            Texture texture = new Texture(Gdx.files.internal(fileName));
-            texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-            textureArray.add(new TextureRegion(texture));
-        }
-
-        Animation<TextureRegion> anim = new Animation<>(frameDuration, textureArray);
-
-        if (loop)
-            anim.setPlayMode(Animation.PlayMode.LOOP);
-        else
-            anim.setPlayMode(Animation.PlayMode.NORMAL);
+        Animation<TextureRegion> anim = loadAnimationMethod(fileNames, frameDuration, loop);
 
         if (this.animation == null)
             this.setAnimation(anim);
-
     }
 
-    public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop, float w, float h) {
+    private Animation<TextureRegion> loadAnimationMethod(String[] fileNames, float frameDuration, boolean loop) {
         Array<TextureRegion> textureArray = new Array<>();
 
         for (String fileName : fileNames) {
@@ -155,6 +141,11 @@ public class BaseActor extends Actor {
             anim.setPlayMode(Animation.PlayMode.LOOP);
         else
             anim.setPlayMode(Animation.PlayMode.NORMAL);
+        return anim;
+    }
+
+    public void loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop, float w, float h) {
+        Animation<TextureRegion> anim = loadAnimationMethod(fileNames, frameDuration, loop);
 
         if (this.animation == null)
             this.setAnimation(anim, w, h);
