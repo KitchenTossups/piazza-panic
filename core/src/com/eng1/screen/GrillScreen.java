@@ -91,7 +91,8 @@ public class GrillScreen extends BaseScreen {
                         if (actor == source.getActor()) {
                             if (game.isVerbose()) System.out.println("Inventory found " + i);
                             gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(((IngredientActor) payload.getDragActor()).getIngredient());
-                            if (game.isVerbose()) System.out.println(gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem().toString());
+                            if (game.isVerbose())
+                                System.out.println(gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem().toString());
                             items[i] = null;
                             steams[i].setVisible(false);
                             timePlaced[i] = -1;
@@ -176,7 +177,8 @@ public class GrillScreen extends BaseScreen {
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    if (game.isVerbose()) System.out.println("Grill start up " + finalI + " " + items[finalI].getIngredient().getState());
+                    if (game.isVerbose())
+                        System.out.println("Grill start up " + finalI + " " + items[finalI].getIngredient().getState());
                     if (items[finalI].getIngredient().getState() == IngredientState.UNCOOKED) {
                         needFlip[finalI] = false;
                         flipped[finalI] = true;

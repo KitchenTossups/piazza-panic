@@ -1,8 +1,7 @@
 package com.eng1;
 
 import com.eng1.base.BaseGame;
-import com.eng1.enums.Difficulty;
-import com.eng1.enums.Mode;
+import com.eng1.enums.*;
 import com.eng1.screen.MainMenuScreen;
 
 public class PiazzaPanic extends BaseGame {

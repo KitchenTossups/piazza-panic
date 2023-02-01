@@ -2,27 +2,25 @@ package com.eng1.screen;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.eng1.PiazzaPanic;
-import com.eng1.base.BaseActor;
-import com.eng1.base.BaseScreen;
+import com.eng1.base.*;
 
 public class PauseScreen extends BaseScreen {
     private final GameScreen gameScreen;
     private final PiazzaPanic game;
 
-    public PauseScreen(GameScreen gameScreen, PiazzaPanic game){
+    public PauseScreen(GameScreen gameScreen, PiazzaPanic game) {
         this.gameScreen = gameScreen;
         this.game = game;
 
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "background/background.png" );
+        background.loadTexture("background/background.png");
         background.setSize(gameScreen.width, gameScreen.height);
 
-        Label titleLabel  = new Label("Pause", game.labelStyle[0]);
+        Label titleLabel = new Label("Pause", game.labelStyle[0]);
         titleLabel.setAlignment(Align.center);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -45,10 +43,10 @@ public class PauseScreen extends BaseScreen {
         muteTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (gameScreen.getMasterVolume() == 1f){
+                if (gameScreen.getMasterVolume() == 1f) {
                     gameScreen.setMasterVolume(0f);
                     gameScreen.pauseBackGroundMusic();
-                }else {
+                } else {
                     gameScreen.setMasterVolume(1f);
                     gameScreen.playBackGroundMusic();
                 }

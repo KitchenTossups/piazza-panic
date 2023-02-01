@@ -10,7 +10,7 @@ public enum Product {
 
     private static final Random RANDOM = new Random();
 
-    public static Product getRandomProduct()  {
+    public static Product getRandomProduct() {
         Product[] directions = values();
         return directions[RANDOM.nextInt(directions.length)];
     }

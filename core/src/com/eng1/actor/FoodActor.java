@@ -1,15 +1,12 @@
 package com.eng1.actor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
 import com.eng1.enums.Product;
-import com.eng1.non_actor.Food;
-import com.eng1.non_actor.Ingredient;
+import com.eng1.non_actor.*;
 
 import java.util.*;
 

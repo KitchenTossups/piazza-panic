@@ -1,8 +1,6 @@
 package com.eng1.actor;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eng1.base.BaseActor;
 import com.eng1.enums.TableSpaceType;

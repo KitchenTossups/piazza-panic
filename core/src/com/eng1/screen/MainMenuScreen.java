@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.eng1.*;
 import com.eng1.base.*;
-import com.eng1.enums.Difficulty;
-import com.eng1.enums.Mode;
+import com.eng1.enums.*;
 
 public class MainMenuScreen extends BaseScreen {
 
@@ -27,7 +26,7 @@ public class MainMenuScreen extends BaseScreen {
         camera.setToOrtho(false, width, height);
 
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "background/main_menu.png" );
+        background.loadTexture("background/main_menu.png");
         background.setSize(this.width, this.height);
     }
 

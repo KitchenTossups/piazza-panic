@@ -4,7 +4,6 @@ import com.eng1.enums.*;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
 public class Recipe {
     private final Product endProduct;
     private final List<Ingredient> ingredients;

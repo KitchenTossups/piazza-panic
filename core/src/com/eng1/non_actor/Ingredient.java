@@ -2,7 +2,6 @@ package com.eng1.non_actor;
 
 import com.eng1.enums.*;
 
-@SuppressWarnings("unused")
 public class Ingredient {
 
     private final Item item;

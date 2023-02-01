@@ -11,8 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.eng1.PiazzaPanic;
 import com.eng1.actor.*;
 import com.eng1.base.*;
-import com.eng1.enums.IngredientState;
-import com.eng1.enums.TableSpaceType;
+import com.eng1.enums.*;
 import com.eng1.non_actor.Ingredient;
 
 public class ChoppingScreen extends BaseScreen {

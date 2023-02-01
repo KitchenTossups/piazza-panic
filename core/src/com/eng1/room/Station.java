@@ -19,14 +19,15 @@ public class Station extends BaseActor {
 
     /**
      * This is for the stations that have to store items on the page, it retains the data instead of creating a new screen
-     * @param x x position
-     * @param y y position
-     * @param width width
-     * @param height height
-     * @param loci loci
+     *
+     * @param x           x position
+     * @param y           y position
+     * @param width       width
+     * @param height      height
+     * @param loci        loci
      * @param stationType station type
-     * @param gameScreen GameScreen
-     * @param game Piazza Panic game
+     * @param gameScreen  GameScreen
+     * @param game        Piazza Panic game
      * @see StationType
      * @see GameScreen
      * @see PiazzaPanic

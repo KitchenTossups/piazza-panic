@@ -5,12 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.eng1.enums.IngredientState;
-import com.eng1.enums.Item;
+import com.eng1.enums.*;
 import com.eng1.non_actor.Ingredient;
 import com.eng1.base.BaseActor;
 
-@SuppressWarnings("unused")
 public class IngredientActor extends BaseActor {
 
     private final Ingredient ingredient;

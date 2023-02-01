@@ -540,7 +540,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.ESCAPE){
+        if (keycode == Input.Keys.ESCAPE) {
             this.game.setActiveScreen(new PauseScreen(this, this.game));
         }
         return true;
@@ -587,14 +587,20 @@ public class GameScreen extends BaseScreen {
     public void setLastFoodActorCustomerTime(long lastFoodActorCustomerTime) {
         this.lastFoodActorCustomerTime = lastFoodActorCustomerTime;
     }
-    public float getMasterVolume(){return  this.masterVolume;}
-    public void setMasterVolume(float masterVolume){
+
+    public float getMasterVolume() {
+        return this.masterVolume;
+    }
+
+    public void setMasterVolume(float masterVolume) {
         this.masterVolume = masterVolume;
     }
-    public void playBackGroundMusic(){
+
+    public void playBackGroundMusic() {
         backgroundMusic.play();
     }
-    public void pauseBackGroundMusic(){
+
+    public void pauseBackGroundMusic() {
         backgroundMusic.pause();
     }
 }

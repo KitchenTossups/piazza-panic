@@ -18,7 +18,7 @@ public class OrderScreen extends BaseScreen {
 
     public OrderScreen(Customer customer, Label.LabelStyle[] styles, GameScreen gameScreen, PiazzaPanic game) {
         BaseActor background = new BaseActor(0, 0, this.mainStage);
-        background.loadTexture( "background/background.png" );
+        background.loadTexture("background/background.png");
         background.setSize(gameScreen.width, gameScreen.height);
         Label titleLabel = new Label(customer.getOrder().getEndProduct().toString(), styles[0]);
         this.label = new Label(null, styles[1]);

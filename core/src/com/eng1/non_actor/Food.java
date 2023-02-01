@@ -1,7 +1,6 @@
 package com.eng1.non_actor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Food {
 

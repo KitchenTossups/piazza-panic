@@ -1,10 +1,8 @@
 package com.eng1.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
@@ -12,12 +10,9 @@ import com.eng1.*;
 import com.eng1.actor.*;
 import com.eng1.base.*;
 import com.eng1.enums.*;
-import com.eng1.non_actor.Food;
-import com.eng1.non_actor.Ingredient;
+import com.eng1.non_actor.*;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class PrepScreen extends BaseScreen {
 
@@ -157,7 +152,8 @@ public class PrepScreen extends BaseScreen {
                                         public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
                                             if (game.isVerbose()) System.out.println("Add FoodActor drag start");
                                             if (inventoryItem != null) {
-                                                if (game.isVerbose()) System.out.println("Add FoodActor drag start fail inventory");
+                                                if (game.isVerbose())
+                                                    System.out.println("Add FoodActor drag start fail inventory");
                                                 return null;
                                             }
                                             if (game.isVerbose()) System.out.println("Add FoodActor payload after");
