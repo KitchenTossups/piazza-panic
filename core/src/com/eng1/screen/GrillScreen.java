@@ -206,7 +206,7 @@ public class GrillScreen extends BaseScreen {
 
         @Override
         public void run() {
-            while (true) {
+            do {
                 boolean allOff = true;
                 for (int i = 0; i < 3; i++) {
                     if (labels[i].isVisible())
@@ -251,7 +251,7 @@ public class GrillScreen extends BaseScreen {
                     }
                 }
                 gameScreen.grillLabel.setVisible(!allOff);
-            }
+            } while (new Date().getTime() >= gameScreen.startTime); // Removes infinite loop error
         }
     }
 
