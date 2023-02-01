@@ -1,27 +1,18 @@
 package com.eng1.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.eng1.PiazzaPanic;
-import com.eng1.actor.IngredientActor;
-import com.eng1.actor.Inventory;
-import com.eng1.actor.Steam;
-import com.eng1.actor.TableSpace;
+import com.eng1.actor.*;
 import com.eng1.base.*;
-import com.eng1.enums.IngredientState;
-import com.eng1.enums.Mode;
-import com.eng1.enums.TableSpaceType;
-import com.eng1.non_actor.Ingredient;
+import com.eng1.enums.*;
+import com.eng1.non_actor.*;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class GrillScreen extends BaseScreen {
 
@@ -101,7 +92,6 @@ public class GrillScreen extends BaseScreen {
                             if (game.isVerbose()) System.out.println("Inventory found " + i);
                             gameScreen.chefs[gameScreen.getChefSelector()].setInventoryItem(((IngredientActor) payload.getDragActor()).getIngredient());
                             if (game.isVerbose()) System.out.println(gameScreen.chefs[gameScreen.getChefSelector()].getInventoryItem().toString());
-//                            items[i].remove();
                             items[i] = null;
                             steams[i].setVisible(false);
                             timePlaced[i] = -1;
@@ -109,12 +99,12 @@ public class GrillScreen extends BaseScreen {
                             needFlip[i] = false;
                             flipTime[i] = -1;
                             finished[i] = false;
-//                            try {
-//                                inventoryItem.remove();
-//                            } catch (Exception ignored) {
-//
-//                            }
-//                            inventoryItem = null;
+                            try {
+                                inventoryItem.remove();
+                            } catch (Exception ignored) {
+
+                            }
+                            inventoryItem = null;
                             if (game.isVerbose()) System.out.println("Remove Inventory");
                         }
                     }
