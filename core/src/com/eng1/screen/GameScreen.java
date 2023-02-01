@@ -14,7 +14,6 @@ import com.eng1.enums.*;
 import com.eng1.non_actor.*;
 import com.eng1.room.*;
 
-import java.io.Serializable;
 import java.util.*;
 
 @SuppressWarnings("unused")
@@ -334,7 +333,7 @@ public class GameScreen extends BaseScreen {
                 this.stationProximity();
             if (this.customers.size() == 0) {
                 System.out.println("FINISHED");
-                System.out.println("This game lasted " + (new Date().getTime() - startTime / 1000) + " seconds");
+                System.out.println("This game lasted " + (new Date().getTime() - startTime) / 1000 + " seconds");
                 dispose();
                 this.game.setActiveScreen(new EndScreen(this.width, this.height, getBinnedItems(), this.game.labelStyle, startTime));
             }
