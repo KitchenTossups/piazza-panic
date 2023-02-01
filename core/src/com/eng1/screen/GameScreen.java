@@ -101,9 +101,6 @@ public class GameScreen extends BaseScreen {
 
         this.ingredientActors = new ArrayList<>();
 
-//        this.ingredientActors.add(new IngredientActor(200f, 300f, this.mainStage, new Ingredient(Item.TEST_4, IngredientState.UNCOOKED)));
-//        this.ingredientActors.add(new IngredientActor(200f, 350f, this.mainStage, new Ingredient(Item.TEST_5, IngredientState.UNCOOKED)));
-
         Label oldestOrder = new Label("Click here for the oldest order!", this.game.labelStyle[1]);
         this.uiTable.pad(10);
         this.uiStage.addActor(this.grillLabel);
@@ -133,25 +130,7 @@ public class GameScreen extends BaseScreen {
         this.stations = new ArrayList<>();
 
         stations();
-
-//        FoodActor foodActor = new FoodActor(100, 200, uiStage, new Food(new Recipe(Product.CHEESEBURGER), 1), game.isVerbose());
-//        foodActor.addNextItem(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
-//        foodActor.addNextItem(new Ingredient(Item.PATTY, IngredientState.COOKED));
-//        System.out.println(foodActor.getFood().ready() ? "Ready!" : "Not ready!");
-//        System.out.println(foodActor.addNextItem(new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE)));
-//        System.out.println(foodActor.addNextItem(new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE)));
-//        System.out.println(foodActor.addNextItem(new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE)));
-//        System.out.println(foodActor.getFood().ready() ? "Ready!" : "Not ready!");
-
-//        new IngredientActor(100, 200, uiStage, new Ingredient(Item.BOTTOM_BUN, IngredientState.NOT_APPLICABLE));
-//        p = new IngredientActor(100, 215, uiStage, new Ingredient(Item.PATTY, IngredientState.UNCOOKED));
-//        new IngredientActor(100, 230, uiStage, new Ingredient(Item.CHEESE, IngredientState.NOT_APPLICABLE));
-//        new IngredientActor(100, 245, uiStage, new Ingredient(Item.TOP_BUN, IngredientState.NOT_APPLICABLE));
-//        p.makeReady();
-//        p.makeReady();
     }
-
-//    IngredientActor p;
 
     private void addCustomer(Recipe recipe, long delay) {
         Customer customer = new Customer(1300, 100, this.uiStage, recipe, customerNumber++, delay);
@@ -502,7 +481,6 @@ public class GameScreen extends BaseScreen {
                                     e.printStackTrace();
                                 }
                                 this.chefs[getChefSelector()].setInventoryItem(null);
-                                this.customers.removeIf(customer -> customer.getOrderPlaced() == getLastFoodActorCustomerTime());
                             } else {
                                 Gdx.audio.newSound(Gdx.files.internal("sounds/HonkSound.mp3")).play(masterVolume);
                                 this.messageLabel.setText("This chef has nothing able to be served in their inventory!");
@@ -540,8 +518,6 @@ public class GameScreen extends BaseScreen {
         this.counters.add(new Counter(0f, 0f, (int) (width / 5f * 4f), 80, this.mainStage));   // Bottom
         this.counters.add(new Counter(0f, 0f, 80, height, this.mainStage));    // Left
         this.counters.add(new Counter((width / 5f * 4f), 0f, 80, height, this.mainStage));    // Right
-//        this.counters.add(new Counter(width / 5f + 40f, (height / 3f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));  // Counter 1
-//        this.counters.add(new Counter(width / 5f + 40f, (height / 3f * 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage)); // Counter 2
         this.counters.add(new Counter(width / 5f + 40f, (height / 2f) - 40f, (int) (width / 5f * 2f), 80, this.mainStage));
     }
 
@@ -555,9 +531,6 @@ public class GameScreen extends BaseScreen {
         this.stations.add(new Station((this.width / 5f + 40f) + 136f + 80f, 0, 80, 80, this.loci, FoodChestType.FRESH_FOOD, this.mainStage));
         this.stations.add(new Station((this.width / 5f + 40f) + 2f * (136f + 80f), 0, 80, 80, this.loci, FoodChestType.FROZEN_FOOD, this.mainStage));
         this.stations.add(new Station(0, this.height / 2f - 40f, 80, 80, this.loci, StationType.CHOPPING, this.mainStage));
-//        this.stations.add(new Station(this.width / 5f + 40f, (this.height / 3f * 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
-//        this.stations.add(new Station((this.width / 5f + 40f) + 136f + 80f, (this.height / 3f * 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
-//        this.stations.add(new Station((this.width / 5f + 40f) + 2f * (136f + 80f), (this.height / 3f * 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
         this.stations.add(new Station(this.width / 5f + 40f, (this.height / 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
         this.stations.add(new Station((this.width / 5f + 40f) + 136f + 80f, (this.height / 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
         this.stations.add(new Station((this.width / 5f + 40f) + 2f * (136f + 80f), (this.height / 2f) - 40f, 80, 80, this.loci, StationType.COUNTER, this, this.game));
